@@ -1,15 +1,24 @@
 import { NextResponse } from 'next/server';
 import { sealData } from 'iron-session';
 import { serialize } from 'cookie';
+import Database from 'better-sqlite3';
+import Usuario from '@/app/models/usuario';
+import { hash } from 'crypto';
 
 export async function POST(req: Request) {
   const body = await req.json();
   const { ADM_PASSWORD, ADM_LOGIN, IRON_SESSION_PASSWORD, NODE_ENV } =
     process.env;
 
-  const { email, password } = body;
+  const db = new Database('./db.sqlite');
+  const admin = db
+    .prepare('SELECT * FROM usuario WHERE login = ?')
+    .get(ADM_LOGIN) as Usuario;
 
-  if (email === ADM_LOGIN && password === ADM_PASSWORD) {
+  const { email, password } = body;
+  const hashedPassword = hash('sha256', password);
+
+  if (email === admin.login && hashedPassword == admin.senha) {
     // Session data
     const sessionData = { userId: 1, email };
 
@@ -17,6 +26,7 @@ export async function POST(req: Request) {
     const encryptedSessionData = await sealData(sessionData, {
       password: IRON_SESSION_PASSWORD!,
     });
+    //console.log('Encrypted Session Data:', encryptedSessionData);
 
     // Serialize cookie
     const cookie = serialize('session', encryptedSessionData, {
