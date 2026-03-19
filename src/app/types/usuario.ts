@@ -3,4 +3,5 @@ export default interface Usuario {
   login: string;
   senha: string;
   admin: boolean;
+  ativo: boolean;
 }
