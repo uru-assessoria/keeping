@@ -16,6 +16,19 @@ export async function GET(
   return NextResponse.json(cliente);
 }
 
+export async function DELETE(
+  _: Request,
+  context: { params: Promise<{ id: string }> },
+) {
+  const { id } = await context.params;
+  const cliente = db.prepare('SELECT * FROM cliente WHERE id = ?').get(id);
+  console.log('cliente:', JSON.stringify(cliente));
+  if (!cliente)
+    return NextResponse.json({ error: 'Não encontrado' }, { status: 404 });
+  db.prepare('DELETE FROM cliente WHERE id = ?').run(id);
+  return NextResponse.json({ message: 'Cliente excluído com sucesso' });
+}
+
 export async function PUT(
   request: Request,
   context: { params: Promise<{ id: string }> },
