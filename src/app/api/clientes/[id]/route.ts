@@ -1,19 +1,21 @@
 import Cliente from '@/app/types/cliente';
+import { neon } from '@neondatabase/serverless';
 import Database, { Database as Database3 } from 'better-sqlite3';
 import { NextResponse } from 'next/server';
 
-let db: Database3 = new Database('./db.sqlite');
+const sql = neon(`${process.env.DATABASE_URL}`);
 
 export async function GET(
   _: Request,
   context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
-  const cliente = db.prepare('SELECT * FROM cliente WHERE id = ?').get(id);
-  console.log('cliente:', JSON.stringify(cliente));
-  if (!cliente)
+  const cliente = (await sql`SELECT * FROM cliente WHERE id = ${id}`).map(
+    (c) => ({ ...c, razaoSocial: c.razao_social }),
+  );
+  if (cliente.length === 0)
     return NextResponse.json({ error: 'Não encontrado' }, { status: 404 });
-  return NextResponse.json(cliente);
+  return NextResponse.json(cliente[0]);
 }
 
 export async function DELETE(
@@ -21,11 +23,12 @@ export async function DELETE(
   context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
-  const cliente = db.prepare('SELECT * FROM cliente WHERE id = ?').get(id);
-  console.log('cliente:', JSON.stringify(cliente));
-  if (!cliente)
+  const cliente = await sql`SELECT * FROM cliente WHERE id = ${id}`;
+  if (cliente.length === 0)
     return NextResponse.json({ error: 'Não encontrado' }, { status: 404 });
-  db.prepare('DELETE FROM cliente WHERE id = ?').run(id);
+
+  const result = await sql`UPDATE cliente SET ativo = false WHERE id = ${id}`;
+
   return NextResponse.json({ message: 'Cliente excluído com sucesso' });
 }
 
@@ -35,15 +38,8 @@ export async function PUT(
 ) {
   const body = await request.json();
   const { id } = await context.params;
-  const result = db
-    .prepare('UPDATE cliente SET razaoSocial = ?, documento = ? WHERE id = ?')
-    .run(body.razaoSocial, body.documento, id);
-  return NextResponse.json(
-    {
-      razaoSocial: body.razaoSocial,
-      documento: body.documento,
-      id: result.lastInsertRowid,
-    },
-    { status: 201 },
-  );
+
+  const result =
+    await sql`UPDATE cliente SET razao_social = ${body.razaoSocial}, documento = ${body.documento} WHERE id = ${id}`;
+  return NextResponse.json(result[0], { status: 201 });
 }

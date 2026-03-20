@@ -1,7 +1,14 @@
 import Database from 'better-sqlite3';
 import Usuario from './app/types/usuario';
+import { neon } from '@neondatabase/serverless';
 
 export async function register() {
+  /*
+  if (process.env.NEXT_RUNTIME === 'nodejs') {
+    const sql = neon(`${process.env.DATABASE_URL}`);
+    const response = await sql`SELECT * FROM usuario`;
+    console.log(response[0]);
+  }
   if (process.env.NEXT_RUNTIME === 'nodejs') {
     const crypto = await import('crypto');
     const { ADM_PASSWORD, ADM_LOGIN, IRON_SESSION_PASSWORD, NODE_ENV } =
@@ -45,4 +52,5 @@ export async function register() {
       db.close();
     }
   }
+  */
 }

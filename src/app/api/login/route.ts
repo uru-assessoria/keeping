@@ -4,21 +4,19 @@ import { serialize } from 'cookie';
 import Database from 'better-sqlite3';
 import Usuario from '@/app/types/usuario';
 import { hash } from 'crypto';
+import { neon } from '@neondatabase/serverless';
+
+const sql = neon(`${process.env.DATABASE_URL}`);
 
 export async function POST(req: Request) {
   const body = await req.json();
   const { ADM_PASSWORD, ADM_LOGIN, IRON_SESSION_PASSWORD, NODE_ENV } =
     process.env;
 
-  const db = new Database('./db.sqlite');
-  const admin = db
-    .prepare('SELECT * FROM usuario WHERE login = ?')
-    .get(ADM_LOGIN) as Usuario;
-
   const { email, password } = body;
-  const hashedPassword = hash('sha256', password);
+  const [admin] = await sql`SELECT * FROM usuario WHERE login = ${email}`;
 
-  if (email === admin.login && hashedPassword == admin.senha) {
+  if (email === admin.login && password == admin.senha) {
     // Session data
     const sessionData = { userId: 1, email };
 
