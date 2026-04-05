@@ -3,7 +3,7 @@ import { sealData } from 'iron-session';
 import { serialize } from 'cookie';
 import Database from 'better-sqlite3';
 import Usuario from '@/app/types/usuario';
-import { hash } from 'crypto';
+import { createHash } from 'crypto';
 import { neon } from '@neondatabase/serverless';
 
 const sql = neon(`${process.env.DATABASE_URL}`);
@@ -14,11 +14,12 @@ export async function POST(req: Request) {
     process.env;
 
   const { email, password } = body;
-  const [admin] = await sql`SELECT * FROM usuario WHERE login = ${email}`;
+  const [user] = await sql`SELECT * FROM usuario WHERE login = ${email}`;
+  const hashedPassword = createHash('md5').update(password).digest('hex');
 
-  if (email === admin.login && password == admin.senha) {
+  if (email === user.login && hashedPassword == user.senha) {
     // Session data
-    const sessionData = { userId: 1, email };
+    const sessionData = { id: user.id, email };
 
     // Encrypt session data
     const encryptedSessionData = await sealData(sessionData, {

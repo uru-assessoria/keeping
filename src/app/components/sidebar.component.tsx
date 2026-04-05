@@ -31,9 +31,9 @@ export default function Sidebar() {
           Novo Cliente
         </Link>
         <Link
-          href="/gerar-boleto"
+          href="/gerar-contrato"
           className="block text-zinc-900 dark:text-zinc-50 hover:text-zinc-600 dark:hover:text-zinc-400">
-          Gerar Boleto
+          Gerar Contrato
         </Link>
       </nav>
 

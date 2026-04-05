@@ -4,6 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Sidebar from '../components/sidebar.component';
+import { STYLE } from '../config/style.consts';
+import html2pdf from 'html2pdf.js';
 
 export default function Dashboard() {
   const router = useRouter();
@@ -14,12 +16,10 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="flex min-h-screen bg-zinc-50 font-sans dark:bg-black">
+    <div className={STYLE.PAGE}>
       <Sidebar />
-      <main className="flex-1 flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-          Dashboard
-        </h1>
+      <main className={STYLE.MAIN}>
+        <h1 className={STYLE.TITLE}>Dashboard</h1>
       </main>
     </div>
   );

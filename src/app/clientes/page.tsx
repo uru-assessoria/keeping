@@ -2,8 +2,9 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import Cliente from '../types/cliente';
 import Sidebar from '../components/sidebar.component';
+import { STYLE } from '../config/style.consts';
+import { Cliente } from '../types/cliente';
 
 export default function ClientesPage() {
   const [clientes, setClientes] = useState<Cliente[]>([]);
@@ -26,13 +27,11 @@ export default function ClientesPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col md:flex-row bg-zinc-50 font-sans dark:bg-black">
+    <div className={STYLE.PAGE}>
       <Sidebar />
-      <main className="flex-1 flex flex-col w-full min-h-screen py-8 px-4 sm:px-8 md:px-16 bg-white dark:bg-black">
+      <main className={STYLE.MAIN}>
         <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
-          <h1 className="text-2xl sm:text-3xl font-semibold text-black dark:text-zinc-50">
-            Clientes
-          </h1>
+          <h1 className={STYLE.TITLE}>Clientes</h1>
           <Link
             href="/clientes/new"
             className="w-full sm:w-auto rounded bg-zinc-900 px-4 py-2 text-white hover:bg-zinc-700 text-center transition-colors">
@@ -41,7 +40,7 @@ export default function ClientesPage() {
         </header>
 
         <ul className="w-full space-y-4">
-          {clientes.map((cliente) => (
+          {clientes.map((cliente: Cliente) => (
             <li
               key={cliente.id}
               className="rounded border border-zinc-300 dark:border-zinc-700 p-4 bg-zinc-50 dark:bg-zinc-900">
@@ -57,12 +56,12 @@ export default function ClientesPage() {
 
                 <Link
                   href={`/clientes/${cliente.id}`}
-                  className="w-full sm:w-auto rounded bg-zinc-900 px-3 py-1 text-sm text-white hover:bg-zinc-700 text-center transition-colors">
+                  className={STYLE.BUTTON}>
                   Editar
                 </Link>
                 <button
                   onClick={() => handleDelete(cliente.id)}
-                  className="rounded bg-red-900 px-3 py-1 text-sm text-white hover:bg-red-800 transition-colors cursor-pointer">
+                  className={STYLE.BUTTON_DESTRUCTIVE}>
                   Excluir
                 </button>
               </div>

@@ -1,4 +1,4 @@
-import Cliente from '@/app/types/cliente';
+import { clienteToSqlType, sqlToClienteType } from '@/app/types/cliente';
 import { neon } from '@neondatabase/serverless';
 import Database, { Database as Database3 } from 'better-sqlite3';
 import { NextResponse } from 'next/server';
@@ -11,7 +11,7 @@ export async function GET(
 ) {
   const { id } = await context.params;
   const cliente = (await sql`SELECT * FROM cliente WHERE id = ${id}`).map(
-    (c) => ({ ...c, razaoSocial: c.razao_social }),
+    sqlToClienteType,
   );
   if (cliente.length === 0)
     return NextResponse.json({ error: 'Não encontrado' }, { status: 404 });
@@ -39,7 +39,16 @@ export async function PUT(
   const body = await request.json();
   const { id } = await context.params;
 
-  const result =
-    await sql`UPDATE cliente SET razao_social = ${body.razaoSocial}, documento = ${body.documento} WHERE id = ${id}`;
+  const result = await sql`UPDATE cliente SET 
+     razao_social = ${body.razaoSocial},
+     documento = ${body.documento},
+     data_nascimento = ${body.dataNascimento},
+     razao_social_representante = ${body.razaoSocialRepresentante},
+     documento_representante = ${body.documentoRepresentante},
+     email = ${body.email},
+     endereco = ${body.endereco},
+     telefone = ${body.telefone},
+     entidade_juridica = ${body.entidadeJuridica}
+    WHERE id = ${id}`;
   return NextResponse.json(result[0], { status: 201 });
 }

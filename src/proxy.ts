@@ -22,18 +22,18 @@ export default async function proxy(req: NextRequest) {
       return NextResponse.next();
     }
   }
-  const session = await unsealData<{ userId: number; email: string }>(cookie!, {
+  const session = await unsealData<{ id: number; email: string }>(cookie!, {
     password: process.env.IRON_SESSION_PASSWORD!,
   });
   // 4. Redirect to /login if the user is not authenticated
-  if (isProtectedRoute && !session?.userId) {
+  if (isProtectedRoute && !session?.id) {
     return NextResponse.redirect(new URL('/', req.nextUrl));
   }
 
   // 5. Redirect to /dashboard if the user is authenticated
   if (
     isPublicRoute &&
-    session?.userId &&
+    session?.id &&
     !req.nextUrl.pathname.startsWith('/dashboard')
   ) {
     return NextResponse.redirect(new URL('/dashboard', req.nextUrl));
