@@ -40,11 +40,6 @@ export default function Sidebar() {
           className="block text-zinc-900 dark:text-zinc-50 hover:text-zinc-600 dark:hover:text-zinc-400">
           Novo Contrato
         </Link>
-        <Link
-          href="/gerar-contrato"
-          className="block text-zinc-900 dark:text-zinc-50 hover:text-zinc-600 dark:hover:text-zinc-400">
-          Gerar Contrato
-        </Link>
       </nav>
 
       <button
