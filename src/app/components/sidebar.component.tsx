@@ -31,6 +31,16 @@ export default function Sidebar() {
           Novo Cliente
         </Link>
         <Link
+          href="/contratos"
+          className="block text-zinc-900 dark:text-zinc-50 hover:text-zinc-600 dark:hover:text-zinc-400">
+          Contratos
+        </Link>
+        <Link
+          href="/contratos/new"
+          className="block text-zinc-900 dark:text-zinc-50 hover:text-zinc-600 dark:hover:text-zinc-400">
+          Novo Contrato
+        </Link>
+        <Link
           href="/gerar-contrato"
           className="block text-zinc-900 dark:text-zinc-50 hover:text-zinc-600 dark:hover:text-zinc-400">
           Gerar Contrato

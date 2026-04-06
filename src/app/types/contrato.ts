@@ -1,7 +1,16 @@
+import { ItemContrato } from './item-contrato';
+
 export type Contrato = {
   id: number;
   idCliente: number;
   valorPlano: number;
+};
+export type ContratoItens = {
+  id: number;
+  idCliente: number;
+  valorPlano: number;
+  clienteNome: string;
+  itens: ItemContrato[];
 };
 export function sqlToContratoType(json: any): Contrato {
   return {
