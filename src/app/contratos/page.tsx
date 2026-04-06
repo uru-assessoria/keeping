@@ -8,7 +8,7 @@ import { Cliente } from '../types/cliente';
 import { ItemContrato } from '../types/item-contrato';
 import { Contrato, ContratoItens } from '../types/contrato';
 import { generateContrato } from '../config/document.const';
-import html2pdf from 'html2pdf.js';
+//import html2pdf from 'html2pdf.js';
 
 type ContratoListItem = {
   id: number;
@@ -46,25 +46,22 @@ export default function ContratosPage() {
   };
 
   async function printContrato(contrato: ContratoListItem) {
+    const { default: html2pdf } = await import('html2pdf.js');
     Promise.all([
       fetch(`/api/clientes/${contrato.idCliente}`).then((res) => res.json()),
       fetch(`/api/contratos/${contrato.id}`).then((res) => res.json()),
     ]).then((results) => {
       const [clienteData, contratoData] = results;
 
-      const element = document.createElement('div');
+      const element = document?.createElement('div');
       element.id = 'pdf-content';
       element.innerHTML = generateContrato(
         contratoData as ContratoItens,
         clienteData as Cliente,
       );
+
       html2pdf().set(opt).from(element).save();
     });
-  }
-
-  async function handleSubmit(event: React.FormEvent) {
-    event.preventDefault();
-    //  printTest();
   }
 
   return (
