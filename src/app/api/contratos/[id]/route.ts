@@ -1,5 +1,5 @@
 import { sqlToContratoType } from '@/app/types/contrato';
-import { sqlToContratoType as sqlToItemContratoType } from '@/app/types/item-contrato';
+import { sqlToProdutoContratoType } from '@/app/types/produto-contrato';
 import { neon } from '@neondatabase/serverless';
 import { NextResponse } from 'next/server';
 
@@ -32,7 +32,7 @@ export async function GET(
   return NextResponse.json({
     contrato: sqlToContratoType(contratoRows[0]),
     clienteNome: contratoRows[0].cliente_razao_social,
-    itens: itens.map(sqlToItemContratoType),
+    itens: itens.map(sqlToProdutoContratoType),
   });
 }
 
@@ -58,17 +58,11 @@ export async function PUT(
       INSERT INTO item_contrato (
         id_contrato,
         numero_provisorio,
-        franquia,
-        operadora,
-        valor,
-        portabilidade
+        id_produto
       ) VALUES (
         ${id},
         ${item.numeroProvisorio},
-        ${item.franquia},
-        ${item.operadora},
-        ${item.valor},
-        ${item.portabilidade}
+        ${item.idProduto}
       )
     `;
   }

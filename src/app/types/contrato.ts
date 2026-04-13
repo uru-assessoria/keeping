@@ -1,4 +1,4 @@
-import { ItemContrato } from './item-contrato';
+import { ProdutoContrato } from './produto-contrato';
 
 export type Contrato = {
   id: number;
@@ -10,7 +10,7 @@ export type ContratoItens = {
   idCliente: number;
   valorPlano: number;
   clienteNome: string;
-  itens: ItemContrato[];
+  itens: ProdutoContrato[];
 };
 export function sqlToContratoType(json: any): Contrato {
   return {

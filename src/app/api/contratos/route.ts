@@ -46,17 +46,11 @@ export async function POST(request: Request) {
       INSERT INTO item_contrato (
         id_contrato,
         numero_provisorio,
-        franquia,
-        operadora,
-        valor,
-        portabilidade
+        id_produto
       ) VALUES (
         ${contratoId},
         ${item.numeroProvisorio},
-        ${item.franquia},
-        ${item.operadora},
-        ${item.valor},
-        ${item.portabilidade}
+        ${item.idProduto}
       )
     `;
   }

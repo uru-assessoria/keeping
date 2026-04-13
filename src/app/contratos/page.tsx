@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import Sidebar from '@/app/components/sidebar.component';
 import { STYLE } from '@/app/config/style.consts';
 import { Cliente } from '../types/cliente';
-import { ItemContrato } from '../types/item-contrato';
+import { Produto } from '../types/produto';
 import { Contrato, ContratoItens } from '../types/contrato';
 import { generateContrato } from '../config/document.const';
 //import html2pdf from 'html2pdf.js';
@@ -50,14 +50,16 @@ export default function ContratosPage() {
     Promise.all([
       fetch(`/api/clientes/${contrato.idCliente}`).then((res) => res.json()),
       fetch(`/api/contratos/${contrato.id}`).then((res) => res.json()),
+      fetch('/api/produtos').then((res) => res.json()),
     ]).then((results) => {
-      const [clienteData, contratoData] = results;
+      const [clienteData, contratoData, produtosData] = results;
 
       const element = document?.createElement('div');
       element.id = 'pdf-content';
       element.innerHTML = generateContrato(
         contratoData as ContratoItens,
         clienteData as Cliente,
+        produtosData as Produto[],
       );
 
       html2pdf().set(opt).from(element).save();

@@ -3,18 +3,16 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Cliente } from '@/app/types/cliente';
-import { ItemContrato } from '@/app/types/item-contrato';
+import { ProdutoContrato } from '@/app/types/produto-contrato';
+import { Produto } from '@/app/types/produto';
 import { STYLE } from '@/app/config/style.consts';
 import Sidebar from '@/app/components/sidebar.component';
 
-const emptyItem = (): ItemContrato => ({
+const emptyItem = (): ProdutoContrato => ({
   id: 0,
   idContrato: 0,
   numeroProvisorio: '',
-  franquia: '',
-  operadora: '',
-  valor: 0,
-  portabilidade: '',
+  idProduto: 0,
 });
 
 interface ContratoFormProps {
@@ -24,18 +22,24 @@ interface ContratoFormProps {
 export default function ContratoForm({ id }: ContratoFormProps) {
   const router = useRouter();
   const [clientes, setClientes] = useState<Cliente[]>([]);
+  const [produtos, setProdutos] = useState<Produto[]>([]);
   const [idCliente, setIdCliente] = useState(0);
   const [valorPlano, setValorPlano] = useState(0);
-  const [itens, setItens] = useState<ItemContrato[]>([emptyItem()]);
+  const [itens, setItens] = useState<ProdutoContrato[]>([emptyItem()]);
   const [loading, setLoading] = useState(true);
 
   const editId = id ? Number(id) : undefined;
   const novo = !editId;
 
   useEffect(() => {
-    fetch('/api/clientes')
-      .then((res) => res.json())
-      .then((data) => setClientes(data))
+    Promise.all([
+      fetch('/api/clientes').then((res) => res.json()),
+      fetch('/api/produtos').then((res) => res.json()),
+    ])
+      .then(([clientesData, produtosData]) => {
+        setClientes(clientesData);
+        setProdutos(produtosData);
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -53,15 +57,15 @@ export default function ContratoForm({ id }: ContratoFormProps) {
 
   function updateItem(
     index: number,
-    field: keyof ItemContrato,
+    field: keyof ProdutoContrato,
     value: string | number,
   ) {
     setItens((current) => {
       const next = [...current];
       next[index] = {
         ...next[index],
-        [field]: field === 'valor' ? Number(value) : value,
-      } as ItemContrato;
+        [field]: field === 'idProduto' ? Number(value) : value,
+      } as ProdutoContrato;
       return next;
     });
   }
@@ -88,12 +92,7 @@ export default function ContratoForm({ id }: ContratoFormProps) {
       idCliente,
       valorPlano,
       itens: itens.filter(
-        (item) =>
-          item.numeroProvisorio ||
-          item.franquia ||
-          item.operadora ||
-          item.valor > 0 ||
-          item.portabilidade,
+        (item) => item.numeroProvisorio || item.idProduto > 0,
       ),
     };
 
@@ -193,51 +192,25 @@ export default function ContratoForm({ id }: ContratoFormProps) {
                         />
                       </div>
                       <div>
-                        <label className={STYLE.LABEL}>Operadora</label>
-                        <input
-                          value={item.operadora}
+                        <label className={STYLE.LABEL}>Produto</label>
+                        <select
+                          value={item.idProduto}
                           onChange={(event) =>
-                            updateItem(index, 'operadora', event.target.value)
+                            updateItem(index, 'idProduto', event.target.value)
                           }
                           className={STYLE.INPUT}
-                        />
-                      </div>
-                      <div>
-                        <label className={STYLE.LABEL}>Franquia</label>
-                        <input
-                          value={item.franquia}
-                          onChange={(event) =>
-                            updateItem(index, 'franquia', event.target.value)
-                          }
-                          className={STYLE.INPUT}
-                        />
-                      </div>
-                      <div>
-                        <label className={STYLE.LABEL}>Valor</label>
-                        <input
-                          type="number"
-                          min={0}
-                          step="0.01"
-                          value={item.valor}
-                          onChange={(event) =>
-                            updateItem(index, 'valor', event.target.value)
-                          }
-                          className={STYLE.INPUT}
-                        />
-                      </div>
-                      <div className="sm:col-span-2">
-                        <label className={STYLE.LABEL}>Portabilidade</label>
-                        <input
-                          value={item.portabilidade}
-                          onChange={(event) =>
-                            updateItem(
-                              index,
-                              'portabilidade',
-                              event.target.value,
-                            )
-                          }
-                          className={STYLE.INPUT}
-                        />
+                          required>
+                          <option value={0}>Selecione um produto</option>
+                          {produtos.map((produto) => (
+                            <option
+                              key={produto.id}
+                              value={produto.id}>
+                              {produto.franquia} - {produto.operadora} (R${' '}
+                              {(parseFloat(produto.valor + '') || 0).toFixed(2)}
+                              )
+                            </option>
+                          ))}
+                        </select>
                       </div>
                     </div>
                     <button

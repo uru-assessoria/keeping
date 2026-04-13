@@ -40,6 +40,16 @@ export default function Sidebar() {
           className="block text-zinc-900 dark:text-zinc-50 hover:text-zinc-600 dark:hover:text-zinc-400">
           Novo Contrato
         </Link>
+        <Link
+          href="/produtos"
+          className="block text-zinc-900 dark:text-zinc-50 hover:text-zinc-600 dark:hover:text-zinc-400">
+          Produtos
+        </Link>
+        <Link
+          href="/produtos/new"
+          className="block text-zinc-900 dark:text-zinc-50 hover:text-zinc-600 dark:hover:text-zinc-400">
+          Novo Produto
+        </Link>
       </nav>
 
       <button

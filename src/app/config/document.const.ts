@@ -1,10 +1,13 @@
 import { Cliente } from '../types/cliente';
 import { Contrato, ContratoItens } from '../types/contrato';
-import { ItemContrato } from '../types/item-contrato';
+import { ProdutoContrato } from '../types/produto-contrato';
+
+import { Produto } from '../types/produto';
 
 export function generateContrato(
   contrato: ContratoItens,
   cliente: Cliente,
+  produtos: Produto[],
 ): string {
   return `
 
@@ -31,7 +34,7 @@ ${sectionClausulaSexta}
 
 ${sectionClausulaSetima}
 
-${sectionServicoContratado(contrato)}
+${sectionServicoContratado(contrato, produtos)}
 
 ${sectionAssinaturas(cliente)}
 
@@ -256,19 +259,25 @@ const sectionClausulaSetima = `
 </section>
 `;
 
-function sectionServicoContratado(contrato: ContratoItens): string {
+function sectionServicoContratado(
+  contrato: ContratoItens,
+  produtos: Produto[],
+): string {
   let rows = '';
 
   contrato.itens.forEach((item) => {
-    rows += `
-      <tr> 
-        <td>${item.numeroProvisorio}</td>
-        <td>${item.franquia}</td>
-        <td>${item.operadora}</td>
-        <td>R$ ${parseFloat(item.valor + '').toFixed(2)}</td>
-        <td>${item.portabilidade}</td>
-      </tr>
-      `;
+    const produto = produtos.find((p) => p.id === item.idProduto);
+    if (produto) {
+      rows += `
+        <tr> 
+          <td>${item.numeroProvisorio}</td>
+          <td>${produto.franquia}</td>
+          <td>${produto.operadora}</td>
+          <td>R$ ${(parseFloat(produto.valor + '') || 0).toFixed(2)}</td>
+          <td>${produto.portabilidade ? 'Sim' : 'Não'}</td>
+        </tr>
+        `;
+    }
   });
 
   return `
