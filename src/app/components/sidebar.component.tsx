@@ -12,10 +12,10 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="w-full md:w-64 bg-sidebar text-slate-900 p-6 flex flex-col justify-between shadow-lg">
+    <aside className="w-full md:w-64 bg-sidebar text-white p-6 flex flex-col justify-between shadow-lg">
       <div>
         <div className="mb-8">
-          <span className="block text-sm uppercase tracking-[0.3em] text-slate-900/80">
+          <span className="block text-sm uppercase tracking-[0.3em] text-white/80">
             Sistema
           </span>
           <h2 className="mt-2 text-2xl font-semibold">Credheinz Telecom</h2>
