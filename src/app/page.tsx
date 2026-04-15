@@ -25,28 +25,34 @@ export default function LoginPage() {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-md mx-auto mt-10 p-6 bg-gray-200 white rounded-md shadow-md">
-      <input
-        type="email"
-        name="email"
-        placeholder="Email"
-        className="mb-4 block w-full rounded-md border-2 border-gray-300 p-2 focus:border-blue-500 focus:outline-none text-gray-900 placeholder:text-gray-400"
-        required
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        className="mb-4 block w-full rounded-md border-2 border-gray-300 p-2 focus:border-blue-500 focus:outline-none text-gray-900 placeholder:text-gray-400"
-        required
-      />
-      <button
-        type="submit"
-        className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none">
-        Login
-      </button>
-    </form>
+    <div className="min-h-screen flex items-center justify-center bg-background px-4 py-10">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-8 shadow-[var(--shadow)]">
+        <div className="mb-6">
+          <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Keeping ERP</p>
+          <h1 className="mt-4 text-3xl font-semibold text-slate-900">Entrar</h1>
+        </div>
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          className="mb-4 w-full rounded-lg border border-slate-300 bg-surface px-4 py-3 text-slate-900 outline-none transition focus:border-primary"
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Senha"
+          className="mb-6 w-full rounded-lg border border-slate-300 bg-surface px-4 py-3 text-slate-900 outline-none transition focus:border-primary"
+          required
+        />
+        <button
+          type="submit"
+          className="w-full rounded-lg bg-primary py-3 text-sm font-semibold text-white transition hover:bg-primary-hover">
+          Entrar
+        </button>
+      </form>
+    </div>
   );
 }
