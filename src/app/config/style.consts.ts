@@ -9,11 +9,11 @@ export var STYLE: any = {
   FORM: 'w-full max-w-md space-y-6',
   LABEL: 'block text-sm font-medium text-slate-700 mb-2',
   INPUT:
-    'w-full rounded border border-slate-300 bg-surface px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary',
+    'w-full rounded border border-slate-300 bg-surface-variant px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary',
 };
-STYLE.BUTTON = STYLE.BUTTON_WIREFRAME + ' bg-primary hover:bg-primary-hover';
+STYLE.BUTTON = STYLE.BUTTON_WIREFRAME + ' bg-zinc-900 hover:bg-zinc-700';
 STYLE.BUTTON_OPERATIVE =
-  STYLE.BUTTON_WIREFRAME + ' bg-primary hover:bg-primary-hover';
+  STYLE.BUTTON_WIREFRAME + ' bg-zinc-900 hover:bg-zinc-700';
 STYLE.BUTTON_DESTRUCTIVE =
   STYLE.BUTTON_WIREFRAME + ' bg-danger hover:bg-red-700';
 

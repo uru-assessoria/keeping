@@ -34,7 +34,7 @@ export default function ClientesPage() {
           <h1 className={STYLE.TITLE}>Clientes</h1>
           <Link
             href="/clientes/new"
-            className="w-full sm:w-auto rounded bg-zinc-900 px-4 py-2 text-white hover:bg-zinc-700 text-center transition-colors">
+            className={STYLE.BUTTON}>
             Novo cliente
           </Link>
         </header>
@@ -43,13 +43,13 @@ export default function ClientesPage() {
           {clientes.map((cliente: Cliente) => (
             <li
               key={cliente.id}
-              className="rounded border border-zinc-300 dark:border-zinc-700 p-4 bg-zinc-50 dark:bg-zinc-900">
+              className="rounded border border-border p-4 bg-surface-variant">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-black dark:text-zinc-50 truncate">
+                  <p className="font-semibold text-foreground truncate">
                     {cliente.razaoSocial}
                   </p>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                  <p className="text-sm text-muted">
                     {cliente.documento}
                   </p>
                 </div>

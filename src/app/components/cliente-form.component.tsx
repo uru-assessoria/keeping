@@ -196,7 +196,7 @@ export default function ClienteForm() {
             </div>
             <button
               type="submit"
-              className="w-full rounded bg-zinc-900 px-4 py-2 text-white hover:bg-zinc-700 transition-colors">
+              className={STYLE.BUTTON}>
               {novo ? 'Cadastrar' : 'Atualizar'}
             </button>
           </form>

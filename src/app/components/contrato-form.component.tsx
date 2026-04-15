@@ -166,7 +166,7 @@ export default function ContratoForm({ id }: ContratoFormProps) {
                 <button
                   type="button"
                   onClick={addItem}
-                  className="rounded bg-zinc-900 px-3 py-1 text-sm text-white hover:bg-zinc-700 transition-colors">
+                  className={STYLE.BUTTON_OPERATIVE}>
                   Adicionar item
                 </button>
               </div>
@@ -175,7 +175,7 @@ export default function ContratoForm({ id }: ContratoFormProps) {
                 {itens.map((item, index) => (
                   <div
                     key={index}
-                    className="rounded border border-zinc-300 dark:border-zinc-700 p-4 bg-zinc-50 dark:bg-zinc-900">
+                    className="rounded border border-border p-4 bg-surface-variant">
                     <div className="grid gap-4 sm:grid-cols-2">
                       <div>
                         <label className={STYLE.LABEL}>Número provisório</label>
@@ -216,7 +216,7 @@ export default function ContratoForm({ id }: ContratoFormProps) {
                     <button
                       type="button"
                       onClick={() => removeItem(index)}
-                      className="mt-4 rounded bg-red-900 px-3 py-1 text-sm text-white hover:bg-red-800 transition-colors">
+                      className="mt-6 rounded bg-danger px-3 py-1 text-sm text-white hover:bg-red-700 transition-colors">
                       Remover item
                     </button>
                   </div>
@@ -226,7 +226,7 @@ export default function ContratoForm({ id }: ContratoFormProps) {
 
             <button
               type="submit"
-              className="w-full rounded bg-zinc-900 px-4 py-2 text-white hover:bg-zinc-700 transition-colors">
+              className={STYLE.BUTTON}>
               {novo ? 'Salvar contrato' : 'Atualizar contrato'}
             </button>
           </form>
