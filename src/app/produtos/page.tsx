@@ -39,39 +39,38 @@ export default function ProdutosPage() {
           </Link>
         </header>
 
-        <ul className="w-full space-y-4">
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {produtos.map((produto: Produto) => (
-            <li
+            <div
               key={produto.id}
-              className="rounded border border-border p-4 bg-surface-variant">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-foreground truncate">
-                    {produto.franquia} - {produto.operadora}
-                  </p>
-                  <p className="text-sm text-muted">
-                    Valor: R$ {(parseFloat(produto.valor + '') || 0).toFixed(2)}{' '}
-                    | Portabilidade: {produto.portabilidade ? 'Sim' : 'Não'}
-                  </p>
-                  <p className="text-sm text-muted">
-                    {produto.descricao}
-                  </p>
-                </div>
+              className="rounded border border-border p-4 bg-surface-variant flex flex-col">
+              <div className="flex-1 min-w-0 mb-4">
+                <p className="font-semibold text-foreground mb-2">
+                  {produto.franquia}
+                </p>
+                <p className="text-sm text-muted line-clamp-2 mb-2">
+                  {produto.operadora}
+                </p>
+                <p className="text-sm text-muted line-clamp-4">
+                  {produto.descricao}
+                </p>
+              </div>
 
+              <div className="flex gap-2 mt-auto">
                 <Link
                   href={`/produtos/${produto.id}`}
-                  className={STYLE.BUTTON}>
+                  className={`${STYLE.BUTTON} flex-1 text-center`}>
                   Editar
                 </Link>
                 <button
                   onClick={() => handleDelete(produto.id)}
-                  className={STYLE.BUTTON_DESTRUCTIVE}>
+                  className={`${STYLE.BUTTON_DESTRUCTIVE} flex-1`}>
                   Excluir
                 </button>
               </div>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
 
         {produtos.length === 0 && (
           <p className="text-center text-zinc-600 dark:text-zinc-400 mt-8">
