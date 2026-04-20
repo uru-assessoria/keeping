@@ -47,7 +47,8 @@ export async function PUT(
   await sql`
     UPDATE contrato SET
       id_cliente = ${body.idCliente},
-      valor_plano = ${body.valorPlano}
+      valor_plano = ${body.valorPlano},
+      formalizacao = ${body.formalizacao}
     WHERE id = ${id}
   `;
 

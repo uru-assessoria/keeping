@@ -25,6 +25,7 @@ export default function ContratoForm({ id }: ContratoFormProps) {
   const [produtos, setProdutos] = useState<Produto[]>([]);
   const [idCliente, setIdCliente] = useState(0);
   const [valorPlano, setValorPlano] = useState(0);
+  const [formalizacao, setFormalizacao] = useState('');
   const [itens, setItens] = useState<ProdutoContrato[]>([emptyItem()]);
   const [loading, setLoading] = useState(true);
 
@@ -51,6 +52,7 @@ export default function ContratoForm({ id }: ContratoFormProps) {
       .then((data) => {
         setIdCliente(data.contrato.idCliente);
         setValorPlano(data.contrato.valorPlano);
+        setFormalizacao((data.contrato.formalizacao + '').split('T')[0]);
         setItens(data.itens.length ? data.itens : [emptyItem()]);
       });
   }, [editId]);
@@ -91,6 +93,7 @@ export default function ContratoForm({ id }: ContratoFormProps) {
     const payload = {
       idCliente,
       valorPlano,
+      formalizacao,
       itens: itens.filter(
         (item) => item.numeroProvisorio || item.idProduto > 0,
       ),
@@ -155,6 +158,17 @@ export default function ContratoForm({ id }: ContratoFormProps) {
                 step="0.01"
                 value={valorPlano}
                 onChange={(event) => setValorPlano(Number(event.target.value))}
+                className={STYLE.INPUT}
+                required
+              />
+            </div>
+
+            <div>
+              <label className={STYLE.LABEL}>Data de formalização</label>
+              <input
+                type="date"
+                value={formalizacao}
+                onChange={(event) => setFormalizacao(event.target.value)}
                 className={STYLE.INPUT}
                 required
               />

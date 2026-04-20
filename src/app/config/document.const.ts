@@ -36,7 +36,7 @@ ${sectionClausulaSetima}
 
 ${sectionServicoContratado(contrato, produtos)}
 
-${sectionAssinaturas(cliente)}
+${sectionAssinaturas(contrato, cliente)}
 
 
 <br/><br/>
@@ -205,7 +205,7 @@ function sectionClausulaQuarta(
   let itens = '';
   if (cliente.entidadeJuridica) {
     itens = `
-      <li>Em caso de rescisão contratual por parte do CONTRATANTE antes do término do período de fidelidade, será cobrada multa proporcional ao tempo restante de vigência, limitada a R$${contrato.valorPlano} vezes número de meses restantes / 24.</li>
+      <li>Em caso de rescisão contratual por parte do CONTRATANTE antes do término do período de fidelidade, será cobrada multa proporcional ao tempo restante de vigência, limitada a R$${contrato.contrato.valorPlano} vezes número de meses restantes / 24.</li>
     `;
   } else {
     itens = `
@@ -298,13 +298,12 @@ function sectionServicoContratado(
     </section>
   `;
 }
-function sectionAssinaturas(cliente: Cliente): string {
-  const data = new Date()
-    .toISOString()
+function sectionAssinaturas(contrato:ContratoItens,cliente: Cliente): string {
+  const data = (contrato.contrato.formalizacao+ '')
     .split('T')[0]
     .split('-')
     .reverse()
-    .join('/');
+    .join('/');  
   let assinantes = '';
   if (cliente.entidadeJuridica) {
     assinantes = `

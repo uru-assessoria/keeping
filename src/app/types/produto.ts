@@ -8,7 +8,6 @@ export type Produto = {
 };
 
 export function sqlToProdutoType(json: any): Produto {
-  console.log('produto', json);
   return {
     id: json.id,
     franquia: json.franquia,

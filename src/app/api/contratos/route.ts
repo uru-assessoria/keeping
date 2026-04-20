@@ -10,6 +10,7 @@ export async function GET() {
       contrato.id,
       contrato.id_cliente,
       contrato.valor_plano,
+      contrato.formalizacao,
       cliente.razao_social AS cliente_razao_social
     FROM contrato
     JOIN cliente ON cliente.id = contrato.id_cliente
@@ -28,8 +29,8 @@ export async function POST(request: Request) {
   const itens = Array.isArray(body.itens) ? body.itens : [];
 
   const result = await sql`
-    INSERT INTO contrato (id_cliente, valor_plano)
-    VALUES (${body.idCliente}, ${body.valorPlano})
+    INSERT INTO contrato (id_cliente, valor_plano, formalizacao)
+    VALUES (${body.idCliente}, ${body.valorPlano}, ${body.formalizacao})
     RETURNING id
   `;
 

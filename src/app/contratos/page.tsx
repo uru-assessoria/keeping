@@ -13,7 +13,7 @@ import { generateContrato } from '../config/document.const';
 type ContratoListItem = {
   id: number;
   idCliente: number;
-  valorPlano: number;
+  valorPlano: number;  
   clienteNome: string;
 };
 
@@ -53,7 +53,9 @@ export default function ContratosPage() {
       fetch('/api/produtos').then((res) => res.json()),
     ]).then((results) => {
       const [clienteData, contratoData, produtosData] = results;
-
+      console.log("Cliente Data:", clienteData);
+      console.log("Contrato Data:", contratoData);
+      console.log("Produtos Data:", produtosData);
       const element = document?.createElement('div');
       element.id = 'pdf-content';
       element.innerHTML = generateContrato(
