@@ -5,6 +5,13 @@ import { NextResponse } from 'next/server';
 
 const sql = neon(`${process.env.DATABASE_URL}`);
 
+function calcularVencimento(dataFormalizacao: string, entidadeJuridica: boolean): string {
+  const data = new Date(dataFormalizacao);
+  const meses = entidadeJuridica ? 24 : 12;
+  data.setMonth(data.getMonth() + meses);
+  return data.toISOString().split('T')[0];
+}
+
 export async function GET(
   _: Request,
   context: { params: Promise<{ id: string }> },
@@ -13,7 +20,8 @@ export async function GET(
   const contratoRows = await sql`
     SELECT
       contrato.*,
-      cliente.razao_social AS cliente_razao_social
+      cliente.razao_social AS cliente_razao_social,
+      cliente.entidade_juridica
     FROM contrato
     JOIN cliente ON cliente.id = contrato.id_cliente
     WHERE contrato.id = ${id}
@@ -29,8 +37,13 @@ export async function GET(
     SELECT * FROM item_contrato WHERE id_contrato = ${id}
   `;
 
+  const vencimento = calcularVencimento(
+    contratoRows[0].formalizacao,
+    contratoRows[0].entidade_juridica,
+  );
+
   return NextResponse.json({
-    contrato: sqlToContratoType(contratoRows[0]),
+    contrato: { ...sqlToContratoType(contratoRows[0]), vencimento },
     clienteNome: contratoRows[0].cliente_razao_social,
     itens: itens.map(sqlToProdutoContratoType),
   });

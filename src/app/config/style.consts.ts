@@ -5,7 +5,7 @@ export var STYLE: any = {
   MAIN: 'flex-1 flex flex-col w-full min-h-screen py-8 px-4 sm:px-8 md:px-16 bg-white shadow-[var(--shadow)]',
   TITLE: 'text-2xl sm:text-3xl font-semibold text-slate-900',
   BUTTON_WIREFRAME:
-    'w-full sm:w-auto rounded px-3 py-2 text-sm text-white text-center transition-colors cursor-pointer',
+    'w-full sm:w-auto inline-flex items-center justify-center rounded px-3 py-2 text-sm font-semibold text-white text-center transition-colors cursor-pointer',
   FORM: 'w-full max-w-md space-y-6',
   LABEL: 'block text-sm font-medium text-slate-700 mb-2',
   INPUT:

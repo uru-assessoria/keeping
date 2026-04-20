@@ -5,6 +5,7 @@ export type Contrato = {
   idCliente: number;
   valorPlano: number;
   formalizacao: string;
+  vencimento?: string;
 };
 export type ContratoItens = {
   id: number;
@@ -17,6 +18,7 @@ export function sqlToContratoType(json: any): Contrato {
     idCliente: json.id_cliente,
     valorPlano: json.valor_plano,
     formalizacao: json.formalizacao,
+    vencimento: json.vencimento,
   } as Contrato;
 }
 export function contratoToSqlType(contrato: Contrato): any {

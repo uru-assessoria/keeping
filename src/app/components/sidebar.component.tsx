@@ -33,29 +33,14 @@ export default function Sidebar() {
             Clientes
           </Link>
           <Link
-            href="/clientes/new"
-            className="block rounded-lg px-3 py-2 text-slate-900 hover:bg-white/20 transition-colors">
-            Novo Cliente
-          </Link>
-          <Link
             href="/contratos"
             className="block rounded-lg px-3 py-2 text-slate-900 hover:bg-white/20 transition-colors">
             Contratos
           </Link>
           <Link
-            href="/contratos/new"
-            className="block rounded-lg px-3 py-2 text-slate-900 hover:bg-white/20 transition-colors">
-            Novo Contrato
-          </Link>
-          <Link
             href="/produtos"
             className="block rounded-lg px-3 py-2 text-slate-900 hover:bg-white/20 transition-colors">
             Produtos
-          </Link>
-          <Link
-            href="/produtos/new"
-            className="block rounded-lg px-3 py-2 text-slate-900 hover:bg-white/20 transition-colors">
-            Novo Produto
           </Link>
         </nav>
       </div>
@@ -63,7 +48,7 @@ export default function Sidebar() {
       <button
         type="button"
         onClick={handleLogout}
-        className="mt-6 rounded bg-white px-4 py-2 text-slate-900 hover:bg-slate-100 transition-colors">
+        className="mt-6 rounded bg-white px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-100 transition-colors">
         Logout
       </button>
     </aside>

@@ -230,7 +230,7 @@ export default function ContratoForm({ id }: ContratoFormProps) {
                     <button
                       type="button"
                       onClick={() => removeItem(index)}
-                      className="mt-6 rounded bg-danger px-3 py-1 text-sm text-white hover:bg-red-700 transition-colors">
+                      className="mt-6 rounded bg-danger px-3 py-1 text-sm font-semibold text-white hover:bg-red-700 transition-colors">
                       Remover item
                     </button>
                   </div>
