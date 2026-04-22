@@ -24,7 +24,7 @@ export default function ContratoForm({ id }: ContratoFormProps) {
   const [clientes, setClientes] = useState<Cliente[]>([]);
   const [produtos, setProdutos] = useState<Produto[]>([]);
   const [idCliente, setIdCliente] = useState(0);
-  const [valorPlano, setValorPlano] = useState(0);
+  const [taxaManutencao, setTaxaManutencao] = useState(0);
   const [formalizacao, setFormalizacao] = useState('');
   const [itens, setItens] = useState<ProdutoContrato[]>([emptyItem()]);
   const [loading, setLoading] = useState(true);
@@ -48,12 +48,25 @@ export default function ContratoForm({ id }: ContratoFormProps) {
     if (!editId) return;
 
     fetch(`/api/contratos/${editId}`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`Erro ao carregar contrato: ${res.statusText}`);
+        }
+        return res.json();
+      })
       .then((data) => {
-        setIdCliente(data.contrato.idCliente);
-        setValorPlano(data.contrato.valorPlano);
-        setFormalizacao((data.contrato.formalizacao + '').split('T')[0]);
-        setItens(data.itens.length ? data.itens : [emptyItem()]);
+        if (data && data.contrato) {
+          setIdCliente(data.contrato.idCliente || 0);
+          setTaxaManutencao(Number(data.contrato.taxaManutencao) || 0);
+          setFormalizacao((data.contrato.formalizacao + '').split('T')[0] || '');
+          setItens(data.itens && data.itens.length ? data.itens : [emptyItem()]);
+        } else {
+          alert('Erro: Dados do contrato inválidos');
+        }
+      })
+      .catch((error) => {
+        console.error('Erro ao carregar contrato:', error);
+        alert('Falha ao carregar contrato: ' + error.message);
       });
   }, [editId]);
 
@@ -90,30 +103,45 @@ export default function ContratoForm({ id }: ContratoFormProps) {
       return;
     }
 
+    const filteredItens = itens.filter(
+      (item) => item.numeroProvisorio || item.idProduto > 0,
+    );
+
+    if (filteredItens.length === 0) {
+      alert('Adicione pelo menos um item ao contrato');
+      return;
+    }
+
     const payload = {
       idCliente,
-      valorPlano,
+      taxaManutencao,
       formalizacao,
-      itens: itens.filter(
-        (item) => item.numeroProvisorio || item.idProduto > 0,
-      ),
+      itens: filteredItens,
     };
 
     const url = editId ? `/api/contratos/${editId}` : '/api/contratos';
     const method = editId ? 'PUT' : 'POST';
 
-    const response = await fetch(url, {
-      method,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
+    try {
+      const response = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
 
-    if (!response.ok) {
-      alert('Falha ao salvar contrato');
-      return;
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        console.error('Erro da API:', responseData);
+        alert('Falha ao salvar contrato: ' + (responseData.error || responseData.message || 'Erro desconhecido'));
+        return;
+      }
+
+      router.push('/contratos');
+    } catch (error) {
+      console.error('Erro ao salvar:', error);
+      alert('Erro ao salvar contrato: ' + (error instanceof Error ? error.message : 'Erro desconhecido'));
     }
-
-    router.push('/contratos');
   }
 
   if (loading) {
@@ -151,15 +179,31 @@ export default function ContratoForm({ id }: ContratoFormProps) {
             </div>
 
             <div>
-              <label className={STYLE.LABEL}>Valor do plano</label>
+              <label className={STYLE.LABEL}>Taxa de manutenção</label>
               <input
                 type="number"
                 min={0}
                 step="0.01"
-                value={valorPlano}
-                onChange={(event) => setValorPlano(Number(event.target.value))}
+                value={taxaManutencao}
+                onChange={(event) => setTaxaManutencao(Number(event.target.value))}
                 className={STYLE.INPUT}
                 required
+              />
+            </div>
+
+            <div>
+              <label className={STYLE.LABEL}>Valor total do contrato</label>
+              <input
+                type="text"
+                value={(
+                  Number(taxaManutencao) +
+                  itens.reduce((acc, item) => {
+                    const produto = produtos.find((p) => p.id === item.idProduto);
+                    return acc + (produto ? Number(produto.valor) : 0);
+                  }, 0)
+                ).toFixed(2)}
+                className={STYLE.INPUT}
+                disabled
               />
             </div>
 

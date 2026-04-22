@@ -13,6 +13,7 @@ type ContratoComCliente = {
   vencimento?: string;
   clienteNome: string;
   entidadeJuridica: boolean;
+  valorTotal: number;
 };
 
 type FiltroTipo =
@@ -232,8 +233,7 @@ export default function Dashboard() {
                           Vencimento: {dataFormatada} • Tipo: {tipoCliente}
                         </p>
                         <p className="text-sm text-muted">
-                          Valor do plano: R${' '}
-                          {parseFloat(contrato.valorPlano + '').toFixed(2)}
+                          Valor do contrato: R${parseFloat(contrato.valorTotal + '').toFixed(2)}
                         </p>
                       </div>
 
