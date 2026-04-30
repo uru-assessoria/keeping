@@ -25,25 +25,25 @@ export default function ClienteForm() {
   const [email, setEmail] = useState('');
   const [ativo, setAtivo] = useState(false);
   const [entidadeJuridica, setEntidadeJuridica] = useState(false);
-  if (id) {
-    useEffect(() => {
-      fetch(`/api/clientes/${id}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setCliente(data);
-          setRazaoSocial(data.razaoSocial);
-          setDocumento(data.documento);
-          setRazaoSocialRepresentante(data.razaoSocialRepresentante);
-          setDocumentoRepresentante(data.documentoRepresentante);
-          setDataNascimento((data.dataNascimento + '').split('T')[0]);
-          setEndereco(data.endereco);
-          setTelefone(data.telefone);
-          setEmail(data.email);
-          setAtivo(data.ativo);
-          setEntidadeJuridica(data.entidadeJuridica);
-        });
-    }, [id]);
-  }
+
+  useEffect(() => {
+    if (!id) return;
+    fetch(`/api/clientes/${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setCliente(data);
+        setRazaoSocial(data.razaoSocial);
+        setDocumento(data.documento);
+        setRazaoSocialRepresentante(data.razaoSocialRepresentante);
+        setDocumentoRepresentante(data.documentoRepresentante);
+        setDataNascimento((data.dataNascimento + '').split('T')[0]);
+        setEndereco(data.endereco);
+        setTelefone(data.telefone);
+        setEmail(data.email);
+        setAtivo(data.ativo);
+        setEntidadeJuridica(data.entidadeJuridica);
+      });
+  }, [id]);
 
   function collectClienteData(): Cliente {
     return {
@@ -79,9 +79,9 @@ export default function ClienteForm() {
   const handleDocumentoChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    const { name, value } = event.target;
+    const { value } = event.target;
 
-    let document = value.trim().replace(/[^a-zA-Z0-9]/g, '');
+    const document = value.trim().replace(/[^a-zA-Z0-9]/g, '');
     if (value.length <= 11) {
       setDocumento(document.replace(/(.{3})(.{3})(.{3})(.{2})/, '$1.$2.$3-$4'));
       setEntidadeJuridica(false);

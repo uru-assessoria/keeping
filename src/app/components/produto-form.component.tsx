@@ -21,20 +21,19 @@ export default function ProdutoForm() {
   const [portabilidade, setPortabilidade] = useState(false);
   const [descricao, setDescricao] = useState('');
 
-  if (id) {
-    useEffect(() => {
-      fetch(`/api/produtos/${id}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setProduto(data);
-          setFranquia(data.franquia);
-          setOperadora(data.operadora);
-          setValor(data.valor);
-          setPortabilidade(data.portabilidade);
-          setDescricao(data.descricao);
-        });
-    }, [id]);
-  }
+  useEffect(() => {
+    if (!id) return;
+    fetch(`/api/produtos/${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setProduto(data);
+        setFranquia(data.franquia);
+        setOperadora(data.operadora);
+        setValor(data.valor);
+        setPortabilidade(data.portabilidade);
+        setDescricao(data.descricao);
+      });
+  }, [id]);
 
   function collectProdutoData(): Produto {
     return {

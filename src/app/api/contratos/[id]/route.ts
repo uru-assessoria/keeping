@@ -1,38 +1,47 @@
-import { sqlToContratoType } from '@/app/types/contrato';
-import { sqlToProdutoContratoType } from '@/app/types/produto-contrato';
-import { neon } from '@neondatabase/serverless';
+import { db } from '@/db';
+import { cliente, contrato, itemContrato } from '@/db/schema';
+import { updateContratoSchema } from '@/lib/schemas';
+import { eq } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
-
-const sql = neon(`${process.env.DATABASE_URL}`);
 
 export async function GET(
   _: Request,
   context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
-  const contratoRows = await sql`
-    SELECT
-      contrato.*,
-      cliente.razao_social AS cliente_razao_social
-    FROM contrato
-    JOIN cliente ON cliente.id = contrato.id_cliente
-    WHERE contrato.id = ${id}
-  `;
+  const contratoId = Number(id);
 
-  if (contratoRows.length === 0)
+  const rows = await db
+    .select({
+      id: contrato.id,
+      idCliente: contrato.idCliente,
+      valorPlano: contrato.valorPlano,
+      formalizacao: contrato.formalizacao,
+      clienteNome: cliente.razaoSocial,
+    })
+    .from(contrato)
+    .leftJoin(cliente, eq(contrato.idCliente, cliente.id))
+    .where(eq(contrato.id, contratoId));
+
+  if (rows.length === 0)
     return NextResponse.json(
       { error: 'Contrato não encontrado' },
       { status: 404 },
     );
 
-  const itens = await sql`
-    SELECT * FROM item_contrato WHERE id_contrato = ${id}
-  `;
+  const itens = await db
+    .select({
+      id: itemContrato.id,
+      idContrato: itemContrato.idContrato,
+      numeroProvisorio: itemContrato.numeroProvisorio,
+      idProduto: itemContrato.idProduto,
+    })
+    .from(itemContrato)
+    .where(eq(itemContrato.idContrato, contratoId));
 
   return NextResponse.json({
-    contrato: sqlToContratoType(contratoRows[0]),
-    clienteNome: contratoRows[0].cliente_razao_social,
-    itens: itens.map(sqlToProdutoContratoType),
+    contrato: rows[0],
+    itens,
   });
 }
 
@@ -42,30 +51,36 @@ export async function PUT(
 ) {
   const body = await request.json();
   const { id } = await context.params;
-  const itens = Array.isArray(body.itens) ? body.itens : [];
+  const contratoId = Number(id);
+  const data = updateContratoSchema.parse(body);
 
-  await sql`
-    UPDATE contrato SET
-      id_cliente = ${body.idCliente},
-      valor_plano = ${body.valorPlano},
-      formalizacao = ${body.formalizacao}
-    WHERE id = ${id}
-  `;
+  if (data.idCliente || data.valorPlano || data.formalizacao) {
+    await db
+      .update(contrato)
+      .set({
+        ...(data.idCliente && { idCliente: data.idCliente }),
+        ...(data.valorPlano && { valorPlano: data.valorPlano }),
+        ...(data.formalizacao && {
+          formalizacao: new Date(data.formalizacao),
+        }),
+      })
+      .where(eq(contrato.id, contratoId));
+  }
 
-  await sql`DELETE FROM item_contrato WHERE id_contrato = ${id}`;
+  if (data.itens) {
+    await db
+      .delete(itemContrato)
+      .where(eq(itemContrato.idContrato, contratoId));
 
-  for (const item of itens) {
-    await sql`
-      INSERT INTO item_contrato (
-        id_contrato,
-        numero_provisorio,
-        id_produto
-      ) VALUES (
-        ${id},
-        ${item.numeroProvisorio},
-        ${item.idProduto}
-      )
-    `;
+    if (data.itens.length > 0) {
+      await db.insert(itemContrato).values(
+        data.itens.map((item) => ({
+          idContrato: contratoId,
+          numeroProvisorio: item.numeroProvisorio,
+          idProduto: item.idProduto,
+        })),
+      );
+    }
   }
 
   return NextResponse.json({ message: 'Contrato atualizado com sucesso' });
@@ -76,9 +91,12 @@ export async function DELETE(
   context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
+  const contratoId = Number(id);
 
-  await sql`DELETE FROM item_contrato WHERE id_contrato = ${id}`;
-  await sql`DELETE FROM contrato WHERE id = ${id}`;
+  await db
+    .delete(itemContrato)
+    .where(eq(itemContrato.idContrato, contratoId));
+  await db.delete(contrato).where(eq(contrato.id, contratoId));
 
   return NextResponse.json({ message: 'Contrato excluído com sucesso' });
 }

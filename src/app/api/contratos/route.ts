@@ -1,59 +1,75 @@
-import { sqlToContratoType } from '@/app/types/contrato';
-import { neon } from '@neondatabase/serverless';
-import { NextResponse } from 'next/server';
+import { db } from "@/db";
+import { cliente, contrato, itemContrato } from "@/db/schema";
+import { buildPaginatedResponse, ilike } from "@/lib/pagination";
+import { createContratoSchema, paginationSchema } from "@/lib/schemas";
+import { count, desc, eq, or } from "drizzle-orm";
+import { NextResponse } from "next/server";
 
-const sql = neon(`${process.env.DATABASE_URL}`);
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const { page, limit, search } = paginationSchema.parse({
+    page: searchParams.get("page"),
+    limit: searchParams.get("limit"),
+    search: searchParams.get("search") || "",
+  });
 
-export async function GET() {
-  const contratos = await sql`
-    SELECT
-      contrato.id,
-      contrato.id_cliente,
-      contrato.valor_plano,
-      contrato.formalizacao,
-      cliente.razao_social AS cliente_razao_social
-    FROM contrato
-    JOIN cliente ON cliente.id = contrato.id_cliente
-  `;
+  console.log("REQUEST", page, limit, search);
 
-  const payload = contratos.map((row: any) => ({
-    ...sqlToContratoType(row),
-    clienteNome: row.cliente_razao_social,
-  }));
+  const offset = (page - 1) * limit;
 
-  return NextResponse.json(payload);
+  const whereClause = search
+    ? or(ilike(cliente.razaoSocial, search), ilike(contrato.valorPlano, search))
+    : undefined;
+
+  const [totalResult] = await db
+    .select({ count: count() })
+    .from(contrato)
+    .leftJoin(cliente, eq(contrato.idCliente, cliente.id))
+    .where(whereClause);
+
+  const rows = await db
+    .select({
+      id: contrato.id,
+      idCliente: contrato.idCliente,
+      valorPlano: contrato.valorPlano,
+      formalizacao: contrato.formalizacao,
+      clienteNome: cliente.razaoSocial,
+    })
+    .from(contrato)
+    .leftJoin(cliente, eq(contrato.idCliente, cliente.id))
+    .where(whereClause)
+    .orderBy(desc(contrato.id))
+    .limit(limit)
+    .offset(offset);
+
+  return NextResponse.json(
+    buildPaginatedResponse(rows, totalResult.count, page, limit),
+  );
 }
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const itens = Array.isArray(body.itens) ? body.itens : [];
+  const data = createContratoSchema.parse(body);
 
-  const result = await sql`
-    INSERT INTO contrato (id_cliente, valor_plano, formalizacao)
-    VALUES (${body.idCliente}, ${body.valorPlano}, ${body.formalizacao})
-    RETURNING id
-  `;
+  const [result] = await db
+    .insert(contrato)
+    .values({
+      idCliente: data.idCliente,
+      valorPlano: data.valorPlano,
+      formalizacao: new Date(data.formalizacao),
+    })
+    .returning();
 
-  const contratoId = result[0]?.id;
-  if (!contratoId) {
-    return NextResponse.json(
-      { error: 'Falha ao criar contrato' },
-      { status: 500 },
+  const contratoId = result.id;
+
+  if (data.itens.length > 0) {
+    await db.insert(itemContrato).values(
+      data.itens.map((item) => ({
+        idContrato: contratoId,
+        numeroProvisorio: item.numeroProvisorio,
+        idProduto: item.idProduto,
+      })),
     );
-  }
-
-  for (const item of itens) {
-    await sql`
-      INSERT INTO item_contrato (
-        id_contrato,
-        numero_provisorio,
-        id_produto
-      ) VALUES (
-        ${contratoId},
-        ${item.numeroProvisorio},
-        ${item.idProduto}
-      )
-    `;
   }
 
   return NextResponse.json({ id: contratoId }, { status: 201 });

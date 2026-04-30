@@ -34,12 +34,12 @@ export default function ContratoForm({ id }: ContratoFormProps) {
 
   useEffect(() => {
     Promise.all([
-      fetch('/api/clientes').then((res) => res.json()),
-      fetch('/api/produtos').then((res) => res.json()),
+      fetch('/api/clientes?limit=999').then((res) => res.json()),
+      fetch('/api/produtos?limit=999').then((res) => res.json()),
     ])
       .then(([clientesData, produtosData]) => {
-        setClientes(clientesData);
-        setProdutos(produtosData);
+        setClientes(clientesData.data || clientesData);
+        setProdutos(produtosData.data || produtosData);
       })
       .finally(() => setLoading(false));
   }, []);

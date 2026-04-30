@@ -1,21 +1,23 @@
-import { clienteToSqlType, sqlToClienteType } from '@/app/types/cliente';
-import { neon } from '@neondatabase/serverless';
-import Database, { Database as Database3 } from 'better-sqlite3';
+import { db } from '@/db';
+import { cliente } from '@/db/schema';
+import { updateClienteSchema } from '@/lib/schemas';
+import { eq } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
-
-const sql = neon(`${process.env.DATABASE_URL}`);
 
 export async function GET(
   _: Request,
   context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
-  const cliente = (await sql`SELECT * FROM cliente WHERE id = ${id}`).map(
-    sqlToClienteType,
-  );
-  if (cliente.length === 0)
+  const rows = await db
+    .select()
+    .from(cliente)
+    .where(eq(cliente.id, Number(id)));
+
+  if (rows.length === 0)
     return NextResponse.json({ error: 'Não encontrado' }, { status: 404 });
-  return NextResponse.json(cliente[0]);
+
+  return NextResponse.json(rows[0]);
 }
 
 export async function DELETE(
@@ -23,11 +25,18 @@ export async function DELETE(
   context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
-  const cliente = await sql`SELECT * FROM cliente WHERE id = ${id}`;
-  if (cliente.length === 0)
+  const rows = await db
+    .select()
+    .from(cliente)
+    .where(eq(cliente.id, Number(id)));
+
+  if (rows.length === 0)
     return NextResponse.json({ error: 'Não encontrado' }, { status: 404 });
 
-  const result = await sql`UPDATE cliente SET ativo = false WHERE id = ${id}`;
+  await db
+    .update(cliente)
+    .set({ ativo: false })
+    .where(eq(cliente.id, Number(id)));
 
   return NextResponse.json({ message: 'Cliente excluído com sucesso' });
 }
@@ -38,17 +47,23 @@ export async function PUT(
 ) {
   const body = await request.json();
   const { id } = await context.params;
+  const data = updateClienteSchema.parse(body);
 
-  const result = await sql`UPDATE cliente SET 
-     razao_social = ${body.razaoSocial},
-     documento = ${body.documento},
-     data_nascimento = ${body.dataNascimento},
-     razao_social_representante = ${body.razaoSocialRepresentante},
-     documento_representante = ${body.documentoRepresentante},
-     email = ${body.email},
-     endereco = ${body.endereco},
-     telefone = ${body.telefone},
-     entidade_juridica = ${body.entidadeJuridica}
-    WHERE id = ${id}`;
-  return NextResponse.json(result[0], { status: 201 });
+  const [result] = await db
+    .update(cliente)
+    .set({
+      ...data,
+      razaoSocialRepresentante:
+        data.razaoSocialRepresentante === ''
+          ? null
+          : data.razaoSocialRepresentante,
+      documentoRepresentante:
+        data.documentoRepresentante === ''
+          ? null
+          : data.documentoRepresentante,
+    })
+    .where(eq(cliente.id, Number(id)))
+    .returning();
+
+  return NextResponse.json(result, { status: 200 });
 }

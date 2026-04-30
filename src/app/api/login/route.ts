@@ -1,41 +1,45 @@
-import { NextResponse } from 'next/server';
+import { db } from '@/db';
+import { usuario } from '@/db/schema';
+import { loginSchema } from '@/lib/schemas';
 import { sealData } from 'iron-session';
 import { serialize } from 'cookie';
-import Database from 'better-sqlite3';
-import Usuario from '@/app/types/usuario';
 import { createHash } from 'crypto';
-import { neon } from '@neondatabase/serverless';
-
-const sql = neon(`${process.env.DATABASE_URL}`);
+import { eq } from 'drizzle-orm';
+import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   const body = await req.json();
-  const { ADM_PASSWORD, ADM_LOGIN, IRON_SESSION_PASSWORD, NODE_ENV } =
-    process.env;
+  const { email, password } = loginSchema.parse(body);
 
-  const { email, password } = body;
-  const [user] = await sql`SELECT * FROM usuario WHERE login = ${email}`;
+  const { IRON_SESSION_PASSWORD, NODE_ENV } = process.env;
+
+  const rows = await db
+    .select()
+    .from(usuario)
+    .where(eq(usuario.login, email));
+
+  const user = rows[0];
+
+  if (!user) {
+    return NextResponse.json({ success: false }, { status: 401 });
+  }
+
   const hashedPassword = createHash('md5').update(password).digest('hex');
 
-  if (email === user.login && hashedPassword == user.senha) {
-    // Session data
+  if (email === user.login && hashedPassword === user.senha) {
     const sessionData = { id: user.id, email };
 
-    // Encrypt session data
     const encryptedSessionData = await sealData(sessionData, {
       password: IRON_SESSION_PASSWORD!,
     });
-    //console.log('Encrypted Session Data:', encryptedSessionData);
 
-    // Serialize cookie
     const cookie = serialize('session', encryptedSessionData, {
       httpOnly: true,
       secure: NODE_ENV === 'production',
-      maxAge: 60 * 60 * 24 * 7, // One week
+      maxAge: 60 * 60 * 24 * 7,
       path: '/',
     });
 
-    // Create response and set cookie
     const response = NextResponse.json({ success: true }, { status: 200 });
     response.headers.set('Set-Cookie', cookie);
     return response;

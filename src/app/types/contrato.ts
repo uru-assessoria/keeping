@@ -6,24 +6,9 @@ export type Contrato = {
   valorPlano: number;
   formalizacao: string;
 };
+
 export type ContratoItens = {
   id: number;
   contrato: Contrato;
   itens: ProdutoContrato[];
 };
-export function sqlToContratoType(json: any): Contrato {
-  return {
-    id: json.id,
-    idCliente: json.id_cliente,
-    valorPlano: json.valor_plano,
-    formalizacao: json.formalizacao,
-  } as Contrato;
-}
-export function contratoToSqlType(contrato: Contrato): any {
-  return {
-    id: contrato.id,
-    id_cliente: contrato.idCliente,
-    valor_plano: contrato.valorPlano,
-    formalizacao: contrato.formalizacao,
-  };
-}

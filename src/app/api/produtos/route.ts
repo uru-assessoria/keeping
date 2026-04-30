@@ -1,24 +1,51 @@
-import { produtoToSqlType, sqlToProdutoType } from '@/app/types/produto';
-import { neon } from '@neondatabase/serverless';
+import { db } from "@/db";
+import { produto } from "@/db/schema";
+import { buildPaginatedResponse, ilike } from "@/lib/pagination";
+import { createProdutoSchema, paginationSchema } from "@/lib/schemas";
+import { count, desc, or } from "drizzle-orm";
+import { NextResponse } from "next/server";
 
-import { NextResponse } from 'next/server';
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const { page, limit, search } = paginationSchema.parse({
+    page: searchParams.get("page"),
+    limit: searchParams.get("limit"),
+    search: searchParams.get("search") || "",
+  });
 
-const sql = neon(`${process.env.DATABASE_URL}`);
+  const offset = (page - 1) * limit;
 
-export async function GET() {
+  const whereClause = search
+    ? or(
+        ilike(produto.franquia, search),
+        ilike(produto.operadora, search),
+        ilike(produto.descricao, search),
+      )
+    : undefined;
+
+  const [totalResult] = await db
+    .select({ count: count() })
+    .from(produto)
+    .where(whereClause);
+
+  const rows = await db
+    .select()
+    .from(produto)
+    .where(whereClause)
+    .orderBy(desc(produto.id))
+    .limit(limit)
+    .offset(offset);
+
   return NextResponse.json(
-    (await sql`SELECT * FROM produto`).map(sqlToProdutoType),
+    buildPaginatedResponse(rows, totalResult.count, page, limit),
   );
 }
 
 export async function POST(request: Request) {
   const body = await request.json();
+  const data = createProdutoSchema.parse(body);
 
-  const result = (
-    await sql`
-    INSERT INTO
-      produto (franquia, operadora, valor, portabilidade, descricao)
-    VALUES (${body.franquia}, ${body.operadora}, ${body.valor}, ${body.portabilidade}, ${body.descricao})`
-  ).map((p) => ({ ...p, franquia: p.franquia }));
-  return NextResponse.json(result[0], { status: 201 });
+  const [result] = await db.insert(produto).values(data).returning();
+
+  return NextResponse.json(result, { status: 201 });
 }

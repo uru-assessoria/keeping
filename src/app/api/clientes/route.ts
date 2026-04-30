@@ -1,24 +1,58 @@
-import { clienteToSqlType, sqlToClienteType } from '@/app/types/cliente';
-import { neon } from '@neondatabase/serverless';
+import { db } from "@/db";
+import { cliente } from "@/db/schema";
+import { buildPaginatedResponse, ilike } from "@/lib/pagination";
+import { createClienteSchema, paginationSchema } from "@/lib/schemas";
+import { count, desc, eq, or } from "drizzle-orm";
+import { NextResponse } from "next/server";
 
-import { NextResponse } from 'next/server';
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const { page, limit, search } = paginationSchema.parse({
+    page: searchParams.get("page"),
+    limit: searchParams.get("limit"),
+    search: searchParams.get("search") || "",
+  });
 
-const sql = neon(`${process.env.DATABASE_URL}`);
+  const offset = (page - 1) * limit;
 
-export async function GET() {
+  const whereClause = search
+    ? or(
+        ilike(cliente.razaoSocial, search),
+        ilike(cliente.documento, search),
+        ilike(cliente.email, search),
+      )
+    : eq(cliente.ativo, true);
+
+  const [totalResult] = await db
+    .select({ count: count() })
+    .from(cliente)
+    .where(whereClause);
+
+  const rows = await db
+    .select()
+    .from(cliente)
+    .where(whereClause)
+    .orderBy(desc(cliente.id))
+    .limit(limit)
+    .offset(offset);
+
   return NextResponse.json(
-    (await sql`SELECT * FROM cliente WHERE ativo = true`).map(sqlToClienteType),
+    buildPaginatedResponse(rows, totalResult.count, page, limit),
   );
 }
 
 export async function POST(request: Request) {
   const body = await request.json();
+  const data = createClienteSchema.parse(body);
 
-  const result = (
-    await sql`
-    INSERT INTO 
-      cliente (razao_social, documento, data_nascimento, razao_social_representante, documento_representante, email, endereco, telefone, entidade_juridica) 
-    VALUES (${body.razaoSocial}, ${body.documento}, ${body.dataNascimento}, ${body.razaoSocialRepresentante}, ${body.documentoRepresentante}, ${body.email}, ${body.endereco}, ${body.telefone}, ${body.entidadeJuridica})`
-  ).map((c) => ({ ...c, razaoSocial: c.razao_social }));
-  return NextResponse.json(result[0], { status: 201 });
+  const [result] = await db
+    .insert(cliente)
+    .values({
+      ...data,
+      razaoSocialRepresentante: data.razaoSocialRepresentante || null,
+      documentoRepresentante: data.documentoRepresentante || null,
+    })
+    .returning();
+
+  return NextResponse.json(result, { status: 201 });
 }
