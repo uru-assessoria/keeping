@@ -1,10 +1,12 @@
-import { ProdutoContrato } from './produto-contrato';
+import { ProdutoContrato } from "./produto-contrato";
 
 export type Contrato = {
   id: number;
   idCliente: number;
-  valorPlano: number;
+  taxaManutencao: number;
   formalizacao: string;
+  vencimento?: string;
+  valorTotal: number;
 };
 
 export type ContratoItens = {

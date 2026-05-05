@@ -203,9 +203,10 @@ function sectionClausulaQuarta(
   contrato: ContratoItens,
 ): string {
   let itens = '';
+  const taxaManutencaoNum = Number(contrato.contrato.taxaManutencao) || 0;
   if (cliente.entidadeJuridica) {
     itens = `
-      <li>Em caso de rescisão contratual por parte do CONTRATANTE antes do término do período de fidelidade, será cobrada multa proporcional ao tempo restante de vigência, limitada a R$${contrato.contrato.valorPlano} vezes número de meses restantes / 24.</li>
+      <li>Em caso de rescisão contratual por parte do CONTRATANTE antes do término do período de fidelidade, será cobrada multa proporcional ao tempo restante de vigência, limitada a R$${taxaManutencaoNum.toFixed(2)} vezes número de meses restantes / 24.</li>
     `;
   } else {
     itens = `
@@ -264,21 +265,27 @@ function sectionServicoContratado(
   produtos: Produto[],
 ): string {
   let rows = '';
+  let totalProdutos = 0;
 
   contrato.itens.forEach((item) => {
     const produto = produtos.find((p) => p.id === item.idProduto);
     if (produto) {
+      const valorProduto = parseFloat(produto.valor + '') || 0;
+      totalProdutos += valorProduto;
       rows += `
         <tr> 
           <td>${item.numeroProvisorio}</td>
           <td>${produto.franquia}</td>
           <td>${produto.operadora}</td>
-          <td>R$ ${(parseFloat(produto.valor + '') || 0).toFixed(2)}</td>
+          <td>R$ ${valorProduto.toFixed(2)}</td>
           <td>${produto.portabilidade ? 'Sim' : 'Não'}</td>
         </tr>
         `;
     }
   });
+
+  const taxaManutencao = Number(contrato.contrato.taxaManutencao) || 0;
+  const valorTotal = totalProdutos + taxaManutencao;
 
   return `
     <section>
@@ -293,7 +300,16 @@ function sectionServicoContratado(
         </tr>
 
         ${rows}  
-          
+        <tr>
+          <td colspan="3"></td>
+          <td><b>Taxa de manutenção</b></td>
+          <td>R$ ${taxaManutencao.toFixed(2)}</td>
+        </tr>
+        <tr>
+          <td colspan="3"></td>
+          <td><b>Valor total</b></td>
+          <td><b>R$ ${valorTotal.toFixed(2)}</b></td>
+        </tr>
       </table>      
     </section>
   `;

@@ -13,7 +13,15 @@ export async function GET(request: Request) {
     search: searchParams.get("search") || "",
   });
 
-  console.log("REQUEST", page, limit, search);
+  function calcularVencimento(
+    dataFormalizacao: Date,
+    entidadeJuridica: boolean | null,
+  ): string {
+    const data = dataFormalizacao;
+    const meses = entidadeJuridica ? 24 : 12;
+    data.setMonth(data.getMonth() + meses);
+    return data.toISOString().split("T")[0];
+  }
 
   const offset = (page - 1) * limit;
 

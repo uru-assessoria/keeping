@@ -12,7 +12,7 @@ import { generateContrato } from "../config/document.const";
 type ContratoListItem = {
   id: number;
   idCliente: number;
-  valorPlano: number;
+  taxaManutencao: number;
   clienteNome: string;
 };
 
@@ -77,23 +77,56 @@ export default function ContratosPage() {
   };
 
   async function printContrato(contrato: ContratoListItem) {
-    const { default: html2pdf } = await import("html2pdf.js");
-    Promise.all([
-      fetch(`/api/clientes/${contrato.idCliente}`).then((res) => res.json()),
-      fetch(`/api/contratos/${contrato.id}`).then((res) => res.json()),
-      fetch("/api/produtos").then((res) => res.json()),
-    ]).then((results) => {
-      const [clienteData, contratoData, produtosData] = results;
-      const element = document?.createElement("div");
-      element.id = "pdf-content";
-      element.innerHTML = generateContrato(
-        contratoData as ContratoItens,
-        clienteData as Cliente,
-        (produtosData.data || produtosData) as Produto[],
-      );
+    try {
+      const { default: html2pdf } = await import("html2pdf.js");
+      Promise.all([
+        fetch(`/api/clientes/${contrato.idCliente}`).then((res) => {
+          if (!res.ok) throw new Error("Erro ao carregar cliente");
+          return res.json();
+        }),
+        fetch(`/api/contratos/${contrato.id}`).then((res) => {
+          if (!res.ok) throw new Error("Erro ao carregar contrato");
+          return res.json();
+        }),
+        fetch("/api/produtos").then((res) => {
+          if (!res.ok) throw new Error("Erro ao carregar produtos");
+          return res.json();
+        }),
+      ])
+        .then((results) => {
+          const [clienteData, contratoData, produtosData] = results;
 
-      html2pdf().set(opt).from(element).save();
-    });
+          if (!clienteData || !contratoData || !produtosData) {
+            alert("Erro: Dados incompletos para gerar PDF");
+            return;
+          }
+
+          if (!contratoData.contrato || !contratoData.itens) {
+            alert("Erro: Estrutura de dados do contrato inválida");
+            return;
+          }
+
+          const element = document?.createElement("div");
+          element.id = "pdf-content";
+          element.innerHTML = generateContrato(
+            contratoData as ContratoItens,
+            clienteData as Cliente,
+            produtosData as Produto[],
+          );
+
+          html2pdf().set(opt).from(element).save();
+        })
+        .catch((error) => {
+          console.error("Erro ao gerar PDF:", error);
+          alert("Falha ao gerar PDF: " + error.message);
+        });
+    } catch (error) {
+      console.error("Erro ao importar html2pdf:", error);
+      alert(
+        "Erro ao gerar PDF: " +
+          (error instanceof Error ? error.message : "Erro desconhecido"),
+      );
+    }
   }
 
   const { data: contratos, meta } = result;
@@ -131,9 +164,13 @@ export default function ContratosPage() {
                     {contrato.clienteNome}
                   </p>
                   <p className="text-sm text-muted">
-                    Valor do plano: R${" "}
-                    {parseFloat(contrato.valorPlano + "").toFixed(2)}
+                    Taxa de manutenção: R$
+                    {parseFloat(contrato.taxaManutencao + "").toFixed(2)}
                   </p>
+                  <ValorTotalDisplay
+                    contratoId={contrato.id}
+                    taxaManutencao={contrato.taxaManutencao}
+                  />
                 </div>
 
                 <div className="flex flex-wrap gap-2">
@@ -190,5 +227,50 @@ export default function ContratosPage() {
         )}
       </main>
     </div>
+  );
+}
+
+function ValorTotalDisplay({
+  contratoId,
+  taxaManutencao,
+}: {
+  contratoId: number;
+  taxaManutencao: number;
+}) {
+  const [valorTotal, setValorTotal] = useState<number | null>(null);
+
+  useEffect(() => {
+    Promise.all([
+      fetch(`/api/contratos/${contratoId}`).then((res) => res.json()),
+      fetch("/api/produtos").then((res) => res.json()),
+    ])
+      .then(([contratoData, produtosData]) => {
+        const itens = contratoData.itens || [];
+        let somaProdutos = 0;
+
+        itens.forEach((item: any) => {
+          const produto = produtosData.find(
+            (p: any) => p.id === item.idProduto,
+          );
+          if (produto) {
+            somaProdutos += Number(produto.valor) || 0;
+          }
+        });
+
+        setValorTotal(somaProdutos + Number(taxaManutencao));
+      })
+      .catch(() => {
+        setValorTotal(Number(taxaManutencao));
+      });
+  }, [contratoId, taxaManutencao]);
+
+  if (valorTotal === null) {
+    return <p className="text-sm text-muted">Valor total: calculando...</p>;
+  }
+
+  return (
+    <p className="text-sm text-muted font-semibold">
+      Valor total: R$ {valorTotal.toFixed(2)}
+    </p>
   );
 }
