@@ -1,115 +1,89 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import Sidebar from '../components/sidebar.component';
-import { STYLE } from '../config/style.consts';
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import Sidebar from "../components/sidebar.component";
+import { STYLE } from "../config/style.consts";
 
 type ContratoComCliente = {
   id: number;
   idCliente: number;
-  valorPlano: number;
+  taxaManutencao: number;
   formalizacao: string;
-  vencimento?: string;
+  vencimento: string;
   clienteNome: string;
-  entidadeJuridica: boolean;
   valorTotal: number;
 };
 
 type FiltroTipo =
-  | 'recente'
-  | 'antigo'
-  | '30dias'
-  | '60dias'
-  | '90dias'
-  | 'fisica'
-  | 'juridica';
+  | "recente"
+  | "antigo"
+  | "30dias"
+  | "60dias"
+  | "90dias"
+  | "fisica"
+  | "juridica";
+
+interface PaginatedContratos {
+  data: ContratoComCliente[];
+  meta: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
+}
 
 export default function Dashboard() {
-  const [contratos, setContratos] = useState<ContratoComCliente[]>([]);
   const [filtrosSelecionados, setFiltrosSelecionados] = useState<FiltroTipo[]>([
-    '30dias',
+    "30dias",
   ]);
-  const [contratosFiltrados, setContratosFiltrados] = useState<ContratoComCliente[]>([]);
+  const [contratosFiltrados, setContratosFiltrados] =
+    useState<PaginatedContratos>({
+      data: [],
+      meta: { page: 1, limit: 100, total: 0, totalPages: 1 },
+    });
+  const [carregando, setCarregando] = useState(true);
 
+  // Carregar contratos com filtros
   useEffect(() => {
-    fetch('/api/contratos')
+    setCarregando(true);
+
+    const params = new URLSearchParams({ page: "1", limit: "100" });
+
+    // Mapear filtros para parâmetros da API
+    const periodoVencimento = filtrosSelecionados.find((f) =>
+      ["30dias", "60dias", "90dias"].includes(f),
+    );
+    if (periodoVencimento) {
+      params.set("periodoVencimento", periodoVencimento);
+    }
+
+    const tipoCliente = filtrosSelecionados.find((f) =>
+      ["fisica", "juridica"].includes(f),
+    );
+    if (tipoCliente) {
+      params.set("tipoCliente", tipoCliente);
+    }
+
+    const ordenacao = filtrosSelecionados.find((f) =>
+      ["recente", "antigo"].includes(f),
+    );
+    if (ordenacao) {
+      params.set("ordenacao", ordenacao);
+    }
+
+    fetch(`/api/contratos?${params}`)
       .then((res) => res.json())
-      .then(setContratos);
-  }, []);
-
-  useEffect(() => {
-    let resultado = [...contratos];
-    const hoje = new Date();
-    hoje.setHours(0, 0, 0, 0);
-
-    // Aplicar filtros de data e tipo de cliente
-    const temFiltroData = filtrosSelecionados.some((f) =>
-      ['30dias', '60dias', '90dias', 'recente', 'antigo'].includes(f),
-    );
-    const temFiltroTipo = filtrosSelecionados.some((f) =>
-      ['fisica', 'juridica'].includes(f),
-    );
-
-    if (temFiltroData || temFiltroTipo) {
-      resultado = resultado.filter((contrato) => {
-        const dataVencimento = new Date(contrato.vencimento || '');
-        dataVencimento.setHours(0, 0, 0, 0);
-
-        // Se tem filtro de tipo de cliente
-        if (temFiltroTipo) {
-          const isJuridica = contrato.entidadeJuridica;
-          if (filtrosSelecionados.includes('fisica') && isJuridica) return false;
-          if (filtrosSelecionados.includes('juridica') && !isJuridica)
-            return false;
-        }
-
-        // Se tem filtro de data
-        if (temFiltroData) {
-          if (filtrosSelecionados.includes('30dias')) {
-            const limite = new Date(hoje);
-            limite.setDate(limite.getDate() + 30);
-            if (dataVencimento > limite || dataVencimento < hoje) return false;
-          }
-          if (filtrosSelecionados.includes('60dias')) {
-            const limite = new Date(hoje);
-            limite.setDate(limite.getDate() + 60);
-            if (dataVencimento > limite || dataVencimento < hoje) return false;
-          }
-          if (filtrosSelecionados.includes('90dias')) {
-            const limite = new Date(hoje);
-            limite.setDate(limite.getDate() + 90);
-            if (dataVencimento > limite || dataVencimento < hoje) return false;
-          }
-        }
-
-        return true;
-      });
-    }
-
-    // Aplicar ordenação
-    if (filtrosSelecionados.includes('recente')) {
-      resultado.sort(
-        (a, b) =>
-          new Date(b.formalizacao).getTime() -
-          new Date(a.formalizacao).getTime(),
-      );
-    } else if (filtrosSelecionados.includes('antigo')) {
-      resultado.sort(
-        (a, b) =>
-          new Date(a.formalizacao).getTime() -
-          new Date(b.formalizacao).getTime(),
-      );
-    }
-
-    setContratosFiltrados(resultado);
-  }, [contratos, filtrosSelecionados]);
+      .then(setContratosFiltrados)
+      .finally(() => setCarregando(false));
+  }, [filtrosSelecionados]);
 
   function toggleFiltro(filtro: FiltroTipo) {
     setFiltrosSelecionados((prev) => {
       // Se é um filtro de data, remover outros filtros de data
-      const filtrosData = ['30dias', '60dias', '90dias'];
-      const filtrosOrdenacao = ['recente', 'antigo'];
+      const filtrosData = ["30dias", "60dias", "90dias"];
+      const filtrosOrdenacao = ["recente", "antigo"];
 
       if (filtrosData.includes(filtro)) {
         const novosFiltros = prev.filter(
@@ -141,30 +115,32 @@ export default function Dashboard() {
     filtro: FiltroTipo;
     categoria?: string;
   }[] = [
-    { label: 'Mais recente', filtro: 'recente', categoria: 'Ordenação' },
-    { label: 'Mais antigo', filtro: 'antigo', categoria: 'Ordenação' },
+    { label: "Mais recente", filtro: "recente", categoria: "Ordenação" },
+    { label: "Mais antigo", filtro: "antigo", categoria: "Ordenação" },
     {
-      label: 'Vence nos próximos 30 dias',
-      filtro: '30dias',
-      categoria: 'Vencimento',
+      label: "Vence nos próximos 30 dias",
+      filtro: "30dias",
+      categoria: "Vencimento",
     },
     {
-      label: 'Vencimento nos próximos 60 dias',
-      filtro: '60dias',
-      categoria: 'Vencimento',
+      label: "Vencimento nos próximos 60 dias",
+      filtro: "60dias",
+      categoria: "Vencimento",
     },
     {
-      label: 'Vencimento nos próximos 90 dias',
-      filtro: '90dias',
-      categoria: 'Vencimento',
+      label: "Vencimento nos próximos 90 dias",
+      filtro: "90dias",
+      categoria: "Vencimento",
     },
-    { label: 'Pessoa Física', filtro: 'fisica', categoria: 'Tipo de Cliente' },
+    { label: "Pessoa Física", filtro: "fisica", categoria: "Tipo de Cliente" },
     {
-      label: 'Pessoa Jurídica',
-      filtro: 'juridica',
-      categoria: 'Tipo de Cliente',
+      label: "Pessoa Jurídica",
+      filtro: "juridica",
+      categoria: "Tipo de Cliente",
     },
   ];
+
+  const contratos = contratosFiltrados.data;
 
   return (
     <div className={STYLE.PAGE}>
@@ -176,7 +152,7 @@ export default function Dashboard() {
           <h2 className="text-lg font-semibold mb-4">Filtros de Contratos</h2>
 
           <div className="space-y-4">
-            {['Ordenação', 'Vencimento', 'Tipo de Cliente'].map((categoria) => (
+            {["Ordenação", "Vencimento", "Tipo de Cliente"].map((categoria) => (
               <div key={categoria}>
                 <h3 className="text-sm font-medium text-slate-700 mb-2">
                   {categoria}
@@ -190,9 +166,10 @@ export default function Dashboard() {
                         onClick={() => toggleFiltro(op.filtro)}
                         className={`px-3 py-2 rounded text-sm font-medium transition-colors ${
                           filtrosSelecionados.includes(op.filtro)
-                            ? 'bg-zinc-900 text-white'
-                            : 'bg-zinc-200 text-slate-900 hover:bg-zinc-300'
-                        }`}>
+                            ? "bg-zinc-900 text-white"
+                            : "bg-zinc-200 text-slate-900 hover:bg-zinc-300"
+                        }`}
+                      >
                         {op.label}
                       </button>
                     ))}
@@ -204,42 +181,45 @@ export default function Dashboard() {
 
         <div className="mt-8">
           <h2 className="text-lg font-semibold mb-4">
-            Contratos ({contratosFiltrados.length})
+            Contratos ({contratos.length})
           </h2>
 
-          {contratosFiltrados.length === 0 ? (
+          {carregando ? (
+            <p className="text-center text-zinc-600">Carregando contratos...</p>
+          ) : contratos.length === 0 ? (
             <p className="text-center text-zinc-600 dark:text-zinc-400">
               Nenhum contrato encontrado com os filtros selecionados
             </p>
           ) : (
             <ul className="w-full space-y-4">
-              {contratosFiltrados.map((contrato) => {
-                const dataVencimento = new Date(contrato.vencimento || '');
-                const dataFormatada = dataVencimento.toLocaleDateString('pt-BR');
-                const tipoCliente = contrato.entidadeJuridica
-                  ? 'Jurídica'
-                  : 'Física';
+              {contratos.map((contrato) => {
+                const dataVencimento = new Date(contrato.vencimento);
+                const dataFormatada =
+                  dataVencimento.toLocaleDateString("pt-BR");
 
                 return (
                   <li
                     key={contrato.id}
-                    className="rounded border border-border p-4 bg-surface-variant">
+                    className="rounded border border-border p-4 bg-surface-variant"
+                  >
                     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                       <div className="flex-1 min-w-0">
                         <p className="font-semibold text-foreground truncate">
                           {contrato.clienteNome}
                         </p>
                         <p className="text-sm text-muted">
-                          Vencimento: {dataFormatada} • Tipo: {tipoCliente}
+                          Vencimento: {dataFormatada}
                         </p>
                         <p className="text-sm text-muted">
-                          Valor do contrato: R${parseFloat(contrato.valorTotal + '').toFixed(2)}
+                          Valor do contrato: R$
+                          {parseFloat(contrato.valorTotal + "").toFixed(2)}
                         </p>
                       </div>
 
                       <Link
                         href={`/contratos/${contrato.id}`}
-                        className={STYLE.BUTTON}>
+                        className={STYLE.BUTTON}
+                      >
                         Ver detalhes
                       </Link>
                     </div>

@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const paginationSchema = z.object({
   page: z.coerce.number().min(1).default(1),
@@ -12,8 +12,8 @@ export const createClienteSchema = z.object({
   razaoSocial: z.string().min(1).max(255),
   documento: z.string().min(1).max(50),
   dataNascimento: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
-  razaoSocialRepresentante: z.string().max(255).optional().or(z.literal('')),
-  documentoRepresentante: z.string().max(50).optional().or(z.literal('')),
+  razaoSocialRepresentante: z.string().max(255).optional().or(z.literal("")),
+  documentoRepresentante: z.string().max(50).optional().or(z.literal("")),
   email: z.string().email().max(255),
   endereco: z.string().min(1),
   telefone: z.string().min(1).max(50),
@@ -45,15 +45,23 @@ export const itemContratoSchema = z.object({
 
 export const createContratoSchema = z.object({
   idCliente: z.coerce.number().positive(),
-  valorPlano: z.coerce.number().positive(),
-  formalizacao: z.string().datetime(),
+  taxaManutencao: z.coerce.number().min(0),
+  formalizacao: z.string(),
   itens: z.array(itemContratoSchema).default([]),
 });
+/*
+formalizacao: z
+    .string().regex(
+      /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/,
+      "Data de formalização deve estar no formato YYYY-MM-DD",
+    )
+*/
 
 export const updateContratoSchema = z.object({
   idCliente: z.coerce.number().positive().optional(),
-  valorPlano: z.coerce.number().positive().optional(),
-  formalizacao: z.string().datetime().optional(),
+  razaoSocialCliente: z.string().min(1).max(255).optional(),
+  taxaManutencao: z.coerce.number().min(0).optional(),
+  formalizacao: z.string().optional(),
   itens: z.array(itemContratoSchema).optional(),
 });
 

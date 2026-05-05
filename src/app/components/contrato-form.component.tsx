@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Cliente } from '@/app/types/cliente';
-import { ProdutoContrato } from '@/app/types/produto-contrato';
-import { Produto } from '@/app/types/produto';
-import { STYLE } from '@/app/config/style.consts';
-import Sidebar from '@/app/components/sidebar.component';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Cliente } from "@/app/types/cliente";
+import { ProdutoContrato } from "@/app/types/produto-contrato";
+import { Produto } from "@/app/types/produto";
+import { STYLE } from "@/app/config/style.consts";
+import Sidebar from "@/app/components/sidebar.component";
 
 const emptyItem = (): ProdutoContrato => ({
   id: 0,
   idContrato: 0,
-  numeroProvisorio: '',
+  numeroProvisorio: "",
   idProduto: 0,
 });
 
@@ -25,7 +25,7 @@ export default function ContratoForm({ id }: ContratoFormProps) {
   const [produtos, setProdutos] = useState<Produto[]>([]);
   const [idCliente, setIdCliente] = useState(0);
   const [taxaManutencao, setTaxaManutencao] = useState(0);
-  const [formalizacao, setFormalizacao] = useState('');
+  const [formalizacao, setFormalizacao] = useState("");
   const [itens, setItens] = useState<ProdutoContrato[]>([emptyItem()]);
   const [loading, setLoading] = useState(true);
 
@@ -34,8 +34,8 @@ export default function ContratoForm({ id }: ContratoFormProps) {
 
   useEffect(() => {
     Promise.all([
-      fetch('/api/clientes?limit=999').then((res) => res.json()),
-      fetch('/api/produtos?limit=999').then((res) => res.json()),
+      fetch("/api/clientes?limit=100&page=1").then((res) => res.json()),
+      fetch("/api/produtos?limit=100&page=1").then((res) => res.json()),
     ])
       .then(([clientesData, produtosData]) => {
         setClientes(clientesData.data || clientesData);
@@ -56,17 +56,22 @@ export default function ContratoForm({ id }: ContratoFormProps) {
       })
       .then((data) => {
         if (data && data.contrato) {
+          console.log("Dados do contrato carregados:", data);
           setIdCliente(data.contrato.idCliente || 0);
           setTaxaManutencao(Number(data.contrato.taxaManutencao) || 0);
-          setFormalizacao((data.contrato.formalizacao + '').split('T')[0] || '');
-          setItens(data.itens && data.itens.length ? data.itens : [emptyItem()]);
+          setFormalizacao(
+            (data.contrato.formalizacao + "").split("T")[0] || "",
+          );
+          setItens(
+            data.itens && data.itens.length ? data.itens : [emptyItem()],
+          );
         } else {
-          alert('Erro: Dados do contrato inválidos');
+          alert("Erro: Dados do contrato inválidos");
         }
       })
       .catch((error) => {
-        console.error('Erro ao carregar contrato:', error);
-        alert('Falha ao carregar contrato: ' + error.message);
+        console.error("Erro ao carregar contrato:", error);
+        alert("Falha ao carregar contrato: " + error.message);
       });
   }, [editId]);
 
@@ -79,7 +84,7 @@ export default function ContratoForm({ id }: ContratoFormProps) {
       const next = [...current];
       next[index] = {
         ...next[index],
-        [field]: field === 'idProduto' ? Number(value) : value,
+        [field]: field === "idProduto" ? Number(value) : value,
       } as ProdutoContrato;
       return next;
     });
@@ -99,7 +104,7 @@ export default function ContratoForm({ id }: ContratoFormProps) {
     event.preventDefault();
 
     if (!idCliente) {
-      alert('Selecione um cliente');
+      alert("Selecione um cliente");
       return;
     }
 
@@ -108,7 +113,7 @@ export default function ContratoForm({ id }: ContratoFormProps) {
     );
 
     if (filteredItens.length === 0) {
-      alert('Adicione pelo menos um item ao contrato');
+      alert("Adicione pelo menos um item ao contrato");
       return;
     }
 
@@ -119,28 +124,34 @@ export default function ContratoForm({ id }: ContratoFormProps) {
       itens: filteredItens,
     };
 
-    const url = editId ? `/api/contratos/${editId}` : '/api/contratos';
-    const method = editId ? 'PUT' : 'POST';
+    const url = editId ? `/api/contratos/${editId}` : "/api/contratos";
+    const method = editId ? "PUT" : "POST";
 
     try {
       const response = await fetch(url, {
         method,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
       const responseData = await response.json();
 
       if (!response.ok) {
-        console.error('Erro da API:', responseData);
-        alert('Falha ao salvar contrato: ' + (responseData.error || responseData.message || 'Erro desconhecido'));
+        console.error("Erro da API:", responseData);
+        alert(
+          "Falha ao salvar contrato: " +
+            (responseData.error || responseData.message || "Erro desconhecido"),
+        );
         return;
       }
 
-      router.push('/contratos');
+      router.push("/contratos");
     } catch (error) {
-      console.error('Erro ao salvar:', error);
-      alert('Erro ao salvar contrato: ' + (error instanceof Error ? error.message : 'Erro desconhecido'));
+      console.error("Erro ao salvar:", error);
+      alert(
+        "Erro ao salvar contrato: " +
+          (error instanceof Error ? error.message : "Erro desconhecido"),
+      );
     }
   }
 
@@ -154,24 +165,21 @@ export default function ContratoForm({ id }: ContratoFormProps) {
       <main className={STYLE.MAIN}>
         <div className="mx-auto w-full max-w-3xl">
           <h1 className={STYLE.TITLE}>
-            {novo ? 'Novo contrato' : 'Editar contrato'}
+            {novo ? "Novo contrato" : "Editar contrato"}
           </h1>
 
-          <form
-            className={STYLE.FORM}
-            onSubmit={handleSubmit}>
+          <form className={STYLE.FORM} onSubmit={handleSubmit}>
             <div>
               <label className={STYLE.LABEL}>Cliente</label>
               <select
                 value={idCliente}
                 onChange={(event) => setIdCliente(Number(event.target.value))}
                 className={STYLE.INPUT}
-                required>
+                required
+              >
                 <option value={0}>Selecione um cliente</option>
                 {clientes.map((cliente) => (
-                  <option
-                    key={cliente.id}
-                    value={cliente.id}>
+                  <option key={cliente.id} value={cliente.id}>
                     {cliente.razaoSocial}
                   </option>
                 ))}
@@ -185,7 +193,9 @@ export default function ContratoForm({ id }: ContratoFormProps) {
                 min={0}
                 step="0.01"
                 value={taxaManutencao}
-                onChange={(event) => setTaxaManutencao(Number(event.target.value))}
+                onChange={(event) =>
+                  setTaxaManutencao(Number(event.target.value))
+                }
                 className={STYLE.INPUT}
                 required
               />
@@ -198,7 +208,9 @@ export default function ContratoForm({ id }: ContratoFormProps) {
                 value={(
                   Number(taxaManutencao) +
                   itens.reduce((acc, item) => {
-                    const produto = produtos.find((p) => p.id === item.idProduto);
+                    const produto = produtos.find(
+                      (p) => p.id === item.idProduto,
+                    );
                     return acc + (produto ? Number(produto.valor) : 0);
                   }, 0)
                 ).toFixed(2)}
@@ -224,7 +236,8 @@ export default function ContratoForm({ id }: ContratoFormProps) {
                 <button
                   type="button"
                   onClick={addItem}
-                  className={STYLE.BUTTON_OPERATIVE}>
+                  className={STYLE.BUTTON_OPERATIVE}
+                >
                   Adicionar item
                 </button>
               </div>
@@ -233,7 +246,8 @@ export default function ContratoForm({ id }: ContratoFormProps) {
                 {itens.map((item, index) => (
                   <div
                     key={index}
-                    className="rounded border border-border p-4 bg-surface-variant">
+                    className="rounded border border-border p-4 bg-surface-variant"
+                  >
                     <div className="grid gap-4 sm:grid-cols-2">
                       <div>
                         <label className={STYLE.LABEL}>Número provisório</label>
@@ -242,7 +256,7 @@ export default function ContratoForm({ id }: ContratoFormProps) {
                           onChange={(event) =>
                             updateItem(
                               index,
-                              'numeroProvisorio',
+                              "numeroProvisorio",
                               event.target.value,
                             )
                           }
@@ -254,17 +268,16 @@ export default function ContratoForm({ id }: ContratoFormProps) {
                         <select
                           value={item.idProduto}
                           onChange={(event) =>
-                            updateItem(index, 'idProduto', event.target.value)
+                            updateItem(index, "idProduto", event.target.value)
                           }
                           className={STYLE.INPUT}
-                          required>
+                          required
+                        >
                           <option value={0}>Selecione um produto</option>
                           {produtos.map((produto) => (
-                            <option
-                              key={produto.id}
-                              value={produto.id}>
-                              {produto.franquia} - {produto.operadora} (R${' '}
-                              {(parseFloat(produto.valor + '') || 0).toFixed(2)}
+                            <option key={produto.id} value={produto.id}>
+                              {produto.franquia} - {produto.operadora} (R${" "}
+                              {(parseFloat(produto.valor + "") || 0).toFixed(2)}
                               )
                             </option>
                           ))}
@@ -274,7 +287,8 @@ export default function ContratoForm({ id }: ContratoFormProps) {
                     <button
                       type="button"
                       onClick={() => removeItem(index)}
-                      className="mt-6 rounded bg-danger px-3 py-1 text-sm font-semibold text-white hover:bg-red-700 transition-colors">
+                      className="mt-6 rounded bg-danger px-3 py-1 text-sm font-semibold text-white hover:bg-red-700 transition-colors"
+                    >
                       Remover item
                     </button>
                   </div>
@@ -282,10 +296,8 @@ export default function ContratoForm({ id }: ContratoFormProps) {
               </div>
             </div>
 
-            <button
-              type="submit"
-              className={STYLE.BUTTON}>
-              {novo ? 'Salvar contrato' : 'Atualizar contrato'}
+            <button type="submit" className={STYLE.BUTTON}>
+              {novo ? "Salvar contrato" : "Atualizar contrato"}
             </button>
           </form>
         </div>

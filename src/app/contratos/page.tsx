@@ -14,6 +14,8 @@ type ContratoListItem = {
   idCliente: number;
   taxaManutencao: number;
   clienteNome: string;
+  valorTotal: number;
+  vencimento: string;
 };
 
 interface PaginatedContratos {
@@ -167,10 +169,10 @@ export default function ContratosPage() {
                     Taxa de manutenção: R$
                     {parseFloat(contrato.taxaManutencao + "").toFixed(2)}
                   </p>
-                  <ValorTotalDisplay
-                    contratoId={contrato.id}
-                    taxaManutencao={contrato.taxaManutencao}
-                  />
+                  <p className="text-sm text-muted font-semibold">
+                    Valor total: R${" "}
+                    {parseFloat(contrato.valorTotal + "").toFixed(2)}
+                  </p>
                 </div>
 
                 <div className="flex flex-wrap gap-2">
@@ -227,50 +229,5 @@ export default function ContratosPage() {
         )}
       </main>
     </div>
-  );
-}
-
-function ValorTotalDisplay({
-  contratoId,
-  taxaManutencao,
-}: {
-  contratoId: number;
-  taxaManutencao: number;
-}) {
-  const [valorTotal, setValorTotal] = useState<number | null>(null);
-
-  useEffect(() => {
-    Promise.all([
-      fetch(`/api/contratos/${contratoId}`).then((res) => res.json()),
-      fetch("/api/produtos").then((res) => res.json()),
-    ])
-      .then(([contratoData, produtosData]) => {
-        const itens = contratoData.itens || [];
-        let somaProdutos = 0;
-
-        itens.forEach((item: any) => {
-          const produto = produtosData.find(
-            (p: any) => p.id === item.idProduto,
-          );
-          if (produto) {
-            somaProdutos += Number(produto.valor) || 0;
-          }
-        });
-
-        setValorTotal(somaProdutos + Number(taxaManutencao));
-      })
-      .catch(() => {
-        setValorTotal(Number(taxaManutencao));
-      });
-  }, [contratoId, taxaManutencao]);
-
-  if (valorTotal === null) {
-    return <p className="text-sm text-muted">Valor total: calculando...</p>;
-  }
-
-  return (
-    <p className="text-sm text-muted font-semibold">
-      Valor total: R$ {valorTotal.toFixed(2)}
-    </p>
   );
 }

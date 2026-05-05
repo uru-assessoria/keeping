@@ -1,20 +1,42 @@
 import { db } from "@/db";
-import { cliente, contrato, itemContrato } from "@/db/schema";
+import { cliente, contrato, itemContrato, produto } from "@/db/schema";
 import { updateContratoSchema } from "@/lib/schemas";
-import { neon } from "@neondatabase/serverless";
-import { eq } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
-const sql = neon(`${process.env.DATABASE_URL}`);
-
 function calcularVencimento(
-  dataFormalizacao: Date,
+  dataFormalizacao: string | Date,
   entidadeJuridica: boolean | null,
 ): string {
-  const data = dataFormalizacao;
+  const data = new Date(dataFormalizacao);
   const meses = entidadeJuridica ? 24 : 12;
   data.setMonth(data.getMonth() + meses);
   return data.toISOString().split("T")[0];
+}
+
+async function calcularValorTotal(
+  itens: Array<{ idProduto: number }>,
+  taxaManutencao: number,
+) {
+  if (itens.length === 0) return taxaManutencao;
+
+  const produtoIds = Array.from(new Set(itens.map((item) => item.idProduto)));
+  const produtosEncontrados = await db
+    .select({ id: produto.id, valor: produto.valor })
+    .from(produto)
+    .where(inArray(produto.id, produtoIds));
+
+  if (produtosEncontrados.length !== produtoIds.length) {
+    throw new Error("Produto inválido em itens do contrato");
+  }
+
+  const valoresPorProduto = new Map(
+    produtosEncontrados.map((item) => [item.id, Number(item.valor)]),
+  );
+
+  return itens.reduce((sum, item) => {
+    return sum + (valoresPorProduto.get(item.idProduto) ?? 0);
+  }, taxaManutencao);
 }
 
 export async function GET(
@@ -28,10 +50,11 @@ export async function GET(
     .select({
       id: contrato.id,
       idCliente: contrato.idCliente,
-      valorPlano: contrato.valorPlano,
+      taxaManutencao: contrato.taxaManutencao,
       formalizacao: contrato.formalizacao,
+      vencimento: contrato.vencimento,
       clienteNome: cliente.razaoSocial,
-      entidadeJuridica: cliente.entidadeJuridica,
+      razaoSocialCliente: contrato.razaoSocialCliente,
     })
     .from(contrato)
     .leftJoin(cliente, eq(contrato.idCliente, cliente.id))
@@ -52,16 +75,8 @@ export async function GET(
     })
     .from(itemContrato)
     .where(eq(itemContrato.idContrato, contratoId));
-
-  const vencimento = calcularVencimento(
-    rows[0].formalizacao,
-    rows[0].entidadeJuridica,
-  );
-
-  return NextResponse.json({
-    contrato: { ...rows[0], vencimento },
-    itens,
-  });
+  console.log("Dados do contrato carregados:", rows[0]);
+  return NextResponse.json({ contrato: rows[0], itens });
 }
 
 export async function PUT(
@@ -74,29 +89,73 @@ export async function PUT(
     const contratoId = Number(id);
     const data = updateContratoSchema.parse(body);
 
-    if (
-      !body.idCliente ||
-      body.taxaManutencao === undefined ||
-      !body.formalizacao
-    ) {
+    const [existingContrato] = await db
+      .select({
+        idCliente: contrato.idCliente,
+        taxaManutencao: contrato.taxaManutencao,
+        formalizacao: contrato.formalizacao,
+      })
+      .from(contrato)
+      .where(eq(contrato.id, contratoId));
+
+    if (!existingContrato) {
       return NextResponse.json(
-        { error: "Dados obrigatórios faltando" },
+        { error: "Contrato não encontrado" },
+        { status: 404 },
+      );
+    }
+
+    const updatedIdCliente = data.idCliente ?? existingContrato.idCliente;
+    const updatedTaxaManutencao =
+      data.taxaManutencao ?? Number(existingContrato.taxaManutencao);
+    const updatedFormalizacao = data.formalizacao
+      ? new Date(data.formalizacao)
+      : existingContrato.formalizacao;
+
+    const [clienteAtual] = await db
+      .select({
+        entidadeJuridica: cliente.entidadeJuridica,
+        razaoSocial: cliente.razaoSocial,
+      })
+      .from(cliente)
+      .where(eq(cliente.id, updatedIdCliente));
+
+    if (!clienteAtual) {
+      return NextResponse.json(
+        { error: "Cliente não encontrado" },
         { status: 400 },
       );
     }
 
-    if (data.idCliente || data.valorPlano || data.formalizacao) {
-      await db
-        .update(contrato)
-        .set({
-          ...(data.idCliente && { idCliente: data.idCliente }),
-          ...(data.valorPlano && { valorPlano: data.valorPlano }),
-          ...(data.formalizacao && {
-            formalizacao: new Date(data.formalizacao),
-          }),
-        })
-        .where(eq(contrato.id, contratoId));
-    }
+    const itensParaCalculo = data.itens
+      ? data.itens.map((item) => ({ idProduto: item.idProduto }))
+      : (
+          await db
+            .select({ idProduto: itemContrato.idProduto })
+            .from(itemContrato)
+            .where(eq(itemContrato.idContrato, contratoId))
+        ).map((item) => ({ idProduto: item.idProduto }));
+
+    const valorTotal = await calcularValorTotal(
+      itensParaCalculo,
+      updatedTaxaManutencao,
+    );
+    const vencimento = calcularVencimento(
+      updatedFormalizacao,
+      clienteAtual.entidadeJuridica,
+    );
+
+    await db
+      .update(contrato)
+      .set({
+        idCliente: updatedIdCliente,
+        taxaManutencao: updatedTaxaManutencao,
+        formalizacao: updatedFormalizacao,
+        vencimento: new Date(vencimento),
+        valorTotal,
+        razaoSocialCliente: clienteAtual.razaoSocial,
+      })
+      .where(eq(contrato.id, contratoId));
 
     if (data.itens) {
       await db
