@@ -90,15 +90,15 @@ export default function ContratosPage() {
           if (!res.ok) throw new Error("Erro ao carregar contrato");
           return res.json();
         }),
-        fetch("/api/produtos").then((res) => {
+        fetch("/api/produtos?page=1&limit=100").then((res) => {
           if (!res.ok) throw new Error("Erro ao carregar produtos");
           return res.json();
         }),
       ])
         .then((results) => {
-          const [clienteData, contratoData, produtosData] = results;
+          const [clienteData, contratoData, produtosResponse] = results;
 
-          if (!clienteData || !contratoData || !produtosData) {
+          if (!clienteData || !contratoData || !produtosResponse) {
             alert("Erro: Dados incompletos para gerar PDF");
             return;
           }
@@ -107,6 +107,11 @@ export default function ContratosPage() {
             alert("Erro: Estrutura de dados do contrato inválida");
             return;
           }
+
+          // Extrair array de produtos da resposta paginada
+          const produtosData = Array.isArray(produtosResponse) 
+            ? produtosResponse 
+            : (produtosResponse.data || []);
 
           const element = document?.createElement("div");
           element.id = "pdf-content";
