@@ -83,8 +83,11 @@ export default function ProdutosPage() {
                 <p className="text-sm text-muted line-clamp-2 mb-2">
                   {produto.operadora}
                 </p>
-                <p className="text-sm text-muted line-clamp-4">
+                <p className="text-sm text-muted line-clamp-4 mb-4">
                   {produto.descricao}
+                </p>
+                <p className="text-lg font-bold text-foreground">
+                  R$ {produto.valor.toFixed(2)}
                 </p>
               </div>
 
