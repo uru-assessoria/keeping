@@ -19,6 +19,34 @@ interface ContratoFormProps {
   id?: string;
 }
 
+// Helper function to load all pages from an endpoint
+async function loadAllPages<T>(endpoint: string): Promise<T[]> {
+  const allData: T[] = [];
+  let page = 1;
+
+  while (true) {
+    const response = await fetch(`${endpoint}?limit=100&page=${page}`);
+    const result = await response.json();
+
+    // Adiciona dados da página atual
+    allData.push(...(result.data || []));
+
+    // Se não há meta.pages, assume que há apenas 1 página
+    if (!result.meta?.totalPages) {
+      break;
+    }
+
+    // Se chegou na última página, para
+    if (page >= result.meta.totalPages) {
+      break;
+    }
+
+    page++;
+  }
+
+  return allData;
+}
+
 export default function ContratoForm({ id }: ContratoFormProps) {
   const router = useRouter();
   const [clientes, setClientes] = useState<Cliente[]>([]);
@@ -34,18 +62,18 @@ export default function ContratoForm({ id }: ContratoFormProps) {
 
   useEffect(() => {
     Promise.all([
-      fetch("/api/clientes?limit=100&page=1").then((res) => res.json()),
-      fetch("/api/produtos?limit=100&page=1").then((res) => res.json()),
+      loadAllPages<Cliente>("/api/clientes"),
+      loadAllPages<Produto>("/api/produtos"),
     ])
       .then(([clientesData, produtosData]) => {
-        setClientes(clientesData.data || clientesData);
-        setProdutos(produtosData.data || produtosData);
+        setClientes(clientesData);
+        setProdutos(produtosData);
       })
       .finally(() => setLoading(false));
   }, []);
 
   useEffect(() => {
-    if (!editId) return;
+    if (!editId || clientes.length === 0 || produtos.length === 0) return;
 
     fetch(`/api/contratos/${editId}`)
       .then((res) => {
@@ -73,7 +101,7 @@ export default function ContratoForm({ id }: ContratoFormProps) {
         console.error("Erro ao carregar contrato:", error);
         alert("Falha ao carregar contrato: " + error.message);
       });
-  }, [editId]);
+  }, [editId, clientes.length, produtos.length]);
 
   function updateItem(
     index: number,

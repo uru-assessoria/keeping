@@ -122,6 +122,8 @@ export async function GET(request: Request) {
       vencimento: contrato.vencimento,
       valorTotal: contrato.valorTotal,
       clienteNome: contrato.razaoSocialCliente,
+      status: contrato.status,
+      zapsignDocumentToken: contrato.zapsignDocumentToken,
     })
     .from(contrato)
     .leftJoin(cliente, eq(contrato.idCliente, cliente.id))

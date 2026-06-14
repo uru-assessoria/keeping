@@ -44,6 +44,8 @@ export const contrato = pgTable("contrato", {
   valorTotal: real("valor_total").notNull(),
   formalizacao: date("formalizacao", { mode: "date" }).notNull(),
   vencimento: date("vencimento", { mode: "date" }).notNull(),
+  status: varchar("status", { length: 50 }).notNull().default("pending"),
+  zapsignDocumentToken: varchar("zapsign_document_token", { length: 255 }),
   //formalizacao: timestamp("formalizacao", { mode: "date" }).notNull(),
   //vencimento: timestamp("vencimento", { mode: "date" }).notNull(),
 });
@@ -98,3 +100,5 @@ export const usuario = pgTable("usuario", {
   admin: boolean("admin").notNull().default(false),
   ativo: boolean("ativo").notNull().default(true),
 });
+
+
