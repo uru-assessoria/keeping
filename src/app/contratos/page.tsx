@@ -38,6 +38,7 @@ export default function ContratosPage() {
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [submittingIds, setSubmittingIds] = useState<Set<number>>(new Set());
+  const [gerandoTituloIds, setGerandoTituloIds] = useState<Set<number>>(new Set());
 
   const load = (page = 1, limit = 20, q = "") => {
     const params = new URLSearchParams({
@@ -158,6 +159,44 @@ export default function ContratosPage() {
       );
     } finally {
       setSubmittingIds((prev) => {
+        const next = new Set(prev);
+        next.delete(contrato.id);
+        return next;
+      });
+    }
+  }
+
+  async function handleGerarTitulo(contrato: ContratoListItem) {
+    const referenciaMes = new Date().toISOString().slice(0, 7);
+    if (!confirm(`Gerar título de cobrança para o mês ${referenciaMes}?`)) return;
+
+    try {
+      setGerandoTituloIds((prev) => new Set(prev).add(contrato.id));
+      const res = await fetch("/api/titulos", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          idContrato: contrato.id,
+          referenciaMes,
+        }),
+      });
+
+      if (!res.ok) {
+        const error = await res.json();
+        alert(`Erro ao gerar título: ${error.error || "Erro desconhecido"}`);
+        return;
+      }
+
+      const data = await res.json();
+      alert(`Título gerado com sucesso!\n\nSeu número: ${data.seuNumero}`);
+    } catch (error) {
+      console.error("Erro ao gerar título:", error);
+      alert(
+        "Falha ao gerar título: " +
+          (error instanceof Error ? error.message : "Erro desconhecido")
+      );
+    } finally {
+      setGerandoTituloIds((prev) => {
         const next = new Set(prev);
         next.delete(contrato.id);
         return next;
@@ -320,6 +359,15 @@ export default function ContratosPage() {
                         className={STYLE.BUTTON}
                       >
                         Checar Status
+                      </button>
+                    )}
+                    {contrato.status === 'signed' && (
+                      <button
+                        onClick={() => handleGerarTitulo(contrato)}
+                        disabled={gerandoTituloIds.has(contrato.id)}
+                        className={`${STYLE.BUTTON} ${gerandoTituloIds.has(contrato.id) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      >
+                        {gerandoTituloIds.has(contrato.id) ? 'Gerando...' : 'Gerar Título'}
                       </button>
                     )}
                     <Link

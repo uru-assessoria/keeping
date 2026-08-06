@@ -56,6 +56,36 @@ export const contratoRelations = relations(contrato, ({ one, many }) => ({
     references: [cliente.id],
   }),
   itens: many(itemContrato),
+  titulos: many(titulo),
+}));
+
+export const titulo = pgTable("titulo", {
+  id: serial("id").primaryKey(),
+  idContrato: integer("id_contrato")
+    .notNull()
+    .references(() => contrato.id),
+  idUnicred: varchar("id_unicred", { length: 255 }),
+  seuNumero: varchar("seu_numero", { length: 15 }).notNull(),
+  valor: real("valor").notNull(),
+  vencimento: date("vencimento", { mode: "date" }).notNull(),
+  status: varchar("status", { length: 50 }).notNull().default("EM_PROCESSAMENTO"),
+  statusUnicred: varchar("status_unicred", { length: 50 }),
+  referenciaMes: varchar("referencia_mes", { length: 7 }).notNull(),
+  codigoBarras: varchar("codigo_barras", { length: 44 }),
+  linhaDigitavel: varchar("linha_digitavel", { length: 46 }),
+  nossoNumero: varchar("nosso_numero", { length: 11 }),
+  qrCodePix: text("qr_code_pix"),
+  dataCriacao: timestamp("data_criacao", { mode: "date" }).notNull().defaultNow(),
+  dataAtualizacao: timestamp("data_atualizacao", { mode: "date" }).notNull().defaultNow(),
+  idempotenciaWebhook: varchar("idempotencia_webhook", { length: 255 }),
+  mensagemErro: text("mensagem_erro"),
+});
+
+export const tituloRelations = relations(titulo, ({ one }) => ({
+  contrato: one(contrato, {
+    fields: [titulo.idContrato],
+    references: [contrato.id],
+  }),
 }));
 
 export const itemContrato = pgTable("item_contrato", {

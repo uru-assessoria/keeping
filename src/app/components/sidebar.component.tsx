@@ -38,6 +38,11 @@ export default function Sidebar() {
             Contratos
           </Link>
           <Link
+            href="/titulos"
+            className="block rounded-lg px-3 py-2 text-slate-900 hover:bg-white/20 transition-colors">
+            Títulos
+          </Link>
+          <Link
             href="/produtos"
             className="block rounded-lg px-3 py-2 text-slate-900 hover:bg-white/20 transition-colors">
             Produtos

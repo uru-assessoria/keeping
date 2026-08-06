@@ -1,0 +1,3829 @@
+<!DOCTYPE html>
+<!-- saved from url=(0104)https://developer.unicred.com.br/api-portal/content/retorno-de-t%C3%ADtulos-de-cobran%C3%A7a-por-webhook -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" version="XHTML+RDFa 1.0" dir="ltr" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/terms/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:og="http://ogp.me/ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:sioc="http://rdfs.org/sioc/ns#" xmlns:sioct="http://rdfs.org/sioc/types#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" class="js csstransforms csstransforms3d csstransitions"><head profile="http://www.w3.org/1999/xhtml/vocab"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link id="bootstrapCSS" rel="stylesheet" href="./Retorno de Títulos de Cobrança por Webhook _ Unicred Developers_files/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+<link rel="canonical" href="https://developer.unicred.com.br/api-portal/content/retorno-de-t%C3%ADtulos-de-cobran%C3%A7a-por-webhook">
+<link rel="shortlink" href="https://developer.unicred.com.br/api-portal/node/55">
+<link rel="shortcut icon" href="https://developer.unicred.com.br/api-portal/sites/default/files/logo_unicred_fav.png" type="image/png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="./Retorno de Títulos de Cobrança por Webhook _ Unicred Developers_files/css" rel="stylesheet" type="text/css">
+    
+
+    <title>Retorno de Títulos de Cobrança por Webhook | Unicred Developers</title>
+    <style type="text/css" media="all">
+@import url("https://developer.unicred.com.br/api-portal/modules/system/system.base.css?thlzv4");
+</style>
+<style type="text/css" media="all">
+@import url("https://developer.unicred.com.br/api-portal/modules/comment/comment.css?thlzv4");
+@import url("https://developer.unicred.com.br/api-portal/modules/field/theme/field.css?thlzv4");
+@import url("https://developer.unicred.com.br/api-portal/modules/node/node.css?thlzv4");
+@import url("https://developer.unicred.com.br/api-portal/modules/search/search.css?thlzv4");
+@import url("https://developer.unicred.com.br/api-portal/modules/user/user.css?thlzv4");
+@import url("https://developer.unicred.com.br/api-portal/modules/forum/forum.css?thlzv4");
+@import url("https://developer.unicred.com.br/api-portal/sites/all/modules/views/css/views.css?thlzv4");
+</style>
+<style type="text/css" media="all">
+@import url("https://developer.unicred.com.br/api-portal/sites/all/modules/ctools/css/ctools.css?thlzv4");
+@import url("https://developer.unicred.com.br/api-portal/sites/all/themes/coworker/style.css?thlzv4");
+@import url("https://developer.unicred.com.br/api-portal/sites/all/themes/coworker/css/tipsy.css?thlzv4");
+
+@import url("https://developer.unicred.com.br/api-portal/sites/all/themes/coworker/css/font-awesome.css?thlzv4");
+@import url("https://developer.unicred.com.br/api-portal/sites/all/themes/coworker/css/coworker.css?thlzv4");
+@import url("https://developer.unicred.com.br/api-portal/sites/default/files/color/coworker_color_cache/colors.css?thlzv4");
+@import url("https://developer.unicred.com.br/api-portal/sites/all/themes/coworker/css/responsive.css?thlzv4");
+</style>
+              <style type="text/css">
+        body{background: url('/api-portal/sites/all/themes/coworker/images/patterns/Dark_pattern11.png') scroll 0 0 repeat;}
+
+      </style>
+    
+    
+    <style type="text/css">/* CSS PADRÃO 2020 */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+body {
+    font-size: 16px;
+    font-family: 'Roboto', Helvetica, sans-serif;
+	background: none;
+	color: #555;
+	overflow-x: hidden;
+}
+
+.content-wrap { padding: 0 }
+
+#wrapper { box-shadow: none; }
+
+.page-user .profile .field-item { line-height: 1 }
+
+ul li { font-family: 'Roboto', Helvetica, sans-serif;}
+
+
+/************** Header **************/
+
+/* MULTI LANGUAGE */
+.region-top-left h2 {
+    display: none;
+}
+
+.region-top-left .language-switcher-locale-url li a {
+    text-shadow: none;
+    color: #1c1c1c !important;
+    margin-right: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 24px !important;
+}
+
+.region-top-left .language-switcher-locale-url ul li a:hover {
+    color: #1c1c1c !important;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    height: 0;
+    margin: 20px 0;
+}
+
+
+/* ----------------------------------------------------------------
+   Typography
+-----------------------------------------------------------------*/
+
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 15px;
+    line-height: 1.25;
+    font-family: 'Roboto', Helvetica, sans-serif;
+}
+
+a {
+    color: #004a35;
+	text-decoration: none;
+	transition: color .3s ease;
+}
+
+a:hover { color: #b39f57; }
+
+a:visited { color: #555; }
+
+a.link, a.link:visited { color: #555}
+
+a.link:hover { color: #b39f57 }
+
+a.link * { color: inherit }
+
+p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.25;
+}
+
+h1 { font-size: 46px }
+h2 { font-size: 38px }
+h3 { font-size: 32px }
+h4 { font-size: 26px }
+h5 { font-size: 20px }
+h6 { font-size: 16px }
+
+
+/* Tamanhos de texto */
+
+.text-100 { font-weight: 100 }
+.text-300 { font-weight: 300 }
+.text-400 { font-weight: 400 }
+.text-500 { font-weight: 500 }
+.text-700 { font-weight: 700 }
+.text-900 { font-weight: 900 }
+
+
+.inline-list li {
+    display: inline;
+    float: left;
+}
+
+.simple-link-list li + li {
+    margin-top: 10px;
+}
+
+strong {
+    font-weight: bold;
+}
+
+
+.content-warp {
+    padding: 0;
+}
+
+
+.container-inline {
+    display: none;
+}
+
+.breadcrumb {
+    display: none;
+}
+
+
+/* Typography */
+
+h1, h2, h3, h4 {
+    font-weight: 600;
+    color:#004a35;
+}
+
+
+a:hover {
+    text-decoration: none;
+}
+
+
+
+
+/*.stretched #page-title {*/
+/*padding: 10px 0; */
+/*}*/
+
+
+/* Regions */
+
+.region-top-right a {
+    color:  #004a35 !important;
+}
+
+.region-top-right .content p {
+    font-size: 12px;
+    line-height: 46px;
+    margin-right: 12px;
+    text-transform: uppercase;
+}
+
+.region-top-right p a:hover {
+    text-decoration: underline;
+}
+
+.region-top-right .login-with a,
+.region-top-right .login-with span {
+    color: #fff;
+    font-size: 12px;
+    line-height: 37px;
+    margin-bottom: 0;
+}
+
+.region-top-right .login-with a:hover{
+    text-decoration: none;
+}
+
+
+.region-top-right .login-with a i {
+    font-size: 18px;
+}
+
+.region.region-top-left h1,
+.region.region-top-left h2,
+.region.region-top-left h4,
+.region.region-top-left h3  {
+    line-height: 39px;
+    font-size: 14px;
+}
+
+
+/* ----------------------------------------------------------------
+   Tabs
+-----------------------------------------------------------------*/
+
+
+.tabs { margin: 45px 0 10px }
+
+@media only screen and (min-width: 980px) {
+	.tabs { margin: 10px 0 }
+}
+
+.tabs:empty { margin: 0 }
+
+.nav-tabs {
+    border-bottom: 0px solid #ddd;
+}
+
+.nav-tabs > li > a {
+    line-height: 45px;
+    font-size: 16px;
+    text-transform: none;
+    padding: 5px 27px;
+    border: 0;
+    color: #00BCD4;
+    font-family: 'Roboto', Helvetica, sans-serif;
+}
+
+.nav-tabs > li > a:hover, .nav-tabs > li > a:focus {
+    border-color: #fff;
+    border-bottom: 3px solid;
+}
+.nav > li > a:hover, .nav > li > a:focus {
+    background-color: #fff;
+    border-bottom: 3px solid;
+}
+
+.nav-tabs > .active > a,
+.nav-tabs > .active > a:hover,
+.nav-tabs > .active > a:focus {
+    color: #004a35;
+    background-color: #ffffff;
+    border: 0px solid #ddd;
+    border-bottom: 3px solid;
+
+}
+
+
+.nav-tabs > .active > a:after {
+    display: none;
+    content: "";
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 5px 5px 0 5px;
+    border-color: #004a35 transparent transparent transparent;
+    position: absolute;
+    bottom: -7px;
+    left: 47%;
+}
+
+
+
+/* ----------------------------------------------------------------
+   Lateral menu
+-----------------------------------------------------------------*/
+
+
+.side-tabs ul.tabs li {
+    float: none;
+    border: 0;
+    border-top: none;
+    border-right: none;
+    height: 64px;
+    line-height: 64px;
+    margin-top: 0;
+    background: #04AED0;
+    text-shadow: none;
+    border-right: 0;
+    border-left: 0;
+}
+
+
+
+.side-tabs ul.tabs {
+    float: left;
+    width: 240px;
+    height: auto;
+    border-bottom: 0;
+    padding: 20px 0;
+    margin-right: 40px;
+    border-right: 0;
+    border-right: 0;
+    border-left: 0;
+
+}
+
+.side-tabs ul.tabs li:first-child {
+    /*padding: 30px 0 0 0;*/
+}
+
+.tab_widget ul.tabs li.active a {
+    color: #fff !important;
+    text-shadow: none;
+    border: 0;
+}
+
+
+.tab_widget ul.tabs li.active {
+    /*border: 0; */
+    /* border-left-color: #57B3DF !important; */
+    background: #0494b6 !important;
+    color: #fff !important;
+    text-shadow: none;
+    border-left: 0;
+    border-bottom: 0;
+}
+
+
+.side-tabs ul.tabs li.active,
+.side-tabs ul.tabs li.active a:hover {
+    /*border-bottom: 0;*/
+    /*border-right: 0;*/
+    /*border-left: 0;*/
+    /*border: 0;*/
+}
+
+.tab_widget ul.tabs li.active a:hover {
+    background: #0494b6;
+    border: 0;
+}
+
+
+.tab_widget ul.tabs li a:hover {
+    background: #0494b6;
+}
+
+.tab_widget ul.tabs li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 17px;
+    display: block;
+    padding: 0 0 0 20px;
+    outline: none;
+    font-weight: 400;
+    text-shadow: none;
+    font-family: 'Roboto', Helvetica, sans-serif;
+    border: 0;
+    border-left: 0px solid #F9F9F9;
+    border-right: 0;
+}
+
+
+.side-tabs .tab_container p {
+    font-size: 15px;
+}
+
+
+
+
+
+/*********************************************************************/
+/* App Gallery */
+/*********************************************************************/
+
+#app-gallery .app-gallery-item {
+    border: 1px solid #ccc;
+    padding: 16px;
+}
+
+#app-gallery .app-gallery-item img{
+    width: 140px !important;
+}
+
+#app-gallery .app-gallery-item h2 {
+    padding: 0;
+}
+
+#app-gallery .app-gallery-item h5 {
+    font-weight: 600;
+}
+
+#app-gallery .app-gallery-item i {
+    color: #EE7B00;
+}
+
+#app-gallery .app-gallery-item p {
+    margin-bottom: 0 !important;
+}
+
+#app-gallery .app-gallery-item p:nth-child(even) {
+    height: 91px;
+}
+
+#app-gallery .app-gallery-item p small {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+#app-gallery .app-gallery-item .btn {
+    padding: 9px 29px !important;
+    border-radius: 5px;
+    background: rgba(63, 68, 74, 0.67);
+    text-transform: uppercase;
+}
+
+#app-gallery .app-gallery-item .btn .btn-primary {
+}
+
+#app-gallery  .app-gallery-item .btn:hover {
+    background: rgba(63, 68, 74, 1);
+}
+
+#app-gallery .col_one_fifth {
+    margin-right: 2.5%;
+    width: 18%;
+}
+
+
+/*********************************************************************/
+/* Theme Colors */
+/*********************************************************************/
+
+
+a {
+    color: #004a35;
+}
+
+.text-primary {
+    color: rgba(101, 15, 118, 0.72);
+}
+
+.text-secondary {
+    color: #F38630;
+}
+
+.text-muted {
+    color: #8c8c8c;
+}
+
+.text-negative {
+    color: #fff;
+}
+
+.text-danger {
+    color: #8c0905;
+}
+
+
+
+/* Regions */
+
+.region-top-right .login-with a:hover,
+.region-top-right .login-with a:hover i {
+    color: #fff;
+}
+
+.region-top-right .login-with a i {
+    color: #c5c4c1;
+}
+
+.region.region-top-left h1,
+.region.region-top-left h2,
+.region.region-top-left h4,
+.region.region-top-left h3  {
+    color: #000 !important;
+}
+
+
+/* GoToTop */
+
+#gotoTop {
+	border-radius: 5px;
+	background-color: #018b6a;
+	transition: background-color .3s !important;
+}
+
+#gotoTop:hover {
+    background: #004b35;
+}
+
+
+/* ------ */
+/* Header */
+/* ------ */
+
+.stretched #header {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
+    -moz-box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
+    -webkit-box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
+    height: 80px;
+    width: 100%;
+    border-bottom: 0;
+    margin-bottom: 0px;
+    background: #fff;
+}
+
+#header .container:after { content: none; }
+
+#header .container {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+@media only screen and (min-width: 980px) {
+	#header .container { flex-wrap: nowrap }
+	#main-menu {
+		display: flex;
+		white-space: nowrap;
+	}
+}
+
+
+/* ----------------------------------------- */
+/* Main Menu - Primary Menu (menu principal) */
+/* ----------------------------------------- */
+
+#primary-menu ul li a { font-family: 'Roboto', Helvetica, sans-serif;}
+
+#primary-menu {
+	float: right;
+	height: auto;
+	max-width: initial;
+	margin: 0;
+}
+
+/* primeira camada */
+
+#primary-menu > ul > li {
+	background: none;
+	background-color: transparent !important;
+	margin: 20px 0 0;
+	height: 40px;
+}
+
+#primary-menu > ul > li > a {
+	height: 40px;
+	line-height: 40px;
+	font-size: 16px;
+	font-weight: 500;
+	text-transform: none;
+	margin: 0;
+	padding: 0 15px;
+	color: #004a35 !important;
+	background-color: #fff;
+	border: none;
+	border-radius: 5px;
+	text-shadow: none !important;
+	text-decoration: none;
+	transition: color .3s, background-color .3s;
+}
+
+#primary-menu > ul > li.active-trail > a {
+	color: #bba756 !important;
+	background-color: #fff;
+}
+
+#primary-menu > ul > li:hover > a {
+	color: #bba756 !important;
+	background-color: #fff;
+}
+
+#primary-menu ul li a div {
+	background-image: none !important;
+	padding-right: 0 !important;
+}
+
+#primary-menu > ul > li > a.has-dropdown > div::after {
+    content: "\f0d7";
+    font-family: FontAwesome;
+	position: relative;
+	top: 0;
+	right: 0;
+	margin-left: 10px;
+}
+
+
+/* segunda camada ou + */
+
+#primary-menu ul ul {
+	width: 240px;
+	top: 60px;
+	box-shadow: 4px 4px 8px rgba(0, 0, 0, .1);
+	overflow: unset !important;
+}
+
+#primary-menu ul ul li {
+	margin: 0;
+	background-color: transparent;
+	position: unset;
+}
+
+#primary-menu ul ul li > a {
+	position: relative;
+	height: 56px;
+	line-height: 56px;
+	color: #004a35 !important;
+	background-color: #fff !important;
+	font-size: 16px;
+	font-weight: 500;
+	text-shadow: none !important;
+	text-decoration: none;
+	transition-property: color .3s, background-color .3s;
+}
+
+#primary-menu ul ul li:hover > a {
+	color: #bba756 !important;
+	background-color: #fff !important;
+	font-weight: 500;
+}
+
+#primary-menu ul ul li > a.has-dropdown > div::after {
+    content: "\f0da";
+    font-family: FontAwesome;
+	position: absolute;
+	top: 0;
+	right: 14px;
+}
+
+#primary-menu ul ul li:hover > a.has-dropdown {
+	background-color: #f2f4f8 !important;
+}
+
+
+/* Terceira camada (ul ul ul) */
+
+#primary-menu ul ul ul { left: 240px !important }
+
+
+/* Menu buttons (btn-menu) */
+
+#primary-menu > ul > li > a.btn-menu {
+	margin: 0 15px;
+	color: #fff !important;
+	background-color: #018b6a;
+}
+
+#primary-menu > ul > li > a.btn-menu-secondary {
+	margin: 0 15px;
+	color: #fff !important;
+	background-color: #018b6a;
+}
+
+#primary-menu > ul > li > a.btn-menu:hover {
+	color: #fff !important;
+	background-color: #004a35;
+}
+
+#primary-menu > ul > li > a.btn-menu-secondary:hover {
+	color: #fff !important;
+	background-color: #004a35;
+}
+
+
+/* Select menu (mobile) */
+
+.select-menu {
+	margin: 0;
+	position: absolute;
+	z-index: 1;
+}
+
+
+/* Forms */
+
+.controls input,
+.controls textarea,
+.controls select {
+    border-radius: 3px;
+    padding: 14px 22px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+}
+
+
+.controls #edit-search-block-form--2 {
+    padding: 7px;
+    margin-left: 31px;
+}
+
+.controls .username {
+    font-size: 14px;
+    margin: 0 0 0 22px;
+}
+
+
+#edit-to.form-item {
+    margin-bottom: 11px;
+}
+
+label {
+    color: inherit;
+    text-transform: none;
+    margin: 0;
+	font-size: 10px;
+	font-weight: 300;
+	line-height: 1.5;
+}
+
+/* Tabs */
+
+.nav-tabs > li > a {
+    line-height: 45px;
+    font-size: 13px;
+    text-transform: uppercase;
+    padding: 5px 27px;
+    border: 0;
+    color: #555;
+}
+
+.nav-tabs > li > a:hover, .nav-tabs > li > a:focus {
+    border-color: #fff;
+    border-bottom: 3px solid;
+}
+.nav > li > a:hover, .nav > li > a:focus {
+    background-color: #fff;
+    border-bottom: 3px solid;
+}
+
+.nav-tabs > .active > a, .nav-tabs > .active > a:hover, .nav-tabs > .active > a:focus {
+    color: #555555;
+    background-color: #ffffff;
+    border: 0px solid #ddd;
+    border-bottom: 3px solid;
+
+}
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+}
+
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0; transform: scale(.9);
+    filter: alpha(opacity=0);
+}
+
+
+
+
+
+
+
+/* Tabs */
+
+.nav-tabs > li > a {
+    line-height: 45px;
+    font-size: 13px;
+    text-transform: uppercase;
+    padding: 5px 27px;
+    border: 0;
+    color: #b39f57;
+}
+
+.nav-tabs > li > a:hover, .nav-tabs > li > a:focus {
+    border-color: #fff;
+    border-bottom: 3px solid;
+}
+.nav > li > a:hover, .nav > li > a:focus {
+    background-color: #fff;
+    border-bottom: 3px solid;
+}
+
+.nav-tabs > .active > a, .nav-tabs > .active > a:hover, .nav-tabs > .active > a:focus {
+    color: #004a35;
+    background-color: #ffffff;
+    border: 0px solid #ddd;
+    border-bottom: 3px solid;
+
+}
+
+
+
+/* Tables */
+
+table th {
+    font-weight: 200 !important;
+    font-size: 15px !important;
+    padding: 20px 0 !important;
+}
+
+/* Forum */
+
+#forum table th, #forum table td {
+    padding: 20px 9px !important;
+    /* vertical-align: top; */
+}
+
+#forum table td.topics,
+#forum table td.posts,
+#forum table td.replies,
+#forum table#forum-topic-5 td.last-reply {
+    font-size: 23px;
+    line-height: 15px;
+    color: #C2C2C2;
+    text-align: center;
+}
+
+#forum table td.topics a,
+#forum table td.posts a,
+#forum table td.replies a,
+#forum table#forum-topic-5 td.last-reply a {
+    font-size: 12px;
+    color: #039200;
+}
+
+#forum table#forum-0 tr th,
+#forum table#forum-topic-5 tr th {
+    color: #555;
+    font-size: 13px;
+    line-height: 25px;
+    font-weight: normal;
+    border-bottom: 3px solid #CCC;
+
+}
+
+#forum table#forum-0 tr td .name a,
+#forum table#forum-topic-5 tr td.title a {
+    font-size: 20px;
+}
+
+#forum table#forum-topic-5 tr th {
+    text-align: center;
+}
+
+#forum table#forum-topic-5 tr td.title .username {
+    font-size: 14px !important;
+}
+
+.field-type-taxonomy-term-reference a {
+    background-color: #fff;
+    font-size: 23px !important;
+    line-height: 43px;
+    text-shadow: none;
+    padding: 3px 0;
+
+}
+
+/* Support */
+
+/* Create new ticket button */
+#support-page-form > div:nth-child(1) > a:nth-child(1),
+ul.action-links li a {
+    color: #fff;
+    background-color: #545454;
+    border-color: transparent;
+    text-shadow: none;
+    float: left;
+    padding: 17px 29px 17px 57px;
+    margin-bottom: 22px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 0px solid transparent;
+    border-radius: 2px;
+    position: relative;
+}
+
+/*replace the content value with the
+corresponding value from the list below*/
+
+#support-page-form > div:nth-child(1) > a:nth-child(1):before,
+ul.action-links li a:before {
+    content: "\f055";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    /*--adjust as necessary--*/
+    color: #fff;
+    font-size: 18px;
+    padding-right: 0.5em;
+    position: absolute;
+    top: 15px;
+    left: 29px;
+}
+
+ul.action-links {
+    margin-left: 0;
+}
+
+
+table th a {
+    color: #555;
+    font-size: 13px;
+    /*line-height: 50px;*/
+}
+
+.support tr {
+    border-bottom: 1px solid #ccc;
+}
+
+
+/* ----------------------------------------------------------------
+   Btns
+-----------------------------------------------------------------*/
+
+.btn {
+    display: inline-block;
+	position: relative;
+    padding: 8px 24px;
+    margin-bottom: 0;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    text-transform: none;
+	text-shadow: none !important;
+	box-shadow: none !important;
+    font-family: 'Roboto', Helvetica, sans-serif;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px !important;
+    border: none !important;
+    color: #fff !important;
+	background-color: #018b6a !important;
+	background-image: none !important;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+	transition: color .3s, background-color .3s !important;
+}
+
+.btn:hover { background-color: #004a35 !important }
+
+/* Botão negativo */
+.btn-negative {
+	color: #004a35 !important;
+	background-color: #fff !important;
+}
+
+.btn-negative:hover,
+.btn-negative:focus {
+	color: #d35210 !important;
+	background-color: #fff !important;
+}
+
+/* Botão com secundário */
+.btn-secondary {
+	background-color: #018b6a !important;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+	background-color: #004b35 !important;
+}
+
+/* Botão grande */
+.btn-big {
+	font-size: 20px !important;
+	padding: 12px 32px;
+}
+
+
+
+/* Structure */
+
+#admin-menu {
+    box-shadow: none;
+}
+
+
+.stretched .content-wrap {
+    box-shadow: none !important;
+}
+
+/* Page Title */
+
+.stretched #page-title {
+    box-shadow: none;
+    border-bottom: 0;
+}
+
+#page-title h1 {
+	font-size: 46px;
+    color: #004a35;
+    text-shadow: none;
+    text-transform: none;
+	margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+
+.stretched #page-title {
+    background-color: transparent;
+    box-shadow: none;
+    border: 0;
+    margin: 0;
+	padding: 60px 0;
+}
+
+
+/* Footer */
+
+#footer.footer-dark {
+    display: none;
+}
+
+/*.signup-yellow-box {*/
+/*background: #fdc728;*/
+/*padding: 0 0 0 100px;*/
+/*margin-left: -100px;*/
+/*z-index: 0;*/
+/*}*/
+
+/*.signup-yellow-box p {*/
+/*font-size: 13px;*/
+/*text-shadow: none;*/
+/*line-height: 1.2;*/
+/*margin: 22px 0 23px 0;*/
+/*}*/
+
+/* First Menu */
+
+#top-bar {
+    height: 40px;
+}
+
+.logged-in-menu a {
+    border-right: 0;
+    float: left;
+    font-size: 12px;
+    height: 40px;
+    line-height: 43px;
+    padding: 0 9px;
+    text-transform: uppercase;
+}
+
+.logged-in-menu i {
+    margin-right: 5px;
+}
+.logged-in-menu br {
+    display: none;
+}
+
+/* editor FullHTML do Drupal insere <br> extras. */
+
+
+
+/* Logo */
+
+#logo {
+	display: flex;
+	align-items: center;
+    position: relative;
+    float: left;
+	width: 140px;
+    height: 80px;
+}
+
+#logo a.standard-logo {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+
+/* --------------- */
+/* Footer (rodapé) */
+/* --------------- */
+
+#copyrights {
+    padding: 0;
+}
+
+#copyrights.copyrights-dark p {
+    text-shadow: none;
+}
+
+
+#copyrights.copyrights-dark {
+    border: 0;
+    height: fit-content;
+	background-color: #4c4c4c;
+	text-shadow: none;
+}
+
+#copyrights .block .content a {
+	display: inherit;
+	margin: initial;
+}
+
+
+#copyrights .block .content a,
+#copyrights .block .content .footer-menu ul li ul li a {
+    border: 0;
+}
+
+#copyrights .last-footer div {
+    float: left;
+}
+
+/* Components*/
+
+.cp-bullet-number{
+    width: 85px;
+    height: 85px;
+    border-radius: 170px;
+    color: #F2F4F6;
+    text-align: center;
+    font-weight: bold;
+    line-height: 18px;
+    margin: 0 auto;
+    background: #00BCD4;
+}
+
+.cp-bullet-number p {
+    margin: 0;
+    color: #fff;
+    font-size: 50px;
+    line-height: 81px;
+}
+
+
+/* Signup */
+
+.password-parent {
+    width: 46.3em;
+}
+
+/* USER ACCOUNT */
+
+.profile .field-label,
+.profile dt {
+    text-transform: uppercase;
+    font-size: 12px;
+    margin-top: 21px;
+}
+
+.profile dl,
+.profile dd {
+    margin: 0
+}
+
+.profile a {
+    position: relative;
+}
+
+
+.profile a:before {
+    content: "\f138";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    margin-right: 8px;
+    text-decoration: inherit;
+}
+
+
+.profile a:hover {
+    text-decoration: underline;
+}
+
+.profile h3 {
+    font-size: 23px;
+    font-weight: 600;
+    margin: 10px 0 20px;
+    padding: 10px 0;
+}
+
+.profile .field-item {
+    font-size: 44px;
+    margin: 21px 0 40px;
+    font-weight: 200;
+}
+
+.documentation i {
+    font-size: 80px;
+    line-height: 110px;
+}
+
+.documentation h2 {
+    padding: 0 0 6px 0;
+}
+
+.documentation p {
+    margin-bottom: 10px;
+}
+
+
+/* FAQ */
+
+.acctitle, .acctitlec {
+    font-size: 26px;
+    font-weight: normal;
+    padding: 32px 0 32px 32px;
+
+}
+
+/* Top Menu */
+
+#top-menu li {
+    float: left;
+    margin-left: 0;
+    height: 40px;
+    text-shadow: none;
+}
+
+#top-menu .display-username {
+    overflow: hidden;
+    text-shadow: none !important;
+}
+
+#top-menu .display-username ul li {
+    float: left;
+}
+
+#top-menu p {
+    font-size: 16px;
+    margin-top: 10px;
+    font-weight: 300;
+}
+
+/*.content-teasers {
+    padding: 15px;
+    background-color: #fff;
+    text-align: center;
+    border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+} */
+
+.content-teasers {
+    position: relative;
+}
+
+.content-teasers .content-divisor-1 {
+    position: absolute;
+    left: 32%;
+    top: 28%;
+}
+
+.content-teasers .content-divisor-2 {
+    position: absolute;
+    left: 66%;
+    top: 28%;
+}
+
+.content-teasers h2 {
+    font-size: 23px;
+    font-weight: 400;
+
+}
+
+
+
+/* MEDIA QUERIES */
+
+@media(max-width:1022px){
+    .numbered-tiles li {
+        float: none;
+    }
+    .numbered-tiles .single-tile {
+        width: 100%;
+    }
+
+    .numbered-tiles .single-tile .arrow-blue,
+    .numbered-tiles .single-tile .arrow-yellow {
+        display: none;
+    }
+}
+
+
+/* Components II */
+
+.signup-arrow {
+    background: #3a3839;
+    color: #fff;
+    margin: 0;
+    line-height: 1.3;
+    font-size: 21px;
+    padding: 32px 10px 31px 31px;
+    position: relative;
+    margin-right: 34px;
+    font-family: 'Roboto', Helvetica, sans-serif;
+    text-transform: uppercase;
+    text-align: center;
+    z-index: 2;
+}
+
+.signup-arrow:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -34px;
+    -webkit-transform: rotate(360deg);
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 45px 0 45px 34px;
+    border-color: transparent transparent transparent #3a3839;
+    z-index: 2;
+
+}
+
+/* Code box */
+
+.code-box {
+    padding: 9px 14px;
+    margin-bottom: 14px;
+    background-color: #f9f9f9;
+    border: 1px solid #e1e1e8;
+    border-radius: 4px;
+    font-family: Menlo, Monaco, Consolas, "Courier New";
+}
+
+/* Call-to-action */
+
+.call-to-action {
+    background: #eeeeee;
+    border-left: 0;
+    border-radius: 3px;
+    padding: 46px 0 30px 41px;
+    position: relative;
+    margin: 60px 0 22px 0;
+}
+
+.call-to-action .col_1 {
+    padding-right: 246px;
+}
+
+.call-to-action .col_2 {
+    position: absolute;
+    right: 45px;
+    top: 45%;
+    margin-top: -19px;
+    max-width: 236px;
+}
+
+.call-to-action p {
+    color: #706f6f;
+    font-size: 16px;
+}
+
+
+.call-to-action h3 {
+    color: #000;
+    font-size: 17px;
+    font-weight: normal;
+    line-height: 26px;
+    padding-bottom: 6px;
+    text-shadow: none;
+}
+
+
+
+/* Swagger */
+
+.resource h2 {
+    font-size: 14px;
+    line-height: 1.2;
+    margin-top: 16px;
+}
+
+body ul#resources li.resource div.heading {
+    margin-top: 7px;
+    padding: 15px;
+}
+
+
+
+/* Blog */
+figure.post-img {
+    max-width: 714px;
+}
+
+.icon-picture {
+    display: none;
+}
+
+h1.largeTitle {
+    display: none;
+}
+
+
+
+
+
+
+/* estilos para o block_menu sitemap, colocado no footer */
+#footer .region ul.menu li {
+    background-color: red;
+    background: url("/api-portal/sites/all/themes/coworker/images/icons/footer-link.png") no-repeat scroll left top rgba(0, 0, 0, 0);
+    color: #ccc;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    font-size: 13px;
+    padding: 3px 3px 3px 10px;
+}
+
+#footer .region ul.menu li a { text-decoration: none; }
+#footer .region ul.menu li i { display: none; }
+#footer.footer-dark .region ul.menu li a { border-bottom-width: 0; }
+
+/* ajusta o icone do google+ */
+#top-social li.ts-gplus .ts-icon {
+    background: url("/api-portal/sites/default/files/images/icon_G%2B.png") no-repeat center center;
+}
+
+/* Estilos para a tabela de forum */
+#forum table {
+    background-color: rgba(0, 0, 0, 0);
+    border-collapse: collapse;
+    border-spacing: 0;
+    max-width: 100%;
+    width: 100%;
+}
+
+#forum table thead th {
+    vertical-align: bottom;
+}
+
+#forum table th {
+    font-weight: bold;
+}
+
+#forum table th,
+#forum table td {
+    border-top: 1px solid #DDDDDD;
+    line-height: 20px;
+    padding: 8px;
+    text-align: left;
+    vertical-align: top;
+}
+
+#forum table caption + thead tr:first-child th,
+#forum table caption + thead tr:first-child td,
+#forum table colgroup + thead tr:first-child th,
+#forum table colgroup + thead tr:first-child td,
+#forum table thead:first-child tr:first-child th,
+#forum table thead:first-child tr:first-child td {
+    border-top: 0 none;
+}
+
+ul.action-links {
+    max-width: 100%;
+}
+
+/* Aplica o estilo apenas no browser Firefox */
+html> /**/body ul.action-links, x:-moz-any-link, x:default {
+    margin-bottom: 45px;
+}
+
+
+ul.links li.comment-delete a,
+ul.links li.comment-edit a,
+ul.links li.comment-reply a,
+a.fieldset-title {
+    background-color: #FFFFFF;
+    border-color: #CCCCCC;
+    color: #333333;
+    border: 1px solid #BBBBBB;
+    padding: 2px 5px 2px 5px;
+    float: left;
+}
+
+ul.links li.comment-delete a:hover,
+ul.links li.comment-edit a:hover,
+ul.links li.comment-reply a:hover,
+a.fieldset-title:hover {
+    background-color: #EBEBEB;
+    border-color: #ADADAD;
+    color: #333333;
+}
+
+a.fieldset-title {
+    margin-bottom: 5px;
+}
+
+ul.links li.comment-edit a:active,
+ul.links li.comment-delete a:active,
+ul.links li.comment-reply a:active,
+a.fieldset-title:active {
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.125) inset;
+}
+
+ul.links li.comment-edit a {
+    border-right: none;
+    border-left: none;
+}
+
+ul.links li.comment-delete a {
+    border-radius: 5px 0px 0px 5px;
+}
+
+ul.links li.comment-reply a {
+    border-radius: 0px 5px 5px 0px;
+}
+
+ul.links li.comment-reply:first-child:last-child a,
+a.fieldset-title {
+    border-radius: 5px;
+}
+
+div.field-item[rel="sioc:has_container"] a {
+    float: none;
+    width: 15%;
+    display: inline;
+}
+
+
+/* ----------------------------------------------------------------
+   Swagger
+-----------------------------------------------------------------*/
+
+#Orders_endpoint_list {
+    display: block;
+}
+
+
+body ul#resources li.resource div.heading h2 a {
+    color: #512DA8;
+}
+
+body ul#resources li.resource div.heading h2 a:hover {
+    color: #000 !important;
+    text-decoration: underline;
+}
+
+body ul#resources li.resource div.heading {
+    background: #f5f5f5;
+}
+
+.resource h2 {
+    font-size: 14px;
+    line-height: 1.2;
+    margin-top: 16px;
+}
+
+body ul#resources li.resource div.heading {
+    margin-top: 7px;
+    padding: 15px;
+}
+
+.swagger-ui-wrap a {
+    font-size: 16px;
+}
+
+.swagger-ui-wrap div.heading h3 {
+    font-size: 22px;
+}
+
+/* Blog */
+
+.entry_c i {
+    color: #4f723d;
+}
+
+.entry_date div.day, .entry_date div.month {
+    background: #4f723d;
+}
+
+.icon-picture {
+    color: #fff;
+}
+
+
+/* ------------------- */
+/*  Dev Dashboard Fix  */
+/* ------------------- */
+
+.page-devdashboard .graph {
+	width: auto !important;
+	margin-left: 15px;
+}
+
+
+/* ----------------- */
+/* Content expandido */
+/* ----------------- */
+
+#content { min-height: calc(100vh - 176px) }
+
+body.admin-menu #content { min-height: calc(100vh - 204px) }
+
+
+/* ---------------------------- */
+/* Container expandido (1200px) */
+/* ---------------------------- */
+
+#wrapper { width: 100% !important }
+
+@media only screen and (min-width: 1200px) {
+	.container {
+		width: 80%;
+		max-width: 1200px;
+	}
+}
+
+@media only screen and (max-width: 479px) {
+	.container { width: calc(100% - 60px) }
+}
+
+
+/* --------------------------------------------------- */
+/* LANGUAGE BUTTONS (botões de idioma fixados ao lado) */
+/* --------------------------------------------------- */
+
+#top-bar { height: 0 }
+
+ul.language-switcher-locale-url {
+	display: flex !important;
+	flex-direction: column;
+	position: fixed;
+	left: 0;
+	top: calc(50% - 40px);
+	background-color: #482462;
+	margin: 0;
+	padding: 10px 8px 0 6px;
+	border-radius: 0 5px 5px 0;
+	z-index: 9999;
+}
+
+ul.language-switcher-locale-url li {
+	width: 25px;
+	height: 18px !important;
+	margin-bottom: 10px;
+	border: 2px solid transparent;
+	border-radius: 2px;
+	background-repeat: no-repeat;
+	background-position: center;
+	box-sizing: content-box;
+	transition: border-color .3s ease;
+}
+
+ul.language-switcher-locale-url li:hover { border-color: rgba(255,255,255,.4) }
+
+ul.language-switcher-locale-url li.pt-br { background-image: url('/api-portal/sites/default/files/images/pt-br.png') }
+
+ul.language-switcher-locale-url li.en { background-image: url('/api-portal/sites/default/files/images/en.png') }
+
+ul.language-switcher-locale-url li.es { background-image: url('/api-portal/sites/default/files/images/es.png') }
+
+ul.language-switcher-locale-url li a {
+	display: block;
+	font-size: 0px !important;
+	margin: 0 !important;
+	width: 25px;
+	height: 18px;
+	border: none !important;
+}
+
+ul.language-switcher-locale-url li a img { visibility: hidden }
+
+
+/* ------- */
+/* PADDING */
+/* ------- */
+
+/* padding 5 */
+.p-5 { padding: 5px }
+.p-t-5 { padding-top: 5px }
+.p-r-5 { padding-right: 5px }
+.p-b-5 { padding-bottom: 5px }
+.p-l-5 { padding-left: 5px }
+.p-v-5 { padding-top: 5px; padding-bottom: 5px }
+.p-h-5 { padding-left: 5px; padding-right: 5px }
+
+/* padding 10 */
+.p-10 { padding: 10px }
+.p-t-10 { padding-top: 10px }
+.p-r-10 { padding-right: 10px }
+.p-b-10 { padding-bottom: 10px }
+.p-l-10 { padding-left: 10px }
+.p-v-10 { padding-top: 10px; padding-bottom: 10px }
+.p-h-10 { padding-left: 10px; padding-right: 10px }
+
+/* padding 15 */
+.p-15 { padding: 15px }
+.p-t-15 { padding-top: 15px }
+.p-r-15 { padding-right: 15px }
+.p-b-15 { padding-bottom: 15px }
+.p-l-15 { padding-left: 15px }
+.p-v-15 { padding-top: 15px; padding-bottom: 15px }
+.p-h-15 { padding-left: 15px; padding-right: 15px }
+
+/* padding 20 */
+.p-20 { padding: 20px }
+.p-t-20 { padding-top: 20px }
+.p-r-20 { padding-right: 20px }
+.p-b-20 { padding-bottom: 20px }
+.p-l-20 { padding-left: 20px }
+.p-v-20 { padding-top: 20px; padding-bottom: 20px }
+.p-h-20 { padding-left: 20px; padding-right: 20px }
+
+/* padding 25 */
+.p-25 { padding: 25px }
+.p-t-25 { padding-top: 25px }
+.p-r-25 { padding-right: 25px }
+.p-b-25 { padding-bottom: 25px }
+.p-l-25 { padding-left: 25px }
+.p-v-25 { padding-top: 25px; padding-bottom: 25px }
+.p-h-25 { padding-left: 25px; padding-right: 25px }
+
+/* padding 30 */
+.p-30 { padding: 30px }
+.p-t-30 { padding-top: 30px }
+.p-r-30 { padding-right: 30px }
+.p-b-30 { padding-bottom: 30px }
+.p-l-30 { padding-left: 30px }
+.p-v-30 { padding-top: 30px; padding-bottom: 30px }
+.p-h-30 { padding-left: 30px; padding-right: 30px }
+
+/* padding 35 */
+.p-35 { padding: 35px }
+.p-t-35 { padding-top: 35px }
+.p-r-35 { padding-right: 35px }
+.p-b-35 { padding-bottom: 35px }
+.p-l-35 { padding-left: 35px }
+.p-v-35 { padding-top: 35px; padding-bottom: 35px }
+.p-h-35 { padding-left: 35px; padding-right: 35px }
+
+/* padding 40 */
+.p-40 { padding: 40px }
+.p-t-40 { padding-top: 40px }
+.p-r-40 { padding-right: 40px }
+.p-b-40 { padding-bottom: 40px }
+.p-l-40 { padding-left: 40px }
+.p-v-40 { padding-top: 40px; padding-bottom: 40px }
+.p-h-40 { padding-left: 40px; padding-right: 40px }
+
+/* padding 45 */
+.p-45 { padding: 45px }
+.p-t-45 { padding-top: 45px }
+.p-r-45 { padding-right: 45px }
+.p-b-45 { padding-bottom: 45px }
+.p-l-45 { padding-left: 45px }
+.p-v-45 { padding-top: 50px; padding-bottom: 50px }
+.p-h-45 { padding-left: 50px; padding-right: 50px }
+
+/* padding 50 */
+.p-50 { padding: 50px }
+.p-t-50 { padding-top: 50px }
+.p-r-50 { padding-right: 50px }
+.p-b-50 { padding-bottom: 50px }
+.p-l-50 { padding-left: 50px }
+.p-v-50 { padding-top: 50px; padding-bottom: 50px }
+.p-h-50 { padding-left: 50px; padding-right: 50px }
+
+/* padding 55 */
+.p-55 { padding: 55px }
+.p-t-55 { padding-top: 55px }
+.p-r-55 { padding-right: 55px }
+.p-b-55 { padding-bottom: 55px }
+.p-l-55 { padding-left: 55px }
+.p-v-55 { padding-top: 55px; padding-bottom: 55px }
+.p-h-55 { padding-left: 55px; padding-right: 55px }
+
+/* padding 60 */
+.p-60 { padding: 60px }
+.p-t-60 { padding-top: 60px }
+.p-r-60 { padding-right: 60px }
+.p-b-60 { padding-bottom: 60px }
+.p-l-60 { padding-left: 60px }
+.p-v-60 { padding-top: 60px; padding-bottom: 60px }
+.p-h-60 { padding-left: 60px; padding-right: 60px }
+
+/* padding 65 */
+.p-65 { padding: 65px }
+.p-t-65 { padding-top: 65px }
+.p-r-65 { padding-right: 65px }
+.p-b-65 { padding-bottom: 65px }
+.p-l-65 { padding-left: 65px }
+.p-v-65 { padding-top: 65px; padding-bottom: 65px }
+.p-h-65 { padding-left: 65px; padding-right: 65px }
+
+/* padding 70 */
+.p-70 { padding: 70px }
+.p-t-70 { padding-top: 70px }
+.p-r-70 { padding-right: 70px }
+.p-b-70 { padding-bottom: 70px }
+.p-l-70 { padding-left: 70px }
+.p-v-70 { padding-top: 70px; padding-bottom: 70px }
+.p-h-70 { padding-left: 70px; padding-right: 70px }
+
+/* padding 75 */
+.p-75 { padding: 75px }
+.p-t-75 { padding-top: 75px }
+.p-r-75 { padding-right: 75px }
+.p-b-75 { padding-bottom: 75px }
+.p-l-75 { padding-left: 75px }
+.p-v-75 { padding-top: 75px; padding-bottom: 75px }
+.p-h-75 { padding-left: 75px; padding-right: 75px }
+
+/* padding 80 */
+.p-80 { padding: 80px }
+.p-t-80 { padding-top: 80px }
+.p-r-80 { padding-right: 80px }
+.p-b-80 { padding-bottom: 80px }
+.p-l-80 { padding-left: 80px }
+.p-v-80 { padding-top: 80px; padding-bottom: 80px }
+.p-h-80 { padding-left: 80px; padding-right: 80px }
+
+/* padding 85 */
+.p-85 { padding: 85px }
+.p-t-85 { padding-top: 85px }
+.p-r-85 { padding-right: 85px }
+.p-b-85 { padding-bottom: 85px }
+.p-l-85 { padding-left: 85px }
+.p-v-85 { padding-top: 85px; padding-bottom: 85px }
+.p-h-85 { padding-left: 85px; padding-right: 85px }
+
+/* padding 90 */
+.p-90 { padding: 90px }
+.p-t-90 { padding-top: 90px }
+.p-r-90 { padding-right: 90px }
+.p-b-90 { padding-bottom: 90px }
+.p-l-90 { padding-left: 90px }
+.p-v-90 { padding-top: 90px; padding-bottom: 90px }
+.p-h-90 { padding-left: 90px; padding-right: 90px }
+
+/* padding 95 */
+.p-95 { padding: 95px }
+.p-t-95 { padding-top: 95px }
+.p-r-95 { padding-right: 95px }
+.p-b-95 { padding-bottom: 95px }
+.p-l-95 { padding-left: 95px }
+.p-v-95 { padding-top: 95px; padding-bottom: 95px }
+.p-h-95 { padding-left: 95px; padding-right: 95px }
+
+/* padding 100 */
+.p-100 { padding: 100px }
+.p-t-100 { padding-top: 100px }
+.p-r-100 { padding-right: 100px }
+.p-b-100 { padding-bottom: 100px }
+.p-l-100 { padding-left: 100px }
+.p-v-100 { padding-top: 100px; padding-bottom: 100px }
+.p-h-100 { padding-left: 100px; padding-right: 100px }
+
+/* padding 0 */
+.no-p { padding: 0px }
+.no-p-t { padding-top: 0px }
+.no-p-r { padding-right: 0px }
+.no-p-b { padding-bottom: 0px }
+.no-p-l { padding-left: 0px }
+.no-p-v { padding-top: 0px; padding-bottom: 0px }
+.no-p-h { padding-left: 0px; padding-right: 0px }
+
+
+/* ------ */
+/* MARGEM */
+/* ------ */
+
+/* margin 5 */
+.m-5 { margin: 5px }
+.m-t-5 { margin-top: 5px }
+.m-r-5 { margin-right: 5px }
+.m-b-5 { margin-bottom: 5px }
+.m-l-5 { margin-left: 5px }
+.m-v-5 { margin-top: 5px; margin-bottom: 5px }
+.m-h-5 { margin-left: 5px; margin-right: 5px }
+
+/* margin 10 */
+.m-10 { margin: 10px }
+.m-t-10 { margin-top: 10px }
+.m-r-10 { margin-right: 10px }
+.m-b-10 { margin-bottom: 10px }
+.m-l-10 { margin-left: 10px }
+.m-v-10 { margin-top: 10px; margin-bottom: 10px }
+.m-h-10 { margin-left: 10px; margin-right: 10px }
+
+/* margin 15 */
+.m-15 { margin: 15px }
+.m-t-15 { margin-top: 15px }
+.m-r-15 { margin-right: 15px }
+.m-b-15 { margin-bottom: 15px }
+.m-l-15 { margin-left: 15px }
+.m-v-15 { margin-top: 15px; margin-bottom: 15px }
+.m-h-15 { margin-left: 15px; margin-right: 15px }
+
+/* margin 20 */
+.m-20 { margin: 20px }
+.m-t-20 { margin-top: 20px }
+.m-r-20 { margin-right: 20px }
+.m-b-20 { margin-bottom: 20px }
+.m-l-20 { margin-left: 20px }
+.m-v-20 { margin-top: 20px; margin-bottom: 20px }
+.m-h-20 { margin-left: 20px; margin-right: 20px }
+
+/* margin 25 */
+.m-25 { margin: 25px }
+.m-t-25 { margin-top: 25px }
+.m-r-25 { margin-right: 25px }
+.m-b-25 { margin-bottom: 25px }
+.m-l-25 { margin-left: 25px }
+.m-v-25 { margin-top: 25px; margin-bottom: 25px }
+.m-h-25 { margin-left: 25px; margin-right: 25px }
+
+/* margin 30 */
+.m-30 { margin: 30px }
+.m-t-30 { margin-top: 30px }
+.m-r-30 { margin-right: 30px }
+.m-b-30 { margin-bottom: 30px }
+.m-l-30 { margin-left: 30px }
+.m-v-30 { margin-top: 30px; margin-bottom: 30px }
+.m-h-30 { margin-left: 30px; margin-right: 30px }
+
+/* margin 35 */
+.m-35 { margin: 35px }
+.m-t-35 { margin-top: 35px }
+.m-r-35 { margin-right: 35px }
+.m-b-35 { margin-bottom: 35px }
+.m-l-35 { margin-left: 35px }
+.m-v-35 { margin-top: 35px; margin-bottom: 35px }
+.m-h-35 { margin-left: 35px; margin-right: 35px }
+
+/* margin 40 */
+.m-40 { margin: 40px }
+.m-t-40 { margin-top: 40px }
+.m-r-40 { margin-right: 40px }
+.m-b-40 { margin-bottom: 40px }
+.m-l-40 { margin-left: 40px }
+.m-v-40 { margin-top: 40px; margin-bottom: 40px }
+.m-h-40 { margin-left: 40px; margin-right: 40px }
+
+/* margin 45 */
+.m-45 { margin: 45px }
+.m-t-45 { margin-top: 45px }
+.m-r-45 { margin-right: 45px }
+.m-b-45 { margin-bottom: 45px }
+.m-l-45 { margin-left: 45px }
+.m-v-45 { margin-top: 50px; margin-bottom: 50px }
+.m-h-45 { margin-left: 50px; margin-right: 50px }
+
+/* margin 50 */
+.m-50 { margin: 50px }
+.m-t-50 { margin-top: 50px }
+.m-r-50 { margin-right: 50px }
+.m-b-50 { margin-bottom: 50px }
+.m-l-50 { margin-left: 50px }
+.m-v-50 { margin-top: 50px; margin-bottom: 50px }
+.m-h-50 { margin-left: 50px; margin-right: 50px }
+
+/* margin 55 */
+.m-55 { margin: 55px }
+.m-t-55 { margin-top: 55px }
+.m-r-55 { margin-right: 55px }
+.m-b-55 { margin-bottom: 55px }
+.m-l-55 { margin-left: 55px }
+.m-v-55 { margin-top: 55px; margin-bottom: 55px }
+.m-h-55 { margin-left: 55px; margin-right: 55px }
+
+/* margin 60 */
+.m-60 { margin: 60px }
+.m-t-60 { margin-top: 60px }
+.m-r-60 { margin-right: 60px }
+.m-b-60 { margin-bottom: 60px }
+.m-l-60 { margin-left: 60px }
+.m-v-60 { margin-top: 60px; margin-bottom: 60px }
+.m-h-60 { margin-left: 60px; margin-right: 60px }
+
+/* margin 65 */
+.m-65 { margin: 65px }
+.m-t-65 { margin-top: 65px }
+.m-r-65 { margin-right: 65px }
+.m-b-65 { margin-bottom: 65px }
+.m-l-65 { margin-left: 65px }
+.m-v-65 { margin-top: 65px; margin-bottom: 65px }
+.m-h-65 { margin-left: 65px; margin-right: 65px }
+
+/* margin 70 */
+.m-70 { margin: 70px }
+.m-t-70 { margin-top: 70px }
+.m-r-70 { margin-right: 70px }
+.m-b-70 { margin-bottom: 70px }
+.m-l-70 { margin-left: 70px }
+.m-v-70 { margin-top: 70px; margin-bottom: 70px }
+.m-h-70 { margin-left: 70px; margin-right: 70px }
+
+/* margin 75 */
+.m-75 { margin: 75px }
+.m-t-75 { margin-top: 75px }
+.m-r-75 { margin-right: 75px }
+.m-b-75 { margin-bottom: 75px }
+.m-l-75 { margin-left: 75px }
+.m-v-75 { margin-top: 75px; margin-bottom: 75px }
+.m-h-75 { margin-left: 75px; margin-right: 75px }
+
+/* margin 80 */
+.m-80 { margin: 80px }
+.m-t-80 { margin-top: 80px }
+.m-r-80 { margin-right: 80px }
+.m-b-80 { margin-bottom: 80px }
+.m-l-80 { margin-left: 80px }
+.m-v-80 { margin-top: 80px; margin-bottom: 80px }
+.m-h-80 { margin-left: 80px; margin-right: 80px }
+
+/* margin 85 */
+.m-85 { margin: 85px }
+.m-t-85 { margin-top: 85px }
+.m-r-85 { margin-right: 85px }
+.m-b-85 { margin-bottom: 85px }
+.m-l-85 { margin-left: 85px }
+.m-v-85 { margin-top: 85px; margin-bottom: 85px }
+.m-h-85 { margin-left: 85px; margin-right: 85px }
+
+/* margin 90 */
+.m-90 { margin: 90px }
+.m-t-90 { margin-top: 90px }
+.m-r-90 { margin-right: 90px }
+.m-b-90 { margin-bottom: 90px }
+.m-l-90 { margin-left: 90px }
+.m-v-90 { margin-top: 90px; margin-bottom: 90px }
+.m-h-90 { margin-left: 90px; margin-right: 90px }
+
+/* margin 95 */
+.m-95 { margin: 95px }
+.m-t-95 { margin-top: 95px }
+.m-r-95 { margin-right: 95px }
+.m-b-95 { margin-bottom: 95px }
+.m-l-95 { margin-left: 95px }
+.m-v-95 { margin-top: 95px; margin-bottom: 95px }
+.m-h-95 { margin-left: 95px; margin-right: 95px }
+
+/* margin 100 */
+.m-100 { margin: 100px }
+.m-t-100 { margin-top: 100px }
+.m-r-100 { margin-right: 100px }
+.m-b-100 { margin-bottom: 100px }
+.m-l-100 { margin-left: 100px }
+.m-v-100 { margin-top: 100px; margin-bottom: 100px }
+.m-h-100 { margin-left: 100px; margin-right: 100px }
+
+/* margin 0 */
+.no-m, .m-0 { margin: 0px }
+.no-m-t, .m-t-0 { margin-top: 0px }
+.no-m-r, .m-r-0 { margin-right: 0px }
+.no-m-b, .m-b-0 { margin-bottom: 0px }
+.no-m-l, .m-l-0 { margin-left: 0px }
+.no-m-v, .m-v-0 { margin-top: 0px; margin-bottom: 0px }
+.no-m-h, .m-h-0 { margin-left: 0px; margin-right: 0px }
+
+/* margin auto */
+.m-auto { margin: auto }
+.m-t-auto { margin-top: auto }
+.m-r-auto { margin-right: auto }
+.m-b-auto { margin-bottom: auto }
+.m-l-auto { margin-left: auto }
+.m-v-auto { margin-top: auto; margin-bottom: auto }
+.m-h-auto { margin-left: auto; margin-right: auto }
+
+
+/* ------------------------------ */
+/* Fade fix (mensagens de alerta) */
+/* ------------------------------ */
+
+.fade, .fade:not(.show) { opacity: 1; transform: scale(1) }
+
+
+/* ---------------- */
+/* Swagger .col fix */
+/* ---------------- */
+
+.page-swagger #swagger-ui .col { width: auto }
+
+
+/* --------------------------------- */
+/* Manter a cor original da tag span */
+/* --------------------------------- */
+
+h1 span, h2 span, h3 span, h4 span, h5 span, h6 span { color: inherit }
+
+
+/* ------------------ */
+/* Conteúdo expandido */
+/* ------------------ */
+
+.expanded {
+	position: relative;
+	width: 100vw;
+	left: calc(50% - 50vw);
+    background: #000;
+}
+
+
+/* ---------------------- */
+/* Esconder tag de idioma */
+/* ---------------------- */
+
+.content .form-item.control-group.form-type-item { display: none }
+
+
+/* ---------------------- */
+/* Evitar quebra de linha */
+/* ---------------------- */
+
+.no-break { white-space: nowrap }
+
+
+/* ---------------------------- */
+/* login e cadastro (page-user) */
+/* ---------------------------- */
+
+.page-user .control-label {
+	font-size: 16px;
+}
+
+.page-user .description.help-block {
+	font-size: 12px;
+	color: #555;
+	margin: 0
+}
+
+.page-user .form-item { margin: 0 0 30px }
+
+.page-user label.checkbox {
+	font-size: 12px;
+	margin-right: 10px;
+}
+
+.page-user label.checkbox input { margin-right: 2px }
+
+.captcha { margin-bottom: 20px }
+
+
+/* ------------- */
+/* Hero (slider) */
+/* ------------- */
+
+.slider-line { border: none }
+
+.hero {
+	position: relative;
+	width: 100%;
+	height: calc(100vh - 80px);
+	min-height: 480px;
+}
+
+.hero > img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+    object-fit: cover;
+}
+
+
+/* ---------------------- */
+/* Sidebar (menu lateral) */
+/* ---------------------- */
+
+.postcontent {
+	width: 100%;
+	padding-bottom: 80px;
+}
+
+#sidebar-first { display: none }
+
+@media only screen and (min-width: 980px) {
+	.postcontent { width: calc(100% - 280px) }
+	#sidebar-first {
+		display: block;
+		width: 240px;
+		margin-right: 40px;
+	}
+}
+
+
+/* ----- */
+/*  FAQ  */
+/* ----- */
+
+.faq-question {
+	position: relative;
+	border-bottom: solid 1px #bbb;
+}
+
+.faq-question:last-child { border: none }
+
+.faq-question h4 {
+	margin: 0;
+	padding: 10px 20px;
+}
+
+.faq-question h4::after {
+	content: '\f0d8';
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+	color: #004a35;
+	position: absolute;
+	right: 16px;
+	top: 12px;
+	transition: transform .3s;
+}
+
+.faq-question a.collapsed h4::after {
+	transform: rotate(180deg);
+}
+
+.faq-question p {
+	margin: 0;
+	padding: 10px 20px;
+}
+
+
+/* ---------------- */
+/*   DOCUMENTAÇÃO   */
+/* ---------------- */
+
+.node-type-documentation h1,
+.node-type-documentation h2,
+.node-type-documentation h3,
+.node-type-documentation h4 {
+	margin-bottom: 10px;
+	padding-bottom: 0;
+}
+
+.node-type-documentation .content h1 {
+	padding-top: 20px;
+	border-top: solid 1px #bbb;
+}
+
+.node-type-documentation .content h1:first-child {
+	border: none;
+	margin-top: -20px;
+}
+
+.node-type-documentation .content h2 {
+	padding-top: 20px;
+	margin-top: -10px;
+}
+
+.node-type-documentation .content code {
+	word-break: break-word;
+}
+
+.node-type-documentation .content ul li {
+	font-size: 15px;
+}
+
+.node-type-documentation #page-title .col_two_fifth {
+	width: 100%;
+	text-align: center;
+}
+
+.node-type-documentation #page-title .col_three_fifth.col_last { display: none; }
+
+.node-type-documentation #page-title * { margin-bottom: 0 }
+
+
+/* ------------------------------- */
+/*   DOCUMENTAÇÃO - MENU LATERAL   */
+/* ------------------------------- */
+
+.node-type-documentation .side-menu {
+	display: flex;
+    flex-direction: column;
+	margin: 0 0 20px;
+	width: 240px;
+	overflow-y: auto;
+}
+
+.node-type-documentation .side-menu ul { margin: 0 0 20px; }
+
+.node-type-documentation .side-menu.affix {
+	top: 78px;
+	position: fixed;
+}
+
+.node-type-documentation .side-menu a {
+	display: block;
+	line-height: 1;
+	padding: 10px;
+	cursor: pointer;
+	text-decoration: underline;
+	text-decoration-color: transparent;
+	transition: color .3s, text-decoration-color .3s;
+}
+
+.node-type-documentation .side-menu a.section {
+	color: #004a35;
+	font-size: 15px;
+	font-weight: 700;
+    text-decoration: none;
+}
+
+.node-type-documentation .side-menu a.sub-section {
+	color: #555;
+	font-size: 13px;
+	font-weight: 500;
+	margin: 0 0 0 15px;
+}
+
+.node-type-documentation .side-menu a.section + a.sub-section {
+	margin-top: -6px;
+}
+
+.node-type-documentation .side-menu a.active { color: #004a35; }
+
+.node-type-documentation .side-menu a:hover { text-decoration-color: #b39f57; }
+
+.node-type-documentation .side-menu a.active:hover { text-decoration-color: #b39f57; }
+
+
+/* ----- */
+/* Cards */
+/* ----- */
+
+.card {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 0 auto 40px;
+	padding: 20px;
+	text-align: center;
+	border: solid 1px #bbb;
+	border-radius: 5px;
+	width: 320px;
+	max-width: 100%;
+	box-shadow: 4px 4px 8px rgba(0, 0, 0, .1);
+}
+
+.card * { color: #555 }
+
+a.card { transition: box-shadow .5s, transform .5s }
+
+a.card:hover,
+a.card:focus {
+	transform: translateY(-4px);
+	box-shadow: 4px 8px 16px rgba(0, 0, 0, .2);
+}
+
+.card-icon {
+	font-size: 54px;
+	color: #004a35;
+	transition: color .3s;
+}
+
+a.card:hover .card-icon { color: #b39f57 }
+
+/* ARRUMAR DEV DASHBOARD */
+.datepicker-wrapper input {
+    width: 100% !important;
+}
+
+.trace-filters .controls .ex-info {
+    width: 100%;
+}
+
+.page-devdashboard div#tabTrace div:nth-child(5) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.page-devdashboard div#tabTrace div:nth-child(5) .span-auto {
+    width: calc(50% - 15px) !important;
+}
+
+.page-devdashboard div#tabTrace div:nth-child(5) .span-auto .controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.page-devdashboard .span-auto label {
+    display: none;
+}
+.page-devdashboard .span-auto .controls label {
+    display: block;
+}
+
+.page-devdashboard .datepicker-wrapper.inline {
+    width: calc(50% - 15px) !important;
+}#gotoTop{bottom:90px;}.grecaptcha-badge {z-index:999;} </style>    <!--[if lt IE 9]>
+        <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+      <![endif]-->
+    <script type="text/javascript" src="./Retorno de Títulos de Cobrança por Webhook _ Unicred Developers_files/jquery.js" nonce=""></script>
+<script type="text/javascript" src="./Retorno de Títulos de Cobrança por Webhook _ Unicred Developers_files/jquery-extend-3.4.0.js" nonce=""></script>
+<script type="text/javascript" src="./Retorno de Títulos de Cobrança por Webhook _ Unicred Developers_files/jquery-html-prefilter-3.5.0-backport.js" nonce=""></script>
+<script type="text/javascript" src="./Retorno de Títulos de Cobrança por Webhook _ Unicred Developers_files/jquery.once.js" nonce=""></script>
+<script type="text/javascript" src="./Retorno de Títulos de Cobrança por Webhook _ Unicred Developers_files/drupal.js" nonce=""></script>
+<script type="text/javascript" src="./Retorno de Títulos de Cobrança por Webhook _ Unicred Developers_files/jquery_browser.js" nonce=""></script>
+<script type="text/javascript" src="./Retorno de Títulos de Cobrança por Webhook _ Unicred Developers_files/form-single-submit.js" nonce=""></script>
+<script type="text/javascript" src="./Retorno de Títulos de Cobrança por Webhook _ Unicred Developers_files/admin_devel.js" nonce=""></script>
+<script type="text/javascript" src="./Retorno de Títulos de Cobrança por Webhook _ Unicred Developers_files/pt-br_Q0FhWhmHsYMyZ2ICjgZZLfD7voUK-6MjU8TudZyTayI.js" nonce=""></script>
+<script type="text/javascript" src="./Retorno de Títulos de Cobrança por Webhook _ Unicred Developers_files/jquery.flexslider.js" nonce=""></script>
+<script type="text/javascript" src="./Retorno de Títulos de Cobrança por Webhook _ Unicred Developers_files/sensedia-user.js" nonce=""></script>
+<script type="text/javascript" src="./Retorno de Títulos de Cobrança por Webhook _ Unicred Developers_files/plugins.js" nonce=""></script>
+<script type="text/javascript" src="./Retorno de Títulos de Cobrança por Webhook _ Unicred Developers_files/custom.js" nonce=""></script>
+<script type="text/javascript" src="./Retorno de Títulos de Cobrança por Webhook _ Unicred Developers_files/coworker.js" nonce=""></script>
+<script type="text/javascript" src="./Retorno de Títulos de Cobrança por Webhook _ Unicred Developers_files/sensedia.js" nonce=""></script>
+<script type="text/javascript" src="./Retorno de Títulos de Cobrança por Webhook _ Unicred Developers_files/scrollspy.js" nonce=""></script>
+<script type="text/javascript" nonce="">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, {"basePath":"\/api-portal\/","pathPrefix":"","setHasJsCookie":0,"ajaxPageState":{"theme":"coworker","theme_token":"Aw7AaBhBB22fY1sfo62Q48c181bpQcSEWfRwYUTGtH0","js":{"https:\/\/ajax.googleapis.com\/ajax\/libs\/jquery\/3.6.1\/jquery.js":1,"misc\/jquery-extend-3.4.0.js":1,"misc\/jquery-html-prefilter-3.5.0-backport.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"sites\/default\/modules\/jquery_update\/js\/jquery_browser.js":1,"misc\/form-single-submit.js":1,"sites\/default\/modules\/admin_menu\/admin_devel\/admin_devel.js":1,"public:\/\/languages\/pt-br_Q0FhWhmHsYMyZ2ICjgZZLfD7voUK-6MjU8TudZyTayI.js":1,"sites\/default\/modules\/tabvn\/flexslider_format\/jquery.flexslider.js":1,"modules\/user\/user.js":1,"sites\/all\/themes\/coworker\/js\/plugins.js":1,"sites\/all\/themes\/coworker\/js\/custom.js":1,"sites\/all\/themes\/coworker\/js\/coworker.js":1,"sites\/all\/themes\/coworker\/js\/sensedia.js":1,"sites\/all\/themes\/coworker\/js\/scrollspy.js":1},"css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"modules\/comment\/comment.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"modules\/search\/search.css":1,"modules\/user\/user.css":1,"modules\/forum\/forum.css":1,"sites\/all\/modules\/views\/css\/views.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"sites\/all\/themes\/coworker\/style.css":1,"sites\/all\/themes\/coworker\/css\/tipsy.css":1,"sites\/all\/themes\/coworker\/css\/bootstrap.css":1,"sites\/all\/themes\/coworker\/css\/font-awesome.css":1,"sites\/all\/themes\/coworker\/css\/coworker.css":1,"public:\/\/color\/coworker_color_cache\/colors.css":1,"sites\/all\/themes\/coworker\/css\/responsive.css":1,"sites\/all\/themes\/coworker\/system.messages.css":1,"sites\/all\/themes\/coworker\/system.menus.css":1,"sites\/all\/themes\/coworker\/system.theme.css":1}},"urlIsAjaxTrusted":{"\/api-portal\/content\/retorno-de-t%C3%ADtulos-de-cobran%C3%A7a-por-webhook":true}});
+//--><!]]>
+</script>
+
+  </head>
+    <body class="stretched html not-front logged-in no-sidebars page-node page-node- page-node-55 node-type-page i18n-pt-br form-single-submit-processed">
+    <div id="skip-link">
+      <a href="https://developer.unicred.com.br/api-portal/content/retorno-de-t%C3%ADtulos-de-cobran%C3%A7a-por-webhook#main-content" class="element-invisible element-focusable">Pular para o conteúdo principal</a>
+    </div>
+        
+<div id="wrapper" class="clearfix">
+  <div id="top-bar">
+
+    <div class="container clearfix">
+
+              <div id="top-menu">
+
+            <div class="region region-top-left">
+    <div id="block-block-17" class="block block-block">
+
+    
+  <div class="content">
+    <!-- Bootstrap 4 - CSS -->
+
+
+<script nonce="">
+	//Realocar o CSS do Bootstrap 4
+	document.head.insertBefore(bootstrapCSS, document.head.firstChild);
+
+	// Remover Bootstrap antigo
+	function removeOldBootstrap() {
+		var styles = document.getElementsByTagName("style");
+		var bootstrapRegex = /@import url\("https\:\/\/[-\w\.]*\/api-portal\/sites\/all\/themes\/coworker\/css\/bootstrap\.css\?\w*"\);/;
+
+		for (var i = 0; i < styles.length; i++) {
+			if (styles[i].textContent.match(bootstrapRegex) != null)
+				styles[i].textContent = styles[i].textContent.replace(bootstrapRegex, "");
+		}
+	}
+
+	removeOldBootstrap();
+</script>
+
+<!-- Bootstrap 4 - scripts -->
+<script nonce="" src="./Retorno de Títulos de Cobrança por Webhook _ Unicred Developers_files/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script nonce="" src="./Retorno de Títulos de Cobrança por Webhook _ Unicred Developers_files/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>  </div>
+</div>
+<div id="block-block-13" class="block block-block">
+
+    
+  <div class="content">
+    <link rel="stylesheet" href="./Retorno de Títulos de Cobrança por Webhook _ Unicred Developers_files/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">  </div>
+</div>
+  </div>
+
+        </div>
+      
+
+      
+    </div>
+
+  </div>
+
+
+  <div id="header">
+    <div class="container clearfix">
+      <div id="logo">
+                  <a href="https://developer.unicred.com.br/api-portal/" class="standard-logo"><img src="./Retorno de Títulos de Cobrança por Webhook _ Unicred Developers_files/Logo_Unicred_Horizontal_RGB_800px_1.jpg" alt="Início" title="Início"></a>
+                      <a href="https://developer.unicred.com.br/api-portal/" class="retina-logo"><img src="./Retorno de Títulos de Cobrança por Webhook _ Unicred Developers_files/Sensedia_devs_200x60px.png"></a>
+                                </div>
+
+
+
+              <div id="primary-menu">
+          <ul id="main-menu" class="nav_simple sf-menu main-menu sf-horizontal sf-style-none sf-total-items-8 sf-parent-items-3 sf-single-items-5 sf-js-enabled"><li id="menu-339-1" class="first odd sf-item-1 sf-depth-1 mainMenu sf-no-children"><a href="https://developer.unicred.com.br/api-portal/content/primeiros-passos?language=pt-br" class="sf-depth-1 "><div>Primeiros Passos</div></a></li><li id="menu-1170-1" class="middle even sf-item-2 sf-depth-1 sf-total-children-1 sf-parent-children-0 sf-single-children-1 mainMenu parent menuparent has-dropdown sub-menu"><a href="https://developer.unicred.com.br/api-portal/content/api-docs" class="sf-depth-1  mainMenu parent menuparent has-dropdown"><div>API Docs</div></a><ul class="dropdown sf-js-enabled sub-menuitem" style="display: none; visibility: hidden;"><li id="menu-1163-1" class="first odd sf-item-1 sf-depth-2 mainMenu sf-no-children"><a href="https://developer.unicred.com.br/api-portal/content/api-guide" class="sf-depth-2 "><div>API Guide</div></a></li></ul></li><li id="menu-1134-1" class="middle odd sf-item-3 sf-depth-1 sf-total-children-3 sf-parent-children-0 sf-single-children-3 mainMenu parent menuparent has-dropdown sub-menu"><a href="https://developer.unicred.com.br/api-portal/content/primeiros-passos" class="sf-depth-1  mainMenu parent menuparent has-dropdown"><div>APIs</div></a><ul class="dropdown sf-js-enabled sub-menuitem" style="display: none; visibility: hidden;"><li id="menu-1136-1" class="first odd sf-item-1 sf-depth-2 mainMenu sf-no-children"><a href="https://developer.unicred.com.br/api-portal/content/autentica%C3%A7%C3%A3o-0" class="sf-depth-2 "><div>Autenticação</div></a></li><li id="menu-1135-1" class="middle even sf-item-2 sf-depth-2 mainMenu sf-no-children"><a href="https://developer.unicred.com.br/api-portal/content/busca-cooperado" class="sf-depth-2 "><div>Busca Cooperado</div></a></li><li id="menu-1152-1" class="last odd sf-item-3 sf-depth-2 mainMenu sf-no-children"><a href="https://developer.unicred.com.br/api-portal/content/t%C3%ADtulos-de-cobran%C3%A7a" class="sf-depth-2 "><div>Títulos de Cobrança</div></a></li></ul></li><li id="menu-1168-1" class="middle even sf-item-4 sf-depth-1 sf-total-children-3 sf-parent-children-0 sf-single-children-3 mainMenu parent menuparent has-dropdown sub-menu"><a href="https://developer.unicred.com.br/api-portal/content/dev-tools" class="sf-depth-1  mainMenu parent menuparent has-dropdown"><div>Dev Tools</div></a><ul class="dropdown sf-js-enabled sub-menuitem" style="display: none; visibility: hidden;"><li id="menu-1169-1" class="first odd sf-item-1 sf-depth-2 mainMenu sf-no-children"><a href="https://developer.unicred.com.br/api-portal/myapps" class="sf-depth-2 "><div>Minhas APPs</div></a></li><li id="menu-1171-1" class="middle even sf-item-2 sf-depth-2 mainMenu sf-no-children"><a href="https://developer.unicred.com.br/api-portal/devdashboard" class="sf-depth-2 "><div>Dev Dashboard</div></a></li><li id="menu-1172-1" class="last odd sf-item-3 sf-depth-2 mainMenu sf-no-children"><a href="https://developer.unicred.com.br/api-portal/apishealth" class="sf-depth-2 "><div>API Status</div></a></li></ul></li><li id="menu-1143-1" class="middle odd sf-item-5 sf-depth-1 mainMenu sf-no-children"><a href="https://developer.unicred.com.br/api-portal/content/ambientes" class="sf-depth-1 "><div>Ambientes</div></a></li><li id="menu-716-1" class="middle even sf-item-6 sf-depth-1 mainMenu sf-no-children"><a href="https://developer.unicred.com.br/api-portal/content/faq" class="sf-depth-1 "><div>FAQ</div></a></li><li id="menu-1165-1" class="middle odd sf-item-7 sf-depth-1 mainMenu sf-no-children"><a href="https://developer.unicred.com.br/api-portal/user" class="btn-menu-secondary sf-depth-1"><div>Minha Conta</div></a></li><li id="menu-1167-1" class="last even sf-item-8 sf-depth-1 mainMenu sf-no-children"><a href="https://developer.unicred.com.br/api-portal/user/logout" class="btn-menu sf-depth-1"><div>Sair</div></a></li></ul><select class="select-menu"><option value="#">Go to Page...</option><option value="https://developer.unicred.com.br/api-portal/content/primeiros-passos?language=pt-br">&nbsp;Primeiros Passos</option><option value="https://developer.unicred.com.br/api-portal/content/api-docs">&nbsp;API Docs</option><option value="https://developer.unicred.com.br/api-portal/content/api-guide">&nbsp;–&nbsp;&nbsp;API Guide</option><option value="https://developer.unicred.com.br/api-portal/content/primeiros-passos">&nbsp;APIs</option><option value="https://developer.unicred.com.br/api-portal/content/autentica%C3%A7%C3%A3o-0">&nbsp;–&nbsp;&nbsp;Autenticação</option><option value="https://developer.unicred.com.br/api-portal/content/busca-cooperado">&nbsp;–&nbsp;&nbsp;Busca Cooperado</option><option value="https://developer.unicred.com.br/api-portal/content/t%C3%ADtulos-de-cobran%C3%A7a">&nbsp;–&nbsp;&nbsp;Títulos de Cobrança</option><option value="https://developer.unicred.com.br/api-portal/content/dev-tools">&nbsp;Dev Tools</option><option value="https://developer.unicred.com.br/api-portal/myapps">&nbsp;–&nbsp;&nbsp;Minhas APPs</option><option value="https://developer.unicred.com.br/api-portal/devdashboard">&nbsp;–&nbsp;&nbsp;Dev Dashboard</option><option value="https://developer.unicred.com.br/api-portal/apishealth">&nbsp;–&nbsp;&nbsp;API Status</option><option value="https://developer.unicred.com.br/api-portal/content/ambientes">&nbsp;Ambientes</option><option value="https://developer.unicred.com.br/api-portal/content/faq">&nbsp;FAQ</option><option value="https://developer.unicred.com.br/api-portal/user">&nbsp;Minha Conta</option><option value="https://developer.unicred.com.br/api-portal/user/logout">&nbsp;Sair</option></select>        </div>
+          </div>
+  </div>
+
+  
+
+
+  <div id="content" style="min-height: 863px;">
+
+                  <div id="page-title">
+          <div class="container clearfix">
+
+            <h1>Retorno de Títulos de Cobrança por Webhook</h1>
+
+                          <div id="top-search">
+                <form action="https://developer.unicred.com.br/api-portal/content/retorno-de-t%C3%ADtulos-de-cobran%C3%A7a-por-webhook" method="post" id="search-block-form" accept-charset="UTF-8"><div><div class="container-inline">
+      <h2 class="element-invisible">Formulário de busca</h2>
+    <div class="form-item control-group form-type-textfield form-item-search-block-form">
+ <label class="element-invisible control-label" for="edit-search-block-form--2">Buscar </label>
+<div class="controls">
+<input title="Digite os termos que você deseja procurar." type="text" id="edit-search-block-form--2" name="search_block_form" value="" size="15" maxlength="128" class="form-text">
+
+</div>
+</div>
+<div class="form-actions form-wrapper" id="edit-actions"><button class="btn form-submit" type="submit" id="edit-submit" name="op" value="Buscar">Buscar</button>
+  </div><input type="hidden" name="form_build_id" value="form-w-6eUET8TAQUA_kFy-v16yHuhO3Y4hoLVNZ4aHpkP0I">
+<input type="hidden" name="form_token" value="nKLzbCQSdml5AUaE4IDL3NLre1vNETTqV9PHDaupzQI">
+<input type="hidden" name="form_id" value="search_block_form">
+</div>
+</div></form>              </div>
+            
+          </div>
+        </div>
+
+          
+    
+    
+    <div class="content-wrap">
+      <div class="container clearfix">
+
+                <!-- content region -->
+        <div class="content-main-column nobottommargin clearfix">
+          
+          
+                    <a id="main-content"></a>
+                    
+          <div class="tabs"></div>                    
+            <div class="region region-content">
+    <div id="block-system-main" class="block block-system">
+
+    
+  <div class="content">
+    <div id="node-55" class="node node-page clearfix" about="/api-portal/content/retorno-de-t%C3%ADtulos-de-cobran%C3%A7a-por-webhook" typeof="foaf:Document">
+
+  
+      <span property="dc:title" content="Retorno de Títulos de Cobrança por Webhook" class="rdf-meta element-hidden"></span><span property="sioc:num_replies" content="0" datatype="xsd:integer" class="rdf-meta element-hidden"></span>
+  
+  <div class="content">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><style>
+  :root {
+    --dark-green: #004a35;
+    --blue-light: #E6F1FB;
+    --blue-mid: #378ADD;
+    --green: #3B6D11;
+    --green-light: #EAF3DE;
+    --amber: #7e4600;
+    --amber-light: #fcf6ec;
+    --red: #A32D2D;
+    --red-light: #FCEBEB;
+    --gray: #444441;
+    --gray-light: #F1EFE8;
+    --gray-border: #D3D1C7;
+    --text: #2C2C2A;
+    --text-muted: #5F5E5A;
+    --bg: #ffffff;
+    --surface: #f4fff3;
+  }
+
+  body {
+    font-family: "Aptos", sans-serif;
+    line-height: 1.7;
+    color: var(--text);
+    background: var(--bg);
+  }
+
+  h1 { margin-bottom: 0.25rem; }
+  h2 { margin: 2.5rem 0 1rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--gray-border); }
+  h3 { margin: 1.75rem 0 0.6rem; }
+  h4 { margin: 1.25rem 0 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
+
+  p { margin-bottom: 0.85rem; }
+
+  a { color: var(--dark-green); }
+
+  code {
+    background: var(--gray-light);
+    border: 1px solid var(--gray-border);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 13px;
+    color: var(--text);
+  }
+
+  pre {
+    background: #ddd;
+    color: #333;
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.5rem;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-x: auto;
+    margin: 0.75rem 0 1.25rem;
+    font-family: Consolas, "Courier New", monospace;
+  }
+
+  pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+  }
+
+  ul, ol { padding-left: 1.5rem; margin-bottom: 0.85rem; }
+  li { margin-bottom: 0.3rem; }
+  .webhook {
+    color: var(--red);
+  }
+  .callout {
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+  .callout-icon { font-size: 18px; flex-shrink: 0; line-height: 1.5; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; margin-bottom: 0.25rem; }
+  .callout-body p:last-child { margin-bottom: 0; }
+
+  .callout-info    { background: var(--blue-light);   border-left: 4px solid var(--blue-mid); }
+  .callout-success { background: var(--green-light);  border-left: 4px solid var(--green); }
+  .callout-warning { background: var(--amber-light);  border-left: 4px solid var(--amber); }
+  .callout-danger  { background: var(--red-light);    border-left: 4px solid var(--red); }
+
+  .steps { counter-reset: step; margin: 1.5rem 0; }
+  .step {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: flex-start;
+  }
+  .step-num {
+    counter-increment: step;
+    background: var(--dark-green);
+    color: #fff;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-num::before { content: counter(step); }
+  .step-body strong { display: block; font-size: 15px; margin-bottom: 0.2rem; }
+  .step-body p { margin-bottom: 0; color: var(--text-muted); font-size: 14px; }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 0.35rem 0 0.35rem 1.8rem; position: relative; border-bottom: 1px solid var(--gray-border); font-size: 14px; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: "✓"; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+
+  .config-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 14px; }
+  .config-table th { background: var(--dark-green); color: #fff; padding: 10px 14px; text-align: left; }
+  .config-table td { padding: 10px 14px; border-bottom: 1px solid var(--gray-border); vertical-align: top; }
+  .config-table tr:last-child td { border-bottom: none; }
+  .config-table tr:nth-child(even) td { background: var(--surface); }
+  .config-table .field-name { font-family: Consolas, monospace; font-size: 13px; font-weight: 700; white-space: nowrap; }
+  .config-table .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .badge-obrig { background: var(--red-light); color: var(--red); }
+  .badge-opt   { background: var(--gray-light); color: var(--text-muted); }
+
+  .key-card {
+    background: var(--surface);
+    border: 1px solid var(--gray-border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.5rem;
+    margin: 1rem 0;
+  }
+  .key-card h4 { margin: 0 0 0.75rem; }
+  .key-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: baseline;
+    margin-bottom: 0.5rem;
+  }
+  .key-label { font-size: 13px; color: var(--text-muted); min-width: 220px; }
+  .key-value { font-family: Consolas, monospace; font-size: 13px; background: #fff; border: 1px solid var(--gray-border); border-radius: 4px; padding: 3px 8px; }
+
+  .crypto-box {
+    background: var(--surface);
+    border: 1px solid var(--gray-border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.5rem;
+    font-size: 14px;
+  }
+  .crypto-box table { width: 100%; border-collapse: collapse; }
+  .crypto-box td { padding: 6px 0; vertical-align: top; }
+  .crypto-box td:first-child { color: var(--text-muted); width: 200px; }
+
+  .scenario {
+    border: 1px solid var(--gray-border);
+    border-radius: var(--radius-lg);
+    margin: 1.5rem 0;
+    overflow: hidden;
+  }
+  .scenario-header {
+    background: var(--dark-green);
+    color: #fff;
+    padding: 0.75rem 1.25rem;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .scenario-header span { font-weight: 400; opacity: 0.75; margin-left: 0.5rem; }
+  .scenario-body { padding: 1.25rem; }
+
+.ref-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 0.75rem 0 1.5rem;
+}
+
+.ref-table th {
+  background: var(--dark-green);
+  color: #fff;
+  padding: 9px 12px;
+  text-align: left;
+  font-weight: 700;
+}
+
+.ref-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--gray-border);
+}
+
+.ref-table tr:not(.section-row):nth-child(even) td {
+  background: var(--surface);
+}
+
+.ref-table .section-row td {
+  background: #1f5f46;  
+  color: #fff;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 12px;
+  border-bottom: none;
+}
+
+  .faq-item { border-bottom: 1px solid var(--gray-border); padding: 1rem 0; }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-q { font-weight: 700; margin-bottom: 0.35rem; }
+  .faq-a { color: var(--text-muted); font-size: 14px; }
+  .faq-a p { margin-bottom: 0.5rem; }
+  .faq-a p:last-child { margin-bottom: 0; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin: 1rem 0; }
+  
+</style>
+
+
+<h2 id="section0">Introdução</h2>
+
+<p>O Webhook de Retorno agiliza a comunicação entre a Unicred e o Beneficiário, notificando sobre alterações nos títulos de forma mais eficiente através de um serviço REST.
+   Ele substitui (ou complementa) os arquivos de retorno tradicionais: ao invés de baixar um arquivo periodicamente, seu sistema recebe uma chamada HTTP a cada alteração de título — incluindo o <strong>QR Code PIX</strong> e outros dados adicionais.</p>
+
+<div class="steps">
+  <div class="step">
+    <div class="step-num"></div>
+    <div class="step-body">
+      <strong>Desenvolva o serviço REST</strong>
+      <p>Crie um endpoint HTTPS que recebe <code>POST</code>, descriptografa o body e retorna <code>202 + UUID</code>.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num"></div>
+    <div class="step-body">
+      <strong>Homologue com os comandos cURL</strong>
+      <p>Simule chamadas reais usando os cenários de teste fornecidos antes de ir a produção.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num"></div>
+    <div class="step-body">
+      <strong>Cadastre o Webhook no CobExpress - Produção</strong>
+      <p>Configure a URL, as chaves e o tipo de retorno diretamente no front-end da cobrança para o deploy do serviço REST em produção.</p>
+    </div>
+  </div>
+</div>
+
+<div class="callout callout-info">
+  <div class="callout-icon">ℹ</div>
+  <div class="callout-body">
+    <strong>Arquivo de retorno continua disponível</strong>
+    <p>Ativar o Webhook não desativa o arquivo de retorno. Ambos podem ser usados simultaneamente.</p>
+  </div>
+</div>
+
+<h2>Onde ficam as chaves?</h2>
+
+<p>Há duas chaves que <strong>você mesmo define</strong> e cadastra no <strong>CobExpress</strong> (aba de Configurações). Elas não são geradas pela Unicred — você as cria como UUIDs e registra no sistema.</p>
+
+<div class="two-col">
+  <div class="key-card">
+    <h4>Chave de Autenticação</h4>
+    <p style="font-size:14px; color: var(--text-muted); margin-bottom: 0.75rem;">Enviada no header <code>x-api-key</code> a cada requisição. Também serve como IV da descriptografia (primeiros 16 caracteres).</p>
+    <ul style="font-size:14px; padding-left: 1.25rem;">
+      <li>Formato: UUID v4</li>
+      <li>Você define o valor</li>
+      <li>Única por inscrição</li>
+    </ul>
+  </div>
+  <div class="key-card">
+    <h4>Chave de Criptografia</h4>
+    <p style="font-size:14px; color: var(--text-muted); margin-bottom: 0.75rem;">Usada como Secret Key na descriptografia AES-256. Não é enviada nas requisições — apenas armazenada no seu serviço.</p>
+    <ul style="font-size:14px; padding-left: 1.25rem;">
+      <li>Formato: UUID v4</li>
+      <li>Você define o valor</li>
+      <li>Pode ser compartilhada entre inscrições</li>
+    </ul>
+  </div>
+</div>
+
+<div class="callout callout-warning">
+  <div class="callout-icon">⚠</div>
+  <div class="callout-body">
+    <strong>As duas chaves não podem ter o mesmo valor</strong>
+    <p>Cada Chave de Autenticação deve referenciar uma única Chave de Criptografia, e os valores devem ser distintos entre si.</p>
+  </div>
+</div>
+
+<h2>Passo 1 — Desenvolvimento do Serviço REST</h2>
+<p>A Unicred entregará as informações da alteração do título através de um serviço REST que deve estar sobre o protocolo HTTPs. O desenvolvimento desse serviço deve seguir três pontos principais: especificações, criptografia e algumas dicas/regras básicas.</p>
+<h3>Especificações</h3>
+
+<table class="config-table">
+  <tbody><tr>
+    <th>Item</th>
+    <th>Requisito</th>
+    <th>Detalhe</th>
+  </tr>
+  <tr>
+    <td class="field-name">Método HTTP</td>
+    <td><code>POST</code></td>
+    <td>Outros métodos não são utilizados pela Unicred.</td>
+  </tr>
+  <tr>
+    <td class="field-name">Protocolo</td>
+    <td>HTTPS (porta 443)</td>
+    <td>Certificado válido e confiável obrigatório.</td>
+  </tr>
+  <tr>
+    <td class="field-name">Header recebido</td>
+    <td><code>x-api-key: {Chave de autenticação – API Webhook}</code></td>
+    <td>Use para identificar qual inscrição está recebendo e para obter o IV de descriptografia.</td>
+  </tr>
+  <tr>
+    <td class="field-name">Content-Type recebido</td>
+    <td><code>text/plain</code></td>
+    <td>Body em texto criptografado (AES-256 + Base64).</td>
+  </tr>
+  <tr>
+    <td class="field-name">Status de retorno</td>
+    <td><code>202 Accepted</code></td>
+    <td>Sempre retornar 202, inclusive em erros de processamento interno.</td>
+  </tr>
+  <tr>
+    <td class="field-name">Body de retorno</td>
+    <td>UUID v4 em texto puro</td>
+    <td>Somente o UUID, sem aspas, sem JSON, sem nada mais. Ver exemplos abaixo.</td>
+  </tr>
+  <tr>
+    <td class="field-name">Content-Type retornado</td>
+    <td><code>text/plain</code></td>
+    <td>O UUID deve ser retornado como texto puro.</td>
+  </tr>
+  <tr>
+    <td class="field-name">Tempo de resposta</td>
+    <td>Máximo 5 segundos</td>
+    <td>Acima disso o cadastro fica <em>off-sync</em>. Use processamento assíncrono interno.</td>
+  </tr>
+</tbody></table>
+
+<h3>Atenção: formato do UUID de retorno</h3>
+
+<p>O UUID deve ser retornado <strong>sem aspas</strong> no corpo da resposta. Um UUID entre aspas é considerado inválido e coloca o cadastro em estado <em>off-sync</em>.</p>
+
+<div class="two-col">
+  <div>
+    <p style="color: var(--red); font-weight: 700; font-size: 13px;">Inválido — UUID entre aspas</p>
+    <pre><code>"9926e320-0e0a-43d0-b76d-972d26956d93"</code></pre>
+  </div>
+  <div>
+    <p style="color: var(--green); font-weight: 700; font-size: 13px;">Válido — UUID sem aspas</p>
+    <pre><code>9926e320-0e0a-43d0-b76d-972d26956d93</code></pre>
+  </div>
+</div>
+
+<h3>O que significa off-sync?</h3>
+
+<p>Se o seu endpoint retornar UUID inválido, demorar mais de 5 segundos, ou retornar um body diferente do esperado, o cadastro entra em estado <em>off-sync</em>. Nesse estado:</p>
+<ul>
+  <li>Nenhuma nova requisição será enviada automaticamente;</li>
+  <li>Cabe ao <strong>beneficiário</strong> monitorar e corrigir o endpoint;</li>
+  <li>Após correção, o fluxo de reenvio é retomado normalmente.</li>
+</ul>
+
+<h3>Criptografia</h3>
+
+<p>O body de cada requisição contém as informações do título criptografadas no padrão AES-256. Para descriptografar, use as seguintes configurações:</p>
+
+<div class="crypto-box">
+  <table>
+    <tbody><tr><td>Cipher Mode of Encryption</td><td><strong>CBC</strong></td></tr>
+    <tr><td>Padding</td><td><strong>PKCS5Padding</strong></td></tr>
+    <tr><td>Key Size in Bits</td><td><strong>256</strong></td></tr>
+    <tr><td>Output Text Format</td><td><strong>Base64</strong></td></tr>
+    <tr><td>Enter IV</td><td><strong>Primeiros 16 caracteres</strong> da Chave de Autenticação (recebida no <code>x-api-key</code>)</td></tr>
+    <tr><td>Secret Key</td><td><strong>Primeiros 32 caracteres</strong> da Chave de Criptografia (cadastrada por você)</td></tr>
+  </tbody></table>
+</div>
+
+<h4>Teste de validação da descriptografia</h4>
+<p>Use os dados abaixo para verificar se sua função de descriptografia está correta:</p>
+
+<div class="key-card">
+  <div class="key-row"><span class="key-label">Chave de Autenticação - API Webhook</span><span class="key-value">f4aecbe7-5061-4522-a1d0-26fc74a920a0</span></div>
+  <div class="key-row"><span class="key-label">Chave de Criptografia - API Webhook</span><span class="key-value">3410d803-bdb4-463a-bd5b-d46ddaaba37b</span></div>
+  <div class="key-row"><span class="key-label">Texto criptografado</span><span class="key-value">9liYoy9rGzjnzN0VQDGIxHtUzM7+D+Tveu2MRZrSkxk=</span></div>
+  <div class="key-row"><span class="key-label">Resultado esperado</span><span class="key-value" style="color: var(--green);">Unicred via Webhook</span></div>
+</div>
+
+<h3>Regras básicas do serviço</h3>
+
+<ul class="checklist">
+  <li><strong>Autenticação:</strong> Use o valor do header <code>x-api-key</code> para identificar qual inscrição está recebendo e buscar a Chave de Criptografia correspondente.</li>
+  <li><strong>Idempotência:</strong> Não há garantia de que o movimento de um título será enviado apenas uma vez. Portanto, é essencial implementar um mecanismo de idempotência no seu serviço. Para isso, no corpo criptografado da requisição, haverá o campo <code>uuidRequisicaoWebhook</code> que será único para cada movimento do título. Certifique-se de utilizar este identificador para evitar o processamento duplicado de movimentos.
+ </li>
+  <li><strong>HTTPS válido:</strong> Use a porta 443 com certificado digital confiável e público.</li>
+  <li><strong>Tempo de resposta:</strong> Retorne o HTTP 202 + UUID em até 5 segundos. Processe internamente de forma assíncrona se necessário.</li>
+</ul>
+
+<h3>Estrutura do JSON (após descriptografia)</h3>
+
+<pre><code>{
+  "uuidInscricaoWebhook": "6c17869c-dbe3-4dd8-abc3-5bb1d2a33758",
+  "uuidRequisicaoWebhook": "bba51828-b147-4928-b34d-211af9b3b4d0",
+  "codigoMovimento": "03",
+  "codigoInstrucaoOrigem": "09",
+  "codigoRejeicao": "114",
+  "beneficiario": {
+    "uuidBeneficiario": "4D2FBDC4AED546EBBF093D8BE9D0F561",
+    "agencia": "5971",
+    "conta": "726620"
+  },
+  "titulo": {
+    "uuidTitulo": "4bc86cd358db484b8c07a79def774022",
+    "codigoBarras": "13692983100000045555971000072662000000995231",
+    "dataVencimento": "2024-07-28",
+    "linhaDigitavel": "13695971070007266200000009952318298310000004555",
+    "nossoNumero": "00000995231",
+    "qrCodePix": "00020101021226940014br.gov.bcb.pix...",
+    "seuNumero": "5014715",
+    "valorTitulo": 45.55,
+    "codigoSituacao": "01",
+    "pagador": {
+      "documento": "84227798035",
+      "nomeRazaoSocial": "Grafica Unicred LTDA"
+    }
+  },
+  "credito": { "dataCredito": "2024-08-21", "valorLancamento": 95.47 },
+  "tarifa": { "dataTarifa": "2024-08-22", "valorTarifa": 1.10 }
+}</code></pre>
+
+<div class="callout callout-info">
+  <div class="callout-icon">ℹ</div>
+  <div class="callout-body">
+    <p>Nem todos os campos são preenchidos em todos os eventos. Apenas os campos relevantes ao tipo de movimento (<code>codigoMovimento</code> + <code>codigoInstrucaoOrigem</code>) são enviados.</p>
+  </div>
+</div>
+
+<h3>Descrição dos campos</h3>
+
+<table class="ref-table">
+
+  <tbody><tr>
+    <th>Campo</th>
+    <th>Tipo (Tamanho)</th>
+    <th>Descrição</th>
+  </tr>
+
+  <tr>
+    <td><code>uuidInscricaoWebhook</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>UUID (36)</td>
+    <td>Identificador da inscrição do Webhook.</td>
+  </tr>
+  <tr>
+    <td><code>uuidRequisicaoWebhook</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>UUID (36)</td>
+    <td>Identificador único do envio — use para idempotência.</td>
+  </tr>
+  <tr>
+    <td><code>codigoMovimento</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>Texto (2)</td>
+    <td>Tipo de alteração do título. Ver tabela Movimentações.</td>
+  </tr>
+  <tr>
+    <td><code>codigoInstrucaoOrigem</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>Texto (2)</td>
+    <td>Instrução do beneficiário que originou a alteração. Ver tabela Instruções.</td>
+  </tr>
+  <tr>
+    <td><code>codigoRejeicao</code> <span class="badge badge-opt">opcional</span></td>
+    <td>Texto (3)</td>
+    <td>Motivo de rejeição da instrução.</td>
+  </tr>
+
+  <tr class="section-row"><td colspan="3">Beneficiário</td></tr>
+
+  <tr>
+    <td><code>uuidBeneficiario</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>Texto (32)</td>
+    <td>Identificador do beneficiário.</td>
+  </tr>
+  <tr>
+    <td><code>agencia</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>Texto (4)</td>
+    <td>Número da agência.</td>
+  </tr>
+  <tr>
+    <td><code>conta</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>Texto (6)</td>
+    <td>Número da conta corrente sem dígito.</td>
+  </tr>
+
+  <tr class="section-row"><td colspan="3">Título</td></tr>
+
+  <tr>
+    <td><code>uuidTitulo</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>UUID (32)</td>
+    <td>Identificador único do título.</td>
+  </tr>
+  <tr>
+    <td><code>codigoBarras</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>Texto (44)</td>
+    <td>Código de barras sem formatação.</td>
+  </tr>
+  <tr>
+    <td><code>dataVencimento</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>Data YYYY-MM-DD</td>
+    <td>Data de vencimento do título.</td>
+  </tr>
+  <tr>
+    <td><code>linhaDigitavel</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>Texto (46)</td>
+    <td>Linha digitável sem formatação.</td>
+  </tr>
+  <tr>
+    <td><code>nossoNumero</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>Texto (11)</td>
+    <td>Identificador do banco emissor.</td>
+  </tr>
+  <tr>
+    <td><code>seuNumero</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>Texto (15)</td>
+    <td>Número de controle interno do beneficiário.</td>
+  </tr>
+  <tr>
+    <td><code>valorTitulo</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>Numérico (14,2)</td>
+    <td>Valor do título.</td>
+  </tr>
+  <tr>
+    <td><code>codigoSituacao</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>Texto (4)</td>
+    <td>Situação atual do título. Ver tabela Status.</td>
+  </tr>
+  <tr>
+    <td><code>qrCodePix</code> <span class="badge badge-opt">opcional</span></td>
+    <td>Texto (400)</td>
+    <td>QR code para pagamento via PIX.</td>
+  </tr>
+  
+  <tr class="section-row"><td colspan="3">Título / Pagador</td></tr>
+
+  <tr>
+    <td><code>documento</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>Texto (14)</td>
+    <td>CPF/CNPJ sem formatação.</td>
+  </tr>
+  <tr>
+    <td><code>nomeRazaoSocial</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>Texto (40)</td>
+    <td>Nome ou razão social do pagador.</td>
+  </tr>
+
+  <tr class="section-row"><td colspan="3">Crédito (quando houver repasse)</td></tr>
+
+  <tr>
+    <td><code>dataCredito</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>Data YYYY-MM-DD</td>
+    <td>Data do lançamento do crédito na conta do beneficiário.</td>
+  </tr>
+  <tr>
+    <td><code>valorLancamento</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>Numérico (14,2)</td>
+    <td>Valor pago menos a tarifa.</td>
+  </tr>
+
+  <tr class="section-row"><td colspan="3">Pagamento (quando liquidado)</td></tr>
+
+  <tr>
+    <td><code>agenciaRecebedora</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>Texto (4)</td>
+    <td>Agência que recebeu o pagamento.</td>
+  </tr>
+  <tr>
+    <td><code>codigoBancoRecebedor</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>Texto (3)</td>
+    <td>Código do banco recebedor.</td>
+  </tr>
+  <tr>
+    <td><code>codigoCanalLiquidacao</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>Texto (3)</td>
+    <td>Canal de pagamento. Ver tabela Canais.</td>
+  </tr>
+  <tr>
+    <td><code>dataLiquidacao</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>Data YYYY-MM-DD</td>
+    <td>Data em que o título foi pago.</td>
+  </tr>
+  <tr>
+    <td><code>valorAbatimento</code> <span class="badge badge-opt">opcional</span></td>
+    <td>Numérico (14,2)</td>
+    <td>Valor de abatimento aplicado.</td>
+  </tr>
+  <tr>
+    <td><code>valorDesconto</code> <span class="badge badge-opt">opcional</span></td>
+    <td>Numérico (14,2)</td>
+    <td>Valor de desconto aplicado.</td>
+  </tr>
+  <tr>
+    <td><code>valorMora</code> <span class="badge badge-opt">opcional</span></td>
+    <td>Numérico (14,2)</td>
+    <td>Valor de juros/multa.</td>
+  </tr>
+  <tr>
+    <td><code>valorRecebido</code> <span class="badge badge-opt">opcional</span></td>
+    <td>Numérico (14,2)</td>
+    <td>Valor total pago.</td>
+  </tr>
+
+  <tr class="section-row"><td colspan="3">Tarifa</td></tr>
+
+  <tr>
+    <td><code>dataTarifa</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>Data YYYY-MM-DD</td>
+    <td>Data de aplicação da tarifa.</td>
+  </tr>
+  <tr>
+    <td><code>valorTarifa</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>Numérico (14,2)</td>
+    <td>Valor da tarifa.</td>
+  </tr>
+
+  <tr class="section-row"><td colspan="3">Empréstimo (caução)</td></tr>
+
+  <tr>
+    <td><code>numeroContrato</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>Texto (10)</td>
+    <td>Número do contrato de empréstimo.</td>
+  </tr>
+
+  <tr class="section-row"><td colspan="3">Protesto</td></tr>
+
+  <tr>
+    <td><code>quantidadeDiasProtesto</code> <span class="badge badge-obrig">obrigatório</span></td>
+    <td>Numérico (2)</td>
+    <td>Dias após vencimento para iniciar protesto (caução).</td>
+  </tr>
+
+</tbody></table>
+
+<h2>Passo 2 — Homologação</h2>
+<p>No ambiente de homologação da Unicred disponibilizamos apenas o serviço de emissão de título. Este serviço permite a homologação das chamadas do Webhook com dados reais para os eventos de emissão do título.
+
+</p><p>Para validar o desenvolvimento de outros eventos, fornecemos uma série de comandos cURL com dados fictícios, que simulam chamadas reais ao seu serviço conforme as especificações fornecidas pela Unicred.</p>
+
+Você pode importar esses comandos em uma plataforma de API, como Postman ou Insomnia, ou executá-los diretamente na linha de comando para realizar os testes. Após a execução, verifique se os dados criptografados enviados correspondem aos dados recebidos conforme especificado.<p></p>
+<p>Para homologação use a <strong>Chave de Criptografia</strong>: <code>af81d220-a717-46f2-9371-18be3777f87b</code></p>
+
+<p>Substitua <code>'SUA_URL'</code> pela URL do seu ambiente de homologação em cada comando abaixo.</p>
+
+<details class="scenario">
+  <summary class="scenario-header">Cenário 1 <span>Instrução de remessa confirmada</span></summary>
+  <div class="scenario-body">
+    <pre><code>curl --request POST 'SUA_URL' \
+--header 'x-api-key: dbd283c7-c6bc-4135-88bc-f9d30c679c2c' \
+--header 'Content-Type: text/plain' \
+--data 'r2ARrolPWr8eEjkodmd2BqiiSHBH2HeN6Y+AHu8awm5S2HwggkQKcSQTkAbv8khFCR+j81amunT3ELgokXUUQnXsaxqhGOTvjZiWv928V8RCziI5ybQ2kuQCgjNiW33Z2oUgDVHlr2XqI+4zM4HdjopwMfBvvwK+uQRkeOzY1718oqX6h2rbTWHtfyLqmCR9kl4SfO6wwhO0Z5wLLm1d+32Eh17PsouDcc3Y58kiy64BR3635ZdpCUIIDp2jdLPXWiu6FGWUFLAHSPtqsI5AHMT7KLIAbVxCVSa9oSA8WjGG9VWKYlZmy4tryS59kpCjw+WxfArhBG2xZtrHhOa290XDoK8S660CpsY+dBikN9j4mzV/XJ02pBeXlpz31pSu41atW9V73C6DDyNEjJeVdkAapaD00KT5WC8I9fwKZ5J/u6ZxBxkor1f4LkkYr1svcwpXlqEXq4ZYB5l0JcaO7MRQmwhayZ4daUqeRw0ZRMcnC1d6Dv+1tw26apWhwTgjBoMsvoqdhZByCZ3b3uSJ4CsSqYzk5Rzcw68r7vD5zlknyo2cr8IHVNiS0oMPFadYU/txj4iTybRRjXhdXTbbyS/XeAM2r2EGMHvxfwYGmqvRJ/LZ6cmt91rNdSCp1cIz95uvNvTIarap9wSQ06Sbzxya4doIr0CdPEkj7GuKGSN3/llPoBtE7/+ro0U9Yw5my/7xJNWfmEhMZmEmgP9272susCl6wu9NzrJrT/+HHI4ZodVydcPWc3OyaB1E2AaearVIhTaxqcggR80iG3N4vikDh/+JEJKTGktrcAsnkeablW1yezKnf2fz+Pw/PqDs1ac9gLS7jMPiSuwfgUuP5n8zbGBcJZ1mtMWeZn9qZLgMc/Ml0mA59PbsfMOW24Jb6kPKZgMWk4LdGDVqLnhawx8ekLVgqAOAFZaAKeq61s+0rqE98EGKszHNcvaaWpZRQ3XsC2jZRw8YuR8zvPhju0guy6oKQtDLWOygN2kL1w7J3qMkYH8qCbJ+HAh595nqGfcvKusSqgp/0tkh34IX2gjT5rcaPUDXHkZ0b4UyzY6GwzCPOx5u/ijagETF/G1TVr8gCsT+AIOamFB1YWBp/qJ8OT6o1UJy0Si5pJFRbQRCHIgraMwPajHcq+HiaTLqWeLuFX2RBQRTxppnRJFkkEuvADi0Lbe2GIGivaPmbh/CHwzyyFyE7Y++Qy2SNd8MJxhKxdtCqykoOe8Puq+qbSYF8tSgap3pQqDMx/AC637mKe+mh2ESdPFlgzWkt/ZxHkQigxpXeaiAhArvFxTEBw=='</code></pre>
+
+    <p style="font-size:13px; color: var(--text-muted); margin-bottom: 0.5rem;">Após a execução, o JSON descriptografado deve ser:</p>
+    <pre><code>{
+  "uuidInscricaoWebhook": "17c61b9e-2bb1-4e44-a71a-80a441ab719a",
+  "uuidRequisicaoWebhook": "d4db33dc-e354-4618-8ef6-495d20ecb57f",
+  "codigoMovimento": "02",
+  "codigoInstrucaoOrigem": "01",
+  "beneficiario": { "uuidBeneficiario": "4D2FBDC4AED546EBBF093D8BE9D0F561", "agencia": "5971", "conta": "726620" },
+  "titulo": {
+    "uuidTitulo": "40ff615cc48d47079c14360e3f5c6146",
+    "codigoBarras": "13699982500000011625971000072662000000979112",
+    "dataVencimento": "2024-08-31",
+    "linhaDigitavel": "13695971070007266200000009791120998250000001162",
+    "nossoNumero": "00000979112",
+    "seuNumero": "5014715",
+    "valorTitulo": 11.62,
+    "codigoSituacao": "01",
+    "pagador": { "documento": "84227798035", "nomeRazaoSocial": "Grafica Unicred LTDA" }
+  },
+  "tarifa": { "dataTarifa": "2024-08-22", "valorTarifa": 1.10 }
+}</code></pre>
+  </div>
+</details>
+
+ 
+<details class="scenario">
+  <summary class="scenario-header">Cenário 2 <span>Liquidação do título</span></summary>
+  <div class="scenario-body">
+    <pre><code>curl --request POST 'SUA_URL' \
+--header 'x-api-key: dbd283c7-c6bc-4135-88bc-f9d30c679c2c' \
+--header 'Content-Type: text/plain' \
+--data 'VJj+m0ATExUKcDkyn2ynXqlmI9d5G2AL+J+9ExHhoBqVwlCocN+oCnXjL2EhHy1XHoXef+BV8ilI9NKzwsHi2KgHHah0CGU0MqSQlSb6FnbxSOWZRbZHOSfWY42sHzuRWowj2bzD4b0zq9eGv52jtYJYK7pD5IOGEgolU8QbsXwG+S93jVo3iCKYg/+WWtK6AYtdym0uL9aRjsN690LnyODw5ZG2J7P16ywlUAByPrehq56z3OnPC06CY9J8AFgu5aeL1SzHghjLIP17wDxPX2UOCVSJjoT59/eaTBPyJwenfkUw/xgequLxpnAj7vL9mynaf+lyoeV22m7KoUARM/WZtPoieNnmPEAhbM8/qkvJPjjnZK1j9p/L/6BeJ99ChkvCUI8qIjxWKEPKjIPTWH3aF0o3yfckYgdTBd4xJ4I6nglYvnvsaaZbwLscBjDkozJ0WyLAbuUlUQIbRDwYO0V4yGKMpSVNbi8x5EXCM0cCU8gsJUwoBDefmJ7RmdoqG4RMUx8xBDeo5ALHO6D3EsPm3P0JRH+SeRB5eu8Y3ANDm2swxrDPIsoNs2awGadoBIROw/MtXsgEyntq1wOMK0KW8lpZ/vAPTSci/R3GDYiLr2Fo9BkmO9c6C28Nzs1jEo12HdLVG0urUjt630wgv0Xo6e4zOeJFRMtm+DlEbWyTMqm+ozolb9G+CFmxNxAAr+fk/MC+ix1giF5vGk4R/1XWfBZwL7/1koUO+umy7FpjEXF+fBcr9tMgtzSCJeG/cev6ETnZ0sI1TLJnib3YDosN3U3CARgRB+oPJ2OvKbbrL9xVWdXjRowPzMhGqffkjfhcE0WMP+ZHn0ij/n2VNjn9RAEl/00jA4iK/AN++1PJaG2G8sgiCAgEWcMFVCVYGLRWO8Tt/TiXYt9bUSUn/0mhk9uR7LUegqHHCyN6LiJLhZ8UE0BLmH5g+/Z1+VXYaAOWcmoARjqd8I6j4tiYZ8f7mZy0e41yYJ7rBkJ20uYP+NF1IjBqwEkWqD7SAogyXLi/6mBMuw0xSN59vUNrRmPsp7kZaKBtEw/YosogtpPdEITQok6ZuY0PpxfH/np79KBqBritIHYvRPTYM9+tR3Aisfo9UnmZ02cEI7fE63zgYO8JBjWO5HHk+i0DqIfK2wTx+5N7ArI/35OYlGeYV+qy+ifzcO5ZUB6XxzfGCz/GH57xwgPk6q0Ai3JrWcQ+STykRjpfMMJ8VrUXrmd9kqwUdRSKnX5e4u1N79sAyh5OlTRTUQkV+X8pV27uqGJg5MawlTtlAHiBLUY4W3y4PwI/05oXIQbthk8Q2thuQynoh3as5mnRMAznqqlNC+f1kYXzkfuKNFVEAv55L54klPfBhgcJqO7YfJXp6TjX5Ev9wExxePsJU4S1YQ6MtzSulwhaZwyC/nJVJDluQGe8b7GBa8glIhS6Wz4lNyormQhe3+yp6ySB/MCoVlrTFGA2ToIVAL9fLtQYYQBRkwLxWlnnhtTZjdPD4Et5d2YPYm/293kMZp7jEqQdDaj0Hx9OlxFQZhfuf0ksG1IdMYWaUvMBQ2rfI5diu3dg6+DxOPiH1Fk9KSOY5wP0Yvl1E8aEo7qcNQHtByDjcc6AQz/e/qqRlAb64fpd86U/lEXlBG4VxVTOKu7UTBAXEfjewaDK0inQrvVC2yPNHGNg2J0f4Lj4Cch3pCxfiga2GwQHdvo8K6XhWZ56/D8e10p1K0+a5Fk4/HIBsUYYFJ4HDum2HwaztQnqvD5dUo4fusnFGKUWXEH+MKdkeB6iag6G3mqP2tZUaVOQ3/dGb9Utx1sPqg=='</code></pre>
+
+    <p style="font-size:13px; color: var(--text-muted); margin-bottom: 0.5rem;">JSON descriptografado esperado:</p>
+    <pre><code>{
+  "uuidRequisicaoWebhook": "d5f776e0-b80b-4883-8b56-d5ad1c4e7ef8",
+  "uuidInscricaoWebhook": "9baade53-edbb-4c72-baee-e1b1d80ab8e2",
+  "codigoMovimento": "06",
+  "codigoInstrucaoOrigem": "00",
+  "beneficiario": { "uuidBeneficiario": "4D2FBDC4AED546EBBF093D8BE9D0F561", "agencia": "5971", "conta": "726620" },
+  "titulo": {
+    "uuidTitulo": "c3978d9dec9a4f61877329d9e7828894",
+    "codigoBarras": "13693982500000106765971000072662000000979309",
+    "dataVencimento": "2024-08-31",
+    "nossoNumero": "979309",
+    "seuNumero": "5014715",
+    "valorTitulo": 106.76,
+    "codigoSituacao": "03",
+    "pagador": { "documento": "84227798035", "nomeRazaoSocial": "Grafica Unicred LTDA" }
+  },
+  "credito": { "dataCredito": "2024-08-21", "valorLancamento": 95.47 },
+  "pagamento": {
+    "agenciaRecebedora": "5731",
+    "codigoBancoRecebedor": "136",
+    "codigoCanalLiquidacao": "3",
+    "dataLiquidacao": "2024-08-21",
+    "valorAbatimento": 0.00, "valorDesconto": 0.00, "valorMora": 0.00, "valorRecebido": 96.76
+  },
+  "tarifa": { "dataTarifa": "2024-08-22", "valorTarifa": 1.29 }
+}</code></pre>
+  </div>
+</details>
+
+<details class="scenario">
+  <summary class="scenario-header">Cenário 3 <span>Título Caucionado</span></summary>
+  <div class="scenario-body">
+    <pre><code>curl --request POST 'SUA_URL' \
+--header 'x-api-key: dbd283c7-c6bc-4135-88bc-f9d30c679c2c' \
+--header 'Content-Type: text/plain' \
+--data 'VJj+m0ATExUKcDkyn2ynXqlmI9d5G2AL+J+9ExHhoBq8xFcAZNqflchHLn4Xpn2fD9thRwhBU7cByvzRngfFYIAr5z188c7xOG0iNHgMZR4WFNJfRhcWDfPCL4ZjgTPPmBD8B7xxh6f/pJXSxirSY6t2Qmvpfgh78if+YPTNUdGQymYQMI8OqRPGMSp4Sf0PjlkSg3kFo2MvWRMmXTnG+0x86HSY7dBX3vu/kWSLeQVQ/3N9BRfTuxWOZBZspl6E9YcfdycSyF6cY/5UtT+Jl8j4rac0eG6tKWOFp5waIBDzKA11APFTlpfUy8B4SBkThGXI2iA2R+xbp4j84fBnEauwMtv9AD/LwFHGGowKlCmu2vylGOi0qNgLLhys8MoTtQk+rxn2DAO2EMxjo4wg/dhXj/7NO3yxXiwdgfXxmrxhZmAHO2n3gfexDEy6fgo5hZpMH0JvbM8b664IQDziyuLODEmSjlGtgkrIAzlnlqRe5r9MJgbx49GqJhVgP6OBDYduOEdXwvMhAFkMjxbFz+KVmZnN/IpwSI8v0bf3zOXTDZJmKTdSC0MxLKzkOw5OCEgB2JGBwFIhr5xRQtV9BHv+X7dS1goIpdisuVJCBaeVmKa440EGb1QmZnhKzJ9QCgOveqobp+gFBocOa/hXmhFqLeu2Mv/5BBCXN+QAXDgMd7X10xOVncMsB5VDQsSv2zIKXVyMoOmcuSobA3qqoAUq63J+POGsMwSoDQ7FkH4IZRI3fCMwn2QwVWQbmOOYxnaPGof25ZIS46R5wjQCLRyvunhej9DqZNvzRrkchtUOlbv6A4IE9eqOviNrPSxLfYLhad4N43PiFKv2sTpSaMDY9/4+CZ+Taawv3AGHkrxYK9Pz8UMHpPz5wG5tRCbwQ9Savy/PjJ61HIojZ8qxeAMO7lCNaIexqQrCUdF7cw6bpfk4YrYHaMZmKzCBq4AFPVulwy1iRPys1y4IZIL3/Qnffu+gvAEsqRBwXzdAJGwOIDQEfSYAzpD1HQD3y9YVOOqbq0z5bMZ04NIhIup6wesCCV7vzGxjkCWfSf5YdnZm7gOFZnuK1KuwrFr/UNXaXocLsJiOnMvF+wb2/oci6+RsjlM9wfhPtPhTHv47a2tvfPAhegWXS2q+9+Nb5Z/YaOf+Pvty07qHyHP0NbFIywo/iPPm4W0xPjM7DcqX2ejSyHQRJISEWrfqBMpLNZp5PXnUz/0d/6RMpKEHysWhVL+MkSDh9zjDMbXTvlrQvHmXLQIVkGMAK8zHIqVk/gi8XYyjZCvU86pF56q1COL4KQDpjMwq+0D8H2PuieW6PXYSpau6a69vnhMDpx7bu5mx'</code></pre>
+
+    <p style="font-size:13px; color: var(--text-muted); margin-bottom: 0.5rem;">JSON descriptografado esperado:</p>
+    <pre><code>{
+  "uuidRequisicaoWebhook": "54bd88a9-6b3e-43f5-a2d9-65547d31b472",
+  "uuidInscricaoWebhook": "596dfd14-9de0-47ba-8958-069d567b53ed",
+  "codigoMovimento": "17",
+  "codigoInstrucaoOrigem": "00",
+  "beneficiario": { "uuidBeneficiario": "4D2FBDC4AED546EBBF093D8BE9D0F561", "agencia": "5971", "conta": "726620" },
+  "titulo": {
+    "uuidTitulo": "a378f33f4baa40ac9fb9f9bf6c8e65a9",
+    "codigoBarras": "13694982500000023465971000072662000000979236",
+    "dataVencimento": "2024-08-31",
+    "nossoNumero": "00000979236",
+    "seuNumero": "5014715",
+    "valorTitulo": 23.46,
+    "codigoSituacao": "01",
+    "pagador": { "documento": "84227798035", "nomeRazaoSocial": "Grafica Unicred LTDA" }
+  },
+  "emprestimo": { "numeroContrato": "8059464" },
+  "protesto": { "quantidadeDiasProtesto": 9 }
+}</code></pre>
+  </div>
+</details>
+
+<h2>Passo 3 — Configuração no CobExpress</h2>
+
+<p>Para conseguir habilitar o serviço em produção, é necessário realizar a inscrição do Webhook no CobExpress.
+Para realizar a inscrição, o cooperado deverá acessar o ambiente master do CobExpress, na aba de configurações e parametrizar conforme abaixo:
+
+</p><div class="callout callout-info">
+  <div class="callout-icon">ℹ</div>
+  <div class="callout-body">
+    <strong>Um cadastro por conta corrente</strong>
+    <p>O cadastro do Webhook é feito por conta corrente. Se você possui 4 contas, realize 4 cadastros separados.</p>
+  </div>
+</div>
+
+<table class="config-table">
+  <tbody><tr>
+    <th>Campo no CobExpress</th>
+    <th>O que preencher</th>
+    <th>Observações</th>
+  </tr>
+  <tr>
+    <td class="field-name">Habilitar Webhook para Retorno?</td>
+    <td>Marcar a opção</td>
+    <td>Ativa o serviço de retorno via Webhook.</td>
+  </tr>
+  <tr>
+    <td class="field-name">Endereço para Recebimento via Webhook (URL)</td>
+    <td>URL HTTPS do seu serviço</td>
+    <td><span class="webhook"><strong>Porta 443</strong></span>, apenas letras minúsculas. Valide no <a href="https://urlfiltering.paloaltonetworks.com/query/" target="_blank">Palo Alto URL Filtering</a> antes de cadastrar — URLs inseguras ou com tempo de vida menor que <span class="webhook"><strong>32 dias</strong></span> não são aceitas.</td>
+  </tr>
+  <tr>
+    <td class="field-name">Chave de Autenticação - API Webhook</td>
+    <td>UUID v4 definido por você</td>
+    <td>Será enviada no header <code>x-api-key</code>. Use também como IV de descriptografia (primeiros 16 caracteres). Deve ser única por inscrição.</td>
+  </tr>
+  <tr>
+    <td class="field-name">Chave de Criptografia - API Webhook</td>
+    <td>UUID v4 definido por você</td>
+    <td>Usada como Secret Key no AES-256 (primeiros 32 caracteres). Pode ser compartilhada entre inscrições. Valor deve ser diferente da Chave de Autenticação.</td>
+  </tr>
+  <tr>
+    <td class="field-name">Versão Webhook</td>
+    <td>Versão atual disponível</td>
+    <td>Define o contrato de retorno. A Unicred comunicará novas versões quando disponíveis.</td>
+  </tr>
+  <tr>
+    <td class="field-name">Tipo de Retorno via Webhook</td>
+    <td>Completo ou Parcial</td>
+    <td><strong>Completo:</strong> todos os movimentos. <strong>Parcial:</strong> apenas liquidações - movimentos 1 (pago), 6 (liquidação normal), 7 (liquidação em condicional) e 9 (liquidação de título descontado).</td>
+  </tr>
+</tbody></table>
+
+<h3>Navegação no CobExpress</h3>
+<p>O cooperado irá realizar o login no CobExpress e optar pelo perfil "Master Cooperado" (que é o perfil onde terá as configurações da conta) 
+  → assim que logar no Master, precisará clicar na aba <strong>Configurações</strong> 
+  → <strong>selecionar a conta</strong> em "Configurações de conta" 
+  → no final da tela estará disponível para selecionar o campo referente ao webhook.</p>
+
+<img src="./Retorno de Títulos de Cobrança por Webhook _ Unicred Developers_files/tela-cobexpress.png" alt="Tela de cadastro do Webhook no CobExpress" style="max-width: 100%; border: 1px solid var(--gray-border); border-radius: var(--radius-lg); margin: 1rem 0;">
+
+<h3>Reprocessamento</h3>
+
+<p>A Unicred é responsável por assegurar a ordem cronológica no envio das alterações dos títulos. Quando um novo evento for gerado para um título que ainda tenha eventos anteriores não enviados, a Unicred priorizará o reenvio do evento mais antigo antes de processar o novo.</p>
+
+<ul>
+  <li>Cada evento tem até <strong>4 tentativas</strong> de envio;</li>
+  <li>Sem novos eventos, novas tentativas ocorrem a cada <strong>4 horas</strong>;</li>
+  <li>Cadastros em estado <em>off-sync</em> não recebem reprocessamento automático.</li>
+</ul>
+
+<h2>Tabelas de Referência</h2>
+
+<h3>Canais <code>(codigoCanalLiquidacao)</code></h3>
+<table class="ref-table">
+  <tbody><tr><th>Código</th><th>Descrição</th></tr>
+  <tr><td>161</td><td>Internet Banking</td></tr>
+  <tr><td>162</td><td>ATM</td></tr>
+  <tr><td>163</td><td>Caixa</td></tr>
+  <tr><td>164</td><td>Retaguarda</td></tr>
+  <tr><td>166</td><td>Compe</td></tr>
+  <tr><td>168</td><td>Banco Correspondente</td></tr>
+  <tr><td>268</td><td>Mobile</td></tr>
+  <tr><td>308</td><td>Cartório</td></tr>
+  <tr><td>333</td><td>PIX</td></tr>
+  <tr><td>334</td><td>Correspondente Digital</td></tr>
+</tbody></table>
+
+<h3>Status do Título <code>(codigoSituacao)</code></h3>
+<table class="ref-table">
+  <tbody><tr><th>Código</th><th>Descrição</th></tr>
+  <tr><td>01</td><td>Aberto (título registrado e não liquidado).</td></tr>
+  <tr><td>02</td><td>Baixado por solicitação do Beneficiário (cedente).</td></tr>
+  <tr><td>03</td><td>Baixado por liquidação Intrabancária.</td></tr>
+  <tr><td>04</td><td>Baixado por liquidação Interbancária.</td></tr>
+  <tr><td>05</td><td>Baixado por decurso de prazo.</td></tr>
+  <tr><td>06</td><td>Baixado por envio para protesto.</td></tr>
+  <tr><td>07</td><td>Título deletado.</td></tr>
+  <tr><td>08</td><td>Baixado por solicitação da Instituição destinatária.</td></tr>
+  <tr><td>99</td><td>Incluído.</td></tr>
+  <tr><td>100</td><td>Aguardando Registro Nuclea (CIP).</td></tr>
+  <tr><td>101</td><td>Rejeitado Nuclea (CIP).</td></tr>
+</tbody></table>
+
+<h3>Instruções <code>(codigoInstrucaoOrigem)</code></h3>
+<table class="ref-table">
+  <tbody><tr><th>Código</th><th>Descrição</th></tr>
+  <tr><td>00</td><td>Sem instrução a informar (movimentos 01, 06, 07, 09, 13, 14, 17, 18).</td></tr>
+  <tr><td>01</td><td>Remessa.</td></tr>
+  <tr><td>02</td><td>Pedido de Baixa.</td></tr>
+  <tr><td>04</td><td>Concessão de Abatimento.</td></tr>
+  <tr><td>05</td><td>Cancelamento de Abatimento.</td></tr>
+  <tr><td>06</td><td>Alteração de vencimento.</td></tr>
+  <tr><td>09</td><td>Protestar.</td></tr>
+  <tr><td>10</td><td>Baixa por Decurso de Prazo.</td></tr>
+  <tr><td>11</td><td>Sustar Protesto e Manter em Carteira.</td></tr>
+  <tr><td>22</td><td>Alteração do Seu Número.</td></tr>
+  <tr><td>23</td><td>Alteração de Dados do Pagador.</td></tr>
+  <tr><td>25</td><td>Sustar Protesto e Baixar Título.</td></tr>
+  <tr><td>26</td><td>Protesto Automático.</td></tr>
+  <tr><td>27</td><td>Negativação Automática.</td></tr>
+  <tr><td>40</td><td>Alteração de Status Desconto.</td></tr>
+  <tr><td>45</td><td>Negativar.</td></tr>
+  <tr><td>46</td><td>Sustar Negativação e Manter Título em Carteira.</td></tr>
+  <tr><td>47</td><td>Sustar Negativação e Baixar Título.</td></tr>
+  <tr><td>50</td><td>Alteração de Status Caução.</td></tr>
+</tbody></table>
+
+<h3>Movimentações <code>(codigoMovimento)</code></h3>
+<table class="ref-table">
+  <tbody><tr><th>Código</th><th>Descrição</th></tr>
+  <tr><td>01</td><td>Pago (título protestado pago em cartório).</td></tr>
+  <tr><td>02</td><td>Instrução Confirmada.</td></tr>
+  <tr><td>03</td><td>Instrução Rejeitada.</td></tr>
+  <tr><td>04</td><td>Sustado Judicial.</td></tr>
+  <tr><td>06</td><td>Liquidação Normal.</td></tr>
+  <tr><td>07</td><td>Liquidação em Condicional.</td></tr>
+  <tr><td>08</td><td>Sustado Definitivo.</td></tr>
+  <tr><td>09</td><td>Liquidação de Título Descontado.</td></tr>
+  <tr><td>10</td><td>Protesto Solicitado.</td></tr>
+  <tr><td>11</td><td>Protesto em Cartório.</td></tr>
+  <tr><td>12</td><td>Sustação Solicitada.</td></tr>
+  <tr><td>13</td><td>Título Descontado (garantia em operação de desconto).</td></tr>
+  <tr><td>14</td><td>Título Descontável (desistência de garantia em desconto).</td></tr>
+  <tr><td>15</td><td>Enviada Negativação.</td></tr>
+  <tr><td>16</td><td>Enviada Sustação de Negativação.</td></tr>
+  <tr><td>17</td><td>Título Caucionado (garantia em cobrança caucionada).</td></tr>
+  <tr><td>18</td><td>Título Não Selecionado (não caucionável).</td></tr>
+</tbody></table>
+
+<h3>Rejeições / Ocorrências <code>(codigoRejeicao)</code></h3>
+<table class="ref-table">
+  <tbody><tr><th>Código</th><th>Descrição</th></tr>
+  <tr><td>01</td><td>CODIGO_BANCO_INVALIDO</td></tr>
+  <tr><td>05</td><td>CODIGO_DE_MOVIMENTO_INVALIDO</td></tr>
+  <tr><td>06</td><td>NUMERO_DE_INSCRICAO_DO_BENEFICIARIO_INVALIDO</td></tr>
+  <tr><td>07</td><td>AGENCIA_CONTA_INVALIDO</td></tr>
+  <tr><td>08</td><td>NOSSO_NUMERO_INVALIDO</td></tr>
+  <tr><td>09</td><td>NOSSO_NUMERO_DUPLICADO</td></tr>
+  <tr><td>12</td><td>TIPO_DE_DOCUMENTO_INVALIDO</td></tr>
+  <tr><td>15</td><td>DATA_VENCIMENTO_INVALIDA_PARA_ENVIO_GRAFICA</td></tr>
+  <tr><td>16</td><td>DATA_VENCIMENTO_INVALIDA</td></tr>
+  <tr><td>17</td><td>DATA_VENCIMENTO_ANTERIOR_A_DATA_DE_EMISSAO</td></tr>
+  <tr><td>18</td><td>VENCIMENTO_FORA_DO_PRAZO_DE_OPERACAO</td></tr>
+  <tr><td>20</td><td>VALOR_DO_TITULO_INVALIDO</td></tr>
+  <tr><td>24</td><td>DATA_EMISSAO_INVALIDA</td></tr>
+  <tr><td>25</td><td>DATA_EMISSAO_POSTERIOR_A_DATA_DE_ENTREGA</td></tr>
+  <tr><td>26</td><td>CODIGO_DE_JUROS_INVALIDO</td></tr>
+  <tr><td>27</td><td>VALOR_DE_JUROS_INVALIDO</td></tr>
+  <tr><td>28</td><td>CODIGO_DE_DESCONTO_INVALIDO</td></tr>
+  <tr><td>29</td><td>VALOR_DE_DESCONTO_INVALIDO</td></tr>
+  <tr><td>30</td><td>ALTERACAO_DE_DADOS_REJEITADA</td></tr>
+  <tr><td>33</td><td>VALOR_DO_ABATIMENTO_INVALIDO</td></tr>
+  <tr><td>34</td><td>VALOR_DO_ABATIMENTO_MAIOR_OU_IGUAL_AO_VALOR_DO_TITULO</td></tr>
+  <tr><td>37</td><td>CODIGO_PARA_PROTESTO_INVALIDO</td></tr>
+  <tr><td>38</td><td>PRAZO_PARA_PROTESTO_INVALIDO</td></tr>
+  <tr><td>39</td><td>PEDIDO_PROTESTO_NAO_PERMITIDO_PARA_TITULO</td></tr>
+  <tr><td>40</td><td>TITULO_COM_ORDEM_PROTESTO_EMITIDA</td></tr>
+  <tr><td>41</td><td>PEDIDO_CANCELAMENTO_SUSTACAO_PARA_TITULO_SEM_INSTRUCAO_PROTESTO</td></tr>
+  <tr><td>45</td><td>NOME_DO_PAGADOR_NAO_INFORMADO</td></tr>
+  <tr><td>46</td><td>NUMERO_DE_INSCRICAO_DO_PAGADOR_INVALIDO</td></tr>
+  <tr><td>47</td><td>ENDERECO_DO_PAGADOR_NAO_INFORMADO</td></tr>
+  <tr><td>48</td><td>CEP_INVALIDO</td></tr>
+  <tr><td>49</td><td>BAIXA_DERCUSO_PRAZO_REJEITADA_TITULO_EM_PROTESTO</td></tr>
+  <tr><td>52</td><td>UNIDADE_FEDERATIVA_INVALIDA</td></tr>
+  <tr><td>57</td><td>CODIGO_DE_MULTA_INVALIDO</td></tr>
+  <tr><td>58</td><td>DATA_DE_MULTA_INVALIDO</td></tr>
+  <tr><td>59</td><td>VALOR_DE_MULTA_INVALIDO</td></tr>
+  <tr><td>60</td><td>MOVIMENTO_PARA_TITULO_NAO_CADASTRADO</td></tr>
+  <tr><td>63</td><td>ENTRADA_PARA_TITULO_JA_CADASTRADO</td></tr>
+  <tr><td>79</td><td>DATA_DE_JUROS_INVALIDO</td></tr>
+  <tr><td>80</td><td>DATA_DE_DESCONTO_INVALIDO</td></tr>
+  <tr><td>86</td><td>SEU_NUMERO_INVALIDO</td></tr>
+  <tr><td>A5</td><td>TITULO_LIQUIDADO</td></tr>
+</tbody></table>
+
+<h2>Perguntas Frequentes</h2>
+
+<div class="faq-item">
+  <div class="faq-q">Onde fica a API Key / Chave de Autenticação?</div>
+  <div class="faq-a"><p>Você mesmo define esse valor como um UUID v4 e cadastra no CobExpress (aba Configurações, campo "Chave de Autenticação - API Webhook"). Após o cadastro, a Unicred a enviará automaticamente no header <code>x-api-key</code> de cada requisição ao seu serviço.</p></div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">Como e onde configuro o Webhook?</div>
+  <div class="faq-a"><p>O cadastro é feito no <strong>CobExpress</strong>, na aba de Configurações. Você informa a URL do seu serviço, a Chave de Autenticação, a Chave de Criptografia, a versão e o tipo de retorno. Veja a tabela completa de campos na seção "Passo 3 — Configuração no CobExpress" acima.</p></div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">Ao habilitar o Webhook o retorno via arquivo continua funcionando?</div>
+  <div class="faq-a"><p>Sim. O arquivo de retorno continua disponível no CobExpress e pode ser baixado normalmente, conforme a grade habitual, desde que o sistema esteja parametrizado para usar ambos.</p></div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">Como fica o crédito em conta corrente?</div>
+  <div class="faq-a"><p>O crédito não é afetado — apenas a informação chega mais rápido. Pagamentos via código de barras seguem o Float bancário da carteira; pagamentos via PIX são creditados no mesmo dia.</p></div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">O que acontece se meu serviço não conseguir receber uma notificação?</div>
+  <div class="faq-a"><p>A Unicred garante ordem cronológica. Se houver eventos pendentes, eles serão reenviados antes dos novos. Sem novos eventos, tentativas são feitas a cada 4 horas, com até 4 tentativas por evento.</p></div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">Meu retorno com UUID entre aspas está sendo rejeitado. Por quê?</div>
+  <div class="faq-a"><p>O UUID deve ser retornado como texto puro, sem aspas simples ou duplas. Um UUID entre aspas (<code>"uuid"</code>) não é considerado válido e coloca o cadastro em estado <em>off-sync</em>. Garanta que o <code>Content-Type</code> seja <code>text/plain</code> e que o body contenha apenas o UUID.</p></div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">Qual é o tempo máximo de resposta?</div>
+  <div class="faq-a"><p>5 segundos. Acima disso o cadastro fica <em>off-sync</em>. Recomenda-se retornar o HTTP 202 + UUID imediatamente e processar internamente de forma assíncrona.</p></div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">Posso usar a mesma Chave de Criptografia em múltiplas inscrições?</div>
+  <div class="faq-a"><p>Sim. A Chave de Criptografia pode ser compartilhada entre inscrições. Porém a Chave de Autenticação deve ser única por inscrição, e os valores das duas chaves devem sempre ser diferentes entre si.</p></div>
+</div>
+
+</div></div></div><div class="form-item control-group form-type-item">
+ <label class="control-label">Idioma </label>
+<div class="controls">
+Português, Brasil
+
+</div>
+</div>
+  </div>
+
+  
+  
+</div>
+  </div>
+</div>
+  </div>
+                  </div>
+        <!-- // content region -->
+
+        
+        
+
+
+      </div>
+    </div>
+
+  </div>
+
+
+    
+    <div id="footer" class="footer-dark">
+
+
+      <div class="container clearfix">
+
+
+        <div class="footer-widgets-wrap clearfix">
+
+
+                      <div class="col_one_fourth">
+                <div class="region region-footer-first">
+    <div id="block-block-4" class="block block-block">
+
+    
+  <div class="content">
+    <h2>About Sensedia</h2>
+
+<p>Find more about Sensedia and APIs at <a href="http://sensedia.com/">sensedia.com</a> or reach us on the web.</p>
+
+<div class="footer-about-us">
+<ul>
+	<li>640, Freedom Business Center<br>
+	Suite 210, King of Prussia, PA<br>
+	United States</li>
+	<li>+1 610 265.3684</li>
+</ul>
+</div>
+  </div>
+</div>
+  </div>
+            </div>
+          
+
+                      <div class="col_one_fourth">
+                <div class="region region-footer-second">
+    <div id="block-menu-block-1" class="block block-menu-block">
+
+    <h2>Menu principal</h2>
+  
+  <div class="content">
+    <div class="menu-block-wrapper menu-block-1 menu-name-main-menu parent-mlid-0 menu-level-1">
+  <ul class="menu unstyled my-account"><li class="first leaf menu-mlid-339"><a href="https://developer.unicred.com.br/api-portal/content/primeiros-passos?language=pt-br" class="invarseColor"><i class="icon-caret-right"></i>Primeiros Passos</a></li>
+<li class="expanded menu-mlid-1170"><a href="https://developer.unicred.com.br/api-portal/content/api-docs" class="invarseColor"><i class="icon-caret-right"></i>API Docs</a><ul class="menu unstyled my-account"><li class="first last leaf menu-mlid-1163"><a href="https://developer.unicred.com.br/api-portal/content/api-guide" class="invarseColor"><i class="icon-caret-right"></i>API Guide</a></li>
+</ul></li>
+<li class="expanded menu-mlid-1134"><a href="https://developer.unicred.com.br/api-portal/content/primeiros-passos" class="invarseColor"><i class="icon-caret-right"></i>APIs</a><ul class="menu unstyled my-account"><li class="first leaf menu-mlid-1136"><a href="https://developer.unicred.com.br/api-portal/content/autentica%C3%A7%C3%A3o-0" class="invarseColor"><i class="icon-caret-right"></i>Autenticação</a></li>
+<li class="leaf menu-mlid-1135"><a href="https://developer.unicred.com.br/api-portal/content/busca-cooperado" class="invarseColor"><i class="icon-caret-right"></i>Busca Cooperado</a></li>
+<li class="last leaf menu-mlid-1152"><a href="https://developer.unicred.com.br/api-portal/content/t%C3%ADtulos-de-cobran%C3%A7a" class="invarseColor"><i class="icon-caret-right"></i>Títulos de Cobrança</a></li>
+</ul></li>
+<li class="expanded menu-mlid-1168"><a href="https://developer.unicred.com.br/api-portal/content/dev-tools" class="invarseColor"><i class="icon-caret-right"></i>Dev Tools</a><ul class="menu unstyled my-account"><li class="first leaf menu-mlid-1169"><a href="https://developer.unicred.com.br/api-portal/myapps" class="invarseColor"><i class="icon-caret-right"></i>Minhas APPs</a></li>
+<li class="leaf menu-mlid-1171"><a href="https://developer.unicred.com.br/api-portal/devdashboard" class="invarseColor"><i class="icon-caret-right"></i>Dev Dashboard</a></li>
+<li class="last leaf menu-mlid-1172"><a href="https://developer.unicred.com.br/api-portal/apishealth" class="invarseColor"><i class="icon-caret-right"></i>API Status</a></li>
+</ul></li>
+<li class="leaf menu-mlid-1143"><a href="https://developer.unicred.com.br/api-portal/content/ambientes" class="invarseColor"><i class="icon-caret-right"></i>Ambientes</a></li>
+<li class="leaf menu-mlid-716"><a href="https://developer.unicred.com.br/api-portal/content/faq" class="invarseColor"><i class="icon-caret-right"></i>FAQ</a></li>
+<li class="leaf menu-mlid-1165"><a href="https://developer.unicred.com.br/api-portal/user" class="btn-menu-secondary invarseColor"><i class="icon-caret-right"></i>Minha Conta</a></li>
+<li class="last leaf menu-mlid-1167"><a href="https://developer.unicred.com.br/api-portal/user/logout" class="btn-menu invarseColor"><i class="icon-caret-right"></i>Sair</a></li>
+</ul></div>
+  </div>
+</div>
+  </div>
+            </div>
+          
+
+
+                      <div class="col_one_fourth">
+                <div class="region region-footer-third">
+    <div id="block-block-9" class="block block-block">
+
+    
+  <div class="content">
+    &nbsp;  </div>
+</div>
+  </div>
+            </div>
+          
+
+
+                      <div class="col_one_fourth">
+                <div class="region region-footer-fourth">
+    <div id="block-block-5" class="block block-block">
+
+    
+  <div class="content">
+    <h2>Like Us On Facebook</h2>
+<iframe src="./Retorno de Títulos de Cobrança por Webhook _ Unicred Developers_files/likebox.html" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:270px;background-color:#fff" allowtransparency="true"></iframe>  </div>
+</div>
+  </div>
+            </div>
+          
+        </div>
+
+
+      </div>
+
+
+    </div>
+  
+  <div class="clear"></div>
+
+
+  
+    <div id="copyrights" class="copyrights-dark">
+
+      <div class="container clearfix">
+          <div class="region region-footer">
+    <div id="block-block-6" class="block block-block">
+
+    
+  <div class="content">
+    <div class="text-center text-sm-right p-v-25">
+	
+</div>  </div>
+</div>
+<div id="block-block-15" class="block block-block">
+
+    
+  <div class="content">
+    <script nonce="">
+var txtAppLinkEdit = document.getElementById("txtAppLink);
+var position = 0;
+
+txtAppLinkEdit.addEventListener("input", function(){
+     position = txtAppLinkEdit.selectionStart;
+     txtAppLinkEdit.value = txtAppLinkEdit.value.toLowerCase();
+     txtAppLinkEdit.setSelectionRange(position, position);
+});
+</script>  </div>
+</div>
+<div id="block-block-16" class="block block-block">
+
+    
+  <div class="content">
+    <script nonce="">
+
+var mailEdit = document.getElementById("edit-mail");
+var position = 0;
+
+mailEdit.addEventListener("input", function(){
+       position = mailEdit.selectionStart;
+       mailEdit.value = mailEdit.value.toLowerCase();
+       mailEdit.setSelectionRange(position, position);
+});
+</script>  </div>
+</div>
+<div id="block-block-18" class="block block-block">
+
+    
+  <div class="content">
+    <script nonce="">
+	// global variables
+	var sections = document.querySelectorAll("#content .content h1, #content .content h2");	
+	var sideMenuList = document.getElementById("side-menu-list");
+
+	// select titles and build section links
+	function buildMenu() {
+		for(var i = 0; i < sections.length; i++) {
+			sections[i].setAttribute("id", "section" + i);
+
+			// build link
+			var listItem = document.createElement("a");
+
+			listItem.innerHTML = sections[i].innerHTML;
+			listItem.id = "side-menu-item-" + i;
+			listItem.href = "#section" + i;
+			if (sections[i].tagName == "H1") listItem.classList.add("section");
+			if (sections[i].tagName == "H2") listItem.classList.add("sub-section");
+
+			//append link
+			sideMenuList.appendChild(listItem);
+		}
+	}
+
+	// set side-menu max height
+	function resizeMenu() {
+		let footer = document.querySelector('#copyrights');
+		if (!!footer)
+			sideMenuList.style.maxHeight = Math.min(window.innerHeight, footer.getBoundingClientRect().top) - sideMenuList.getBoundingClientRect().top + 'px';
+		else
+			sideMenuList.style.maxHeight = window.innerHeight - sideMenuList.getBoundingClientRect().top + 'px';
+	}
+
+	// highlight side-menu items
+	function highlightMenu() {
+		if (window.innerWidth >= 980) {
+			for(var j = 0; j < sections.length; j++) {
+				if (sections[j].getBoundingClientRect().top < 1) {
+					document.getElementById("side-menu-item-" + j).classList.add("active");
+					for(var k = j - 1; k >= 0; k--) {
+						document.getElementById("side-menu-item-" + k).classList.remove("active");
+					}
+					if (sideMenuList.classList.contains("affix")) {
+						document.getElementById("side-menu-item-" + j).scrollIntoView();
+					}
+				}
+				else {
+					document.getElementById("side-menu-item-" + j).classList.remove("active");
+				}
+			}
+		}
+	}
+
+	// call functions
+	buildMenu();
+	resizeMenu();
+	window.onresize = function() { resizeMenu() };
+	window.onscroll = function() { resizeMenu(); highlightMenu() };
+</script>  </div>
+</div>
+<div id="block-block-20" class="block block-block">
+
+    
+  <div class="content">
+    <script nonce="">
+	function expandContent() {
+		content.style.minHeight = (window.innerHeight - header.offsetHeight - copyrights.offsetHeight) + "px";
+	}
+
+	expandContent();
+	window.onresize = function() { expandContent() };
+</script>  </div>
+</div>
+  </div>
+      </div>
+    </div>
+  
+
+</div>
+<div id="gotoTop" class="icon-angle-up" style="display: block;"></div>
+
+      
+
+</body></html>

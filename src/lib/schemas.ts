@@ -74,3 +74,18 @@ export const loginSchema = z.object({
 });
 
 export type LoginInput = z.infer<typeof loginSchema>;
+
+export const createTituloSchema = z.object({
+  idContrato: z.coerce.number().positive(),
+  referenciaMes: z.string().regex(/^\d{4}-\d{2}$/),
+});
+
+export type CreateTituloInput = z.infer<typeof createTituloSchema>;
+
+export const listTitulosQuerySchema = paginationSchema.extend({
+  search: z.string().optional(),
+  status: z.string().optional(),
+  referenciaMes: z.string().optional(),
+});
+
+export type ListTitulosQueryInput = z.infer<typeof listTitulosQuerySchema>;
