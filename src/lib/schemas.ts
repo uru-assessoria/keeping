@@ -82,10 +82,22 @@ export const createTituloSchema = z.object({
 
 export type CreateTituloInput = z.infer<typeof createTituloSchema>;
 
+export const createTituloManualSchema = z.object({
+  idCliente: z.coerce.number().positive(),
+  valor: z.coerce.number().positive(),
+  vencimento: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  descricao: z.string().max(500).optional().or(z.literal("")),
+  jurosValor: z.coerce.number().min(0).optional(),
+  multaValor: z.coerce.number().min(0).optional(),
+});
+
+export type CreateTituloManualInput = z.infer<typeof createTituloManualSchema>;
+
 export const listTitulosQuerySchema = paginationSchema.extend({
   search: z.string().optional(),
   status: z.string().optional(),
   referenciaMes: z.string().optional(),
+  origem: z.enum(["CONTRATO", "MANUAL"]).optional(),
 });
 
 export type ListTitulosQueryInput = z.infer<typeof listTitulosQuerySchema>;

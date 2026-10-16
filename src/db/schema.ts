@@ -61,9 +61,12 @@ export const contratoRelations = relations(contrato, ({ one, many }) => ({
 
 export const titulo = pgTable("titulo", {
   id: serial("id").primaryKey(),
-  idContrato: integer("id_contrato")
+  idContrato: integer("id_contrato").references(() => contrato.id),
+  idCliente: integer("id_cliente")
     .notNull()
-    .references(() => contrato.id),
+    .references(() => cliente.id),
+  origem: varchar("origem", { length: 20 }).notNull().default("CONTRATO"),
+  descricao: text("descricao"),
   idUnicred: varchar("id_unicred", { length: 255 }),
   seuNumero: varchar("seu_numero", { length: 15 }).notNull(),
   valor: real("valor").notNull(),
@@ -85,6 +88,10 @@ export const tituloRelations = relations(titulo, ({ one }) => ({
   contrato: one(contrato, {
     fields: [titulo.idContrato],
     references: [contrato.id],
+  }),
+  cliente: one(cliente, {
+    fields: [titulo.idCliente],
+    references: [cliente.id],
   }),
 }));
 

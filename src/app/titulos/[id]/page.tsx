@@ -104,6 +104,10 @@ export default function TituloDetalhePage() {
             <h2 className="text-lg font-semibold mb-4">Dados do Título</h2>
             <div className="space-y-2 text-sm">
               <p>
+                <span className="font-medium">Origem:</span>{" "}
+                {titulo.origem === "MANUAL" ? "Manual" : "Contrato"}
+              </p>
+              <p>
                 <span className="font-medium">Status:</span>{" "}
                 {formatarStatus(titulo.status)}
               </p>
@@ -162,11 +166,8 @@ export default function TituloDetalhePage() {
           </section>
 
           <section className="rounded border border-border p-4 bg-surface-variant">
-            <h2 className="text-lg font-semibold mb-4">Contrato e Cliente</h2>
+            <h2 className="text-lg font-semibold mb-4">Cliente</h2>
             <div className="space-y-2 text-sm">
-              <p>
-                <span className="font-medium">Contrato:</span> #{titulo.contrato.id}
-              </p>
               <p>
                 <span className="font-medium">Cliente:</span> {titulo.cliente.razaoSocial}
               </p>
@@ -179,10 +180,23 @@ export default function TituloDetalhePage() {
               <p>
                 <span className="font-medium">Telefone:</span> {titulo.cliente.telefone}
               </p>
-              <p>
-                <span className="font-medium">Valor total do contrato:</span> R${" "}
-                {Number(titulo.contrato.valorTotal).toFixed(2)}
-              </p>
+
+              {titulo.contrato ? (
+                <>
+                  <p>
+                    <span className="font-medium">Contrato:</span> #{titulo.contrato.id}
+                  </p>
+                  <p>
+                    <span className="font-medium">Valor total do contrato:</span> R${" "}
+                    {Number(titulo.contrato.valorTotal).toFixed(2)}
+                  </p>
+                </>
+              ) : (
+                <p>
+                  <span className="font-medium">Título manual</span>
+                  {titulo.descricao ? ` — ${titulo.descricao}` : ""}
+                </p>
+              )}
             </div>
           </section>
         </div>

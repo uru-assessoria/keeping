@@ -1,6 +1,9 @@
 export type Titulo = {
   id: number;
-  idContrato: number;
+  idContrato: number | null;
+  idCliente: number | null;
+  origem: "CONTRATO" | "MANUAL";
+  descricao: string | null;
   idUnicred: string | null;
   seuNumero: string;
   valor: number;
@@ -25,7 +28,7 @@ export type TituloDetalhe = Titulo & {
     valorTotal: number;
     formalizacao: string;
     vencimento: string;
-  };
+  } | null;
   cliente: {
     razaoSocial: string;
     documento: string;

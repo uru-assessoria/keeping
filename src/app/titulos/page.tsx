@@ -25,6 +25,22 @@ const STATUS_OPTIONS = [
   { value: "REJEITADO", label: "Rejeitado" },
 ];
 
+const ORIGEM_OPTIONS = [
+  { value: "", label: "Todas as origens" },
+  { value: "CONTRATO", label: "Contrato" },
+  { value: "MANUAL", label: "Manual" },
+];
+
+function corOrigem(origem?: string | null): string {
+  return origem === "MANUAL"
+    ? "bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-400"
+    : "bg-sky-100 text-sky-700 dark:bg-sky-900/40 dark:text-sky-400";
+}
+
+function formatarOrigem(origem?: string | null): string {
+  return origem === "MANUAL" ? "Manual" : "Contrato";
+}
+
 function formatarStatus(status?: string | null): string {
   const map: Record<string, string> = {
     EM_PROCESSAMENTO: "Em processamento",
@@ -60,9 +76,10 @@ export default function TitulosPage() {
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [referenciaMes, setReferenciaMes] = useState("");
+  const [origemFilter, setOrigemFilter] = useState("");
   const [loadingStatus, setLoadingStatus] = useState<number | null>(null);
 
-  const load = (page = 1, limit = 20, q = "", status = "", mes = "") => {
+  const load = (page = 1, limit = 20, q = "", status = "", mes = "", origem = "") => {
     const params = new URLSearchParams({
       page: String(page),
       limit: String(limit),
@@ -70,6 +87,7 @@ export default function TitulosPage() {
     if (q) params.set("search", q);
     if (status) params.set("status", status);
     if (mes) params.set("referenciaMes", mes);
+    if (origem) params.set("origem", origem);
 
     fetch(`/api/titulos?${params}`)
       .then((res) => res.json())
@@ -77,8 +95,8 @@ export default function TitulosPage() {
   };
 
   useEffect(() => {
-    load(1, 20, debouncedSearch, statusFilter, referenciaMes);
-  }, [debouncedSearch, statusFilter, referenciaMes]);
+    load(1, 20, debouncedSearch, statusFilter, referenciaMes, origemFilter);
+  }, [debouncedSearch, statusFilter, referenciaMes, origemFilter]);
 
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedSearch(search), 300);
@@ -88,17 +106,17 @@ export default function TitulosPage() {
   // Polling a cada 30s para atualizar status (complementa o webhook)
   useEffect(() => {
     const interval = setInterval(() => {
-      load(result.meta.page, result.meta.limit, debouncedSearch, statusFilter, referenciaMes);
+      load(result.meta.page, result.meta.limit, debouncedSearch, statusFilter, referenciaMes, origemFilter);
     }, 30000);
     return () => clearInterval(interval);
-  }, [result.meta.page, result.meta.limit, debouncedSearch, statusFilter, referenciaMes]);
+  }, [result.meta.page, result.meta.limit, debouncedSearch, statusFilter, referenciaMes, origemFilter]);
 
   async function handleRefreshStatus(id: number) {
     try {
       setLoadingStatus(id);
       const res = await fetch(`/api/titulos/${id}/status`);
       if (!res.ok) throw new Error("Falha ao consultar status");
-      load(result.meta.page, result.meta.limit, debouncedSearch, statusFilter, referenciaMes);
+      load(result.meta.page, result.meta.limit, debouncedSearch, statusFilter, referenciaMes, origemFilter);
     } catch (error) {
       alert("Erro ao consultar status: " + (error instanceof Error ? error.message : ""));
     } finally {
@@ -127,9 +145,17 @@ export default function TitulosPage() {
       <main className={STYLE.MAIN}>
         <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
           <h1 className={STYLE.TITLE}>Títulos de Cobrança</h1>
+          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+            <Link href="/titulos/new" className={STYLE.BUTTON}>
+              Emitir via contrato assinado
+            </Link>
+            <Link href="/titulos/manual/new" className={STYLE.BUTTON_OPERATIVE}>
+              Emitir título manual
+            </Link>
+          </div>
         </header>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           <input
             type="text"
             placeholder="Buscar título..."
@@ -142,6 +168,16 @@ export default function TitulosPage() {
             onChange={(e) => setStatusFilter(e.target.value)}
             className={STYLE.INPUT}>
             {STATUS_OPTIONS.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+          <select
+            value={origemFilter}
+            onChange={(e) => setOrigemFilter(e.target.value)}
+            className={STYLE.INPUT}>
+            {ORIGEM_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>
                 {opt.label}
               </option>
@@ -165,8 +201,14 @@ export default function TitulosPage() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <p className="font-semibold text-foreground truncate">
-                      {titulo.clienteNome || `Contrato #${titulo.idContrato}`}
+                      {titulo.clienteNome || (titulo.origem === "MANUAL" ? "Cliente não encontrado" : `Contrato #${titulo.idContrato}`)}
                     </p>
+                    <span
+                      className={`text-xs font-medium px-2 py-0.5 rounded-full ${corOrigem(
+                        titulo.origem,
+                      )}`}>
+                      {formatarOrigem(titulo.origem)}
+                    </span>
                     <span
                       className={`text-xs font-medium px-2 py-0.5 rounded-full ${corStatus(
                         titulo.status,
@@ -179,6 +221,9 @@ export default function TitulosPage() {
                       </span>
                     )}
                   </div>
+                  {titulo.origem === "MANUAL" && titulo.descricao && (
+                    <p className="text-sm text-muted">{titulo.descricao}</p>
+                  )}
                   <p className="text-sm text-muted">
                     Seu número: {titulo.seuNumero}
                   </p>
@@ -225,7 +270,7 @@ export default function TitulosPage() {
         {meta.totalPages > 1 && (
           <div className="flex items-center justify-between mt-8">
             <button
-              onClick={() => load(meta.page - 1, meta.limit, debouncedSearch, statusFilter, referenciaMes)}
+              onClick={() => load(meta.page - 1, meta.limit, debouncedSearch, statusFilter, referenciaMes, origemFilter)}
               disabled={meta.page <= 1}
               className={`${STYLE.BUTTON} ${meta.page <= 1 ? "opacity-50 cursor-not-allowed" : ""}`}>
               Anterior
@@ -234,7 +279,7 @@ export default function TitulosPage() {
               Página {meta.page} de {meta.totalPages} ({meta.total} total)
             </span>
             <button
-              onClick={() => load(meta.page + 1, meta.limit, debouncedSearch, statusFilter, referenciaMes)}
+              onClick={() => load(meta.page + 1, meta.limit, debouncedSearch, statusFilter, referenciaMes, origemFilter)}
               disabled={meta.page >= meta.totalPages}
               className={`${STYLE.BUTTON} ${meta.page >= meta.totalPages ? "opacity-50 cursor-not-allowed" : ""}`}>
               Próxima

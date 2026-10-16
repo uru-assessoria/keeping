@@ -19,6 +19,9 @@ export async function GET(
       .select({
         id: titulo.id,
         idContrato: titulo.idContrato,
+        idCliente: titulo.idCliente,
+        origem: titulo.origem,
+        descricao: titulo.descricao,
         idUnicred: titulo.idUnicred,
         seuNumero: titulo.seuNumero,
         valor: titulo.valor,
@@ -48,15 +51,18 @@ export async function GET(
         },
       })
       .from(titulo)
+      .leftJoin(cliente, eq(titulo.idCliente, cliente.id))
       .leftJoin(contrato, eq(titulo.idContrato, contrato.id))
-      .leftJoin(cliente, eq(contrato.idCliente, cliente.id))
       .where(eq(titulo.id, tituloId));
 
     if (!row) {
       return NextResponse.json({ error: "Título não encontrado" }, { status: 404 });
     }
 
-    return NextResponse.json(row);
+    return NextResponse.json({
+      ...row,
+      contrato: row.contrato?.id ? row.contrato : null,
+    });
   } catch (error) {
     console.error("Erro ao buscar título:", error);
     return NextResponse.json(

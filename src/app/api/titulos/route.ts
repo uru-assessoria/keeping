@@ -1,66 +1,27 @@
 import { db } from "@/db";
 import { cliente, contrato, titulo } from "@/db/schema";
-import {
-  emitirTitulo,
-  EmitirTituloParams,
-  formatStatus,
-  Pagador,
-} from "@/lib/unicred";
+import { emitirTitulo, EmitirTituloParams, formatStatus } from "@/lib/unicred";
 import { buildPaginatedResponse, ilike } from "@/lib/pagination";
 import { createTituloSchema, listTitulosQuerySchema } from "@/lib/schemas";
+import {
+  gerarSeuNumero,
+  montarPagador,
+  ultimoDiaDoMes,
+} from "@/lib/titulo-helpers";
 import { count, desc, eq, and, or } from "drizzle-orm";
 import { NextResponse } from "next/server";
-
-function limparDocumento(documento: string): string {
-  return documento.replace(/\D/g, "");
-}
-
-function ultimoDiaDoMes(referenciaMes: string): string {
-  const [ano, mes] = referenciaMes.split("-").map(Number);
-  const data = new Date(ano, mes, 0);
-  return data.toISOString().split("T")[0];
-}
-
-function gerarSeuNumero(idContrato: number, referenciaMes: string): string {
-  const numero = `C${idContrato}-${referenciaMes.replace("-", "")}`;
-  return numero.slice(0, 15);
-}
-
-function parseEndereco(endereco: string) {
-  const padrao = /^(.*?),?\s*(\d+)\s*-?\s*(.*?)\s*-?\s*(.*?)\s*-\s*([A-Z]{2})\s*(\d{8})?$/i;
-  const match = endereco.match(padrao);
-
-  if (match) {
-    return {
-      logradouro: match[1]?.trim() || endereco,
-      numero: match[2]?.trim() || "0",
-      bairro: match[3]?.trim() || "Centro",
-      cidade: match[4]?.trim() || "Cidade",
-      uf: match[5]?.toUpperCase() || "SP",
-      cep: limparDocumento(match[6] || "00000000"),
-    };
-  }
-
-  return {
-    logradouro: endereco,
-    numero: "0",
-    bairro: "Centro",
-    cidade: "Cidade",
-    uf: "SP",
-    cep: "00000000",
-  };
-}
 
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const { page, limit, search, status, referenciaMes } =
+    const { page, limit, search, status, referenciaMes, origem } =
       listTitulosQuerySchema.parse({
         page: searchParams.get("page"),
         limit: searchParams.get("limit"),
         search: searchParams.get("search") || "",
         status: searchParams.get("status") || undefined,
         referenciaMes: searchParams.get("referenciaMes") || undefined,
+        origem: searchParams.get("origem") || undefined,
       });
 
     const offset = (page - 1) * limit;
@@ -71,8 +32,8 @@ export async function GET(request: Request) {
       whereConditions.push(
         or(
           ilike(cliente.razaoSocial, search),
-          ilike(contrato.razaoSocialCliente, search),
           ilike(titulo.seuNumero, search),
+          ilike(titulo.descricao, search),
         ),
       );
     }
@@ -85,20 +46,26 @@ export async function GET(request: Request) {
       whereConditions.push(eq(titulo.referenciaMes, referenciaMes));
     }
 
+    if (origem) {
+      whereConditions.push(eq(titulo.origem, origem));
+    }
+
     const whereClause =
       whereConditions.length > 0 ? and(...whereConditions) : undefined;
 
     const [totalResult] = await db
       .select({ count: count() })
       .from(titulo)
-      .leftJoin(contrato, eq(titulo.idContrato, contrato.id))
-      .leftJoin(cliente, eq(contrato.idCliente, cliente.id))
+      .leftJoin(cliente, eq(titulo.idCliente, cliente.id))
       .where(whereClause);
 
     const rows = await db
       .select({
         id: titulo.id,
         idContrato: titulo.idContrato,
+        idCliente: titulo.idCliente,
+        origem: titulo.origem,
+        descricao: titulo.descricao,
         idUnicred: titulo.idUnicred,
         seuNumero: titulo.seuNumero,
         valor: titulo.valor,
@@ -112,11 +79,10 @@ export async function GET(request: Request) {
         qrCodePix: titulo.qrCodePix,
         dataCriacao: titulo.dataCriacao,
         dataAtualizacao: titulo.dataAtualizacao,
-        clienteNome: contrato.razaoSocialCliente,
+        clienteNome: cliente.razaoSocial,
       })
       .from(titulo)
-      .leftJoin(contrato, eq(titulo.idContrato, contrato.id))
-      .leftJoin(cliente, eq(contrato.idCliente, cliente.id))
+      .leftJoin(cliente, eq(titulo.idCliente, cliente.id))
       .where(whereClause)
       .orderBy(desc(titulo.id))
       .limit(limit)
@@ -202,26 +168,7 @@ export async function POST(request: Request) {
     const seuNumero = gerarSeuNumero(data.idContrato, data.referenciaMes);
     const valor = Number(contratoAtual.valorTotal);
 
-    const endereco = parseEndereco(clienteAtual.endereco);
-
-    const pagador: Pagador = {
-      nomeRazaoSocial: clienteAtual.razaoSocial,
-      tipoPessoa: clienteAtual.entidadeJuridica ? "J" : "F",
-      tipoDocumento: clienteAtual.entidadeJuridica ? "CNPJ" : "CPF",
-      numeroDocumento: limparDocumento(clienteAtual.documento),
-      nomeFantasia: clienteAtual.entidadeJuridica
-        ? clienteAtual.razaoSocialRepresentante || clienteAtual.razaoSocial
-        : undefined,
-      email: clienteAtual.email,
-      endereco: {
-        logradouro: endereco.logradouro,
-        numero: endereco.numero,
-        bairro: endereco.bairro,
-        cidade: endereco.cidade,
-        uf: endereco.uf,
-        cep: endereco.cep,
-      },
-    };
+    const pagador = montarPagador(clienteAtual);
 
     const params: EmitirTituloParams = {
       seuNumero,
@@ -236,6 +183,8 @@ export async function POST(request: Request) {
       .insert(titulo)
       .values({
         idContrato: data.idContrato,
+        idCliente: contratoAtual.idCliente,
+        origem: "CONTRATO",
         idUnicred: resposta.id_titulo,
         seuNumero,
         valor,

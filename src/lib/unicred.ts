@@ -2,8 +2,9 @@ import crypto from "crypto";
 
 const UNICRED_BASE_URL = process.env.UNICRED_API_BASE_URL?.replace(/\/$/, "");
 const UNICRED_BENEFICIARIO_ID = process.env.UNICRED_API_ID_BENEFICIARIO;
-const UNICRED_COOPERATIVA = process.env.UNICRED_API_CODE;
-const UNICRED_API_KEY = process.env.UNICRED_API_CLIENTID;
+const UNICRED_COOPERATIVA = process.env.UNICRED_API_COOPERATIVA;
+const UNICRED_VARIACAO_CARTEIRA = process.env.UNICRED_API_VARIACAO_CARTEIRA;
+const UNICRED_API_KEY = process.env.UNICRED_API_CODE;
 const UNICRED_USER = process.env.UNICRED_API_USER;
 const UNICRED_PASSWORD = process.env.UNICRED_API_PASSWORD;
 const UNICRED_WEBHOOK_API_KEY = process.env.UNICRED_WEBHOOK_API_KEY;
@@ -36,6 +37,14 @@ export interface EmitirTituloParams {
   vencimento: string;
   pagador: Pagador;
   nossoNumero?: string;
+  /** Percentual de juros ao mês. Omitido ou 0 = isento. */
+  jurosValor?: number;
+  /** Data de início da cobrança de juros (YYYY-MM-DD). Default: dia seguinte ao vencimento. */
+  jurosDataInicio?: string;
+  /** Percentual de multa por atraso. Omitido ou 0 = isento. */
+  multaValor?: number;
+  /** Data de início da cobrança de multa (YYYY-MM-DD). Default: dia seguinte ao vencimento. */
+  multaDataInicio?: string;
 }
 
 export interface UnicredTituloResponse {
@@ -121,10 +130,13 @@ export function validateConfig(): void {
     throw new Error("UNICRED_API_ID_BENEFICIARIO não configurado");
   }
   if (!UNICRED_COOPERATIVA) {
-    throw new Error("UNICRED_API_CODE não configurado");
+    throw new Error("UNICRED_API_COOPERATIVA não configurado");
+  }
+  if (!UNICRED_VARIACAO_CARTEIRA) {
+    throw new Error("UNICRED_API_VARIACAO_CARTEIRA não configurado");
   }
   if (!UNICRED_API_KEY) {
-    throw new Error("UNICRED_API_CLIENTID não configurado");
+    throw new Error("UNICRED_API_CODE não configurado");
   }
   if (!UNICRED_USER) {
     throw new Error("UNICRED_API_USER não configurado");
@@ -174,7 +186,7 @@ export async function emitirTitulo(
   const token = await getAccessToken();
 
   const payload: Record<string, unknown> = {
-    beneficiarioVariacaoCarteira: 43,
+    beneficiarioVariacaoCarteira: Number(UNICRED_VARIACAO_CARTEIRA),
     seuNumero: params.seuNumero,
     valor: Number(params.valor.toFixed(2)),
     vencimento: params.vencimento,
@@ -187,12 +199,6 @@ export async function emitirTitulo(
       codigoParaNegativacao: "NAO_NEGATIVAR",
     },
     enviaBoletoEmail: false,
-    juros: {
-      codigo: "5",
-    },
-    multa: {
-      codigo: "3",
-    },
     pagador: {
       nomeRazaoSocial: params.pagador.nomeRazaoSocial,
       tipoPessoa: params.pagador.tipoPessoa,
@@ -217,6 +223,26 @@ export async function emitirTitulo(
     payload.nossoNumero = params.nossoNumero;
   }
 
+  if (params.jurosValor && params.jurosValor > 0) {
+    payload.juros = {
+      codigo: "3",
+      dataInicio: params.jurosDataInicio || diaSeguinte(params.vencimento),
+      valor: params.jurosValor,
+    };
+  } else {
+    payload.juros = { codigo: "5", valor: 0 };
+  }
+
+  if (params.multaValor && params.multaValor > 0) {
+    payload.multa = {
+      codigo: "2",
+      dataInicio: params.multaDataInicio || diaSeguinte(params.vencimento),
+      valor: params.multaValor,
+    };
+  } else {
+    payload.multa = { codigo: "3", valor: 0 };
+  }
+
   // Remove campos undefined/null para evitar rejeição da API
   const cleanPayload = removeNullUndefined(payload);
 
@@ -239,8 +265,24 @@ export async function emitirTitulo(
     throw new Error(`Erro ao emitir título na Unicred: ${response.status} - ${error}`);
   }
 
-  const data: UnicredTituloResponse = await response.json();
-  return data;
+  const text = await response.text();
+  return parseRespostaTitulo(text);
+}
+
+/**
+ * A Unicred documenta duas respostas de sucesso possíveis para a emissão de título:
+ * um objeto JSON ou apenas a string alfanumérica do id_titulo (sem envelope JSON).
+ */
+function parseRespostaTitulo(text: string): UnicredTituloResponse {
+  try {
+    const parsed = JSON.parse(text);
+    if (parsed && typeof parsed === "object") {
+      return parsed as UnicredTituloResponse;
+    }
+  } catch {
+    // corpo não é JSON — resposta em formato de string alfanumérica simples
+  }
+  return { id_titulo: text.replace(/^id_titulo:/, "").trim() };
 }
 
 export async function consultarStatus(
@@ -319,6 +361,12 @@ export function formatStatus(status?: string): string {
     REJEITADO: "Rejeitado",
   };
   return map[status || ""] || status || "Desconhecido";
+}
+
+function diaSeguinte(dataISO: string): string {
+  const [ano, mes, dia] = dataISO.split("-").map(Number);
+  const data = new Date(ano, mes - 1, dia + 1);
+  return data.toISOString().split("T")[0];
 }
 
 function removeNullUndefined(obj: Record<string, unknown>): Record<string, unknown> {
