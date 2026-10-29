@@ -84,7 +84,28 @@ export async function DELETE(
       return NextResponse.json({ error: "ID inválido" }, { status: 400 });
     }
 
-    await db.delete(titulo).where(eq(titulo.id, tituloId));
+    const [tituloAtual] = await db
+      .select({ id: titulo.id, status: titulo.status })
+      .from(titulo)
+      .where(eq(titulo.id, tituloId));
+
+    if (!tituloAtual) {
+      return NextResponse.json({ error: "Título não encontrado" }, { status: 404 });
+    }
+
+    if (tituloAtual.status === "LIQUIDADO") {
+      return NextResponse.json(
+        { error: "Título liquidado não pode ser excluído" },
+        { status: 400 },
+      );
+    }
+
+    // Exclusão lógica: preserva o registro financeiro para auditoria em vez
+    // de apagar fisicamente a linha.
+    await db
+      .update(titulo)
+      .set({ status: "CANCELADO", dataAtualizacao: new Date() })
+      .where(eq(titulo.id, tituloId));
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {

@@ -82,9 +82,15 @@ export const createTituloSchema = z.object({
 
 export type CreateTituloInput = z.infer<typeof createTituloSchema>;
 
+// Teto de segurança para emissão manual de título, configurável sem precisar
+// alterar código. Default conservador: ajuste via env se o negócio exigir.
+const VALOR_MAXIMO_TITULO_MANUAL = Number(
+  process.env.TITULO_MANUAL_VALOR_MAXIMO || 50000,
+);
+
 export const createTituloManualSchema = z.object({
   idCliente: z.coerce.number().positive(),
-  valor: z.coerce.number().positive(),
+  valor: z.coerce.number().positive().max(VALOR_MAXIMO_TITULO_MANUAL),
   vencimento: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   descricao: z.string().max(500).optional().or(z.literal("")),
   jurosValor: z.coerce.number().min(0).optional(),

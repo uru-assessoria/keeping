@@ -29,6 +29,13 @@
       "when": 1786483200000,
       "tag": "0003_titulo_manual",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1793021486694,
+      "tag": "0004_titulo_unique_constraints",
+      "breakpoints": true
     }
   ]
 }

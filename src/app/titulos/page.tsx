@@ -23,6 +23,7 @@ const STATUS_OPTIONS = [
   { value: "LIQUIDADO", label: "Liquidado" },
   { value: "BAIXADO", label: "Baixado" },
   { value: "REJEITADO", label: "Rejeitado" },
+  { value: "CANCELADO", label: "Cancelado" },
 ];
 
 const ORIGEM_OPTIONS = [
@@ -48,6 +49,7 @@ function formatarStatus(status?: string | null): string {
     LIQUIDADO: "Liquidado",
     BAIXADO: "Baixado",
     REJEITADO: "Rejeitado",
+    CANCELADO: "Cancelado",
   };
   return map[status || ""] || status || "Desconhecido";
 }
@@ -62,6 +64,8 @@ function corStatus(status?: string | null): string {
       return "bg-zinc-200 text-zinc-700 dark:bg-zinc-700 dark:text-zinc-300";
     case "REJEITADO":
       return "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400";
+    case "CANCELADO":
+      return "bg-zinc-200 text-zinc-700 dark:bg-zinc-700 dark:text-zinc-300";
     default:
       return "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-400";
   }
@@ -125,15 +129,18 @@ export default function TitulosPage() {
   }
 
   async function handleDelete(id: number) {
-    if (!confirm("Confirmar exclusão deste título?")) return;
+    if (!confirm("Confirmar cancelamento deste título?")) return;
     const res = await fetch(`/api/titulos/${id}`, { method: "DELETE" });
     if (res.ok) {
       setResult((prev) => ({
         ...prev,
-        data: prev.data.filter((t) => t.id !== id),
+        data: prev.data.map((t) =>
+          t.id === id ? { ...t, status: "CANCELADO" } : t,
+        ),
       }));
     } else {
-      alert("Falha ao excluir título");
+      const error = await res.json().catch(() => null);
+      alert(error?.error || "Falha ao cancelar título");
     }
   }
 
@@ -252,8 +259,9 @@ export default function TitulosPage() {
                   </Link>
                   <button
                     onClick={() => handleDelete(titulo.id)}
-                    className={STYLE.BUTTON_DESTRUCTIVE}>
-                    Excluir
+                    disabled={titulo.status === "CANCELADO" || titulo.status === "LIQUIDADO"}
+                    className={`${STYLE.BUTTON_DESTRUCTIVE} ${titulo.status === "CANCELADO" || titulo.status === "LIQUIDADO" ? "opacity-50 cursor-not-allowed" : ""}`}>
+                    Cancelar
                   </button>
                 </div>
               </div>

@@ -14,6 +14,7 @@ function formatarStatus(status?: string | null): string {
     LIQUIDADO: "Liquidado",
     BAIXADO: "Baixado",
     REJEITADO: "Rejeitado",
+    CANCELADO: "Cancelado",
   };
   return map[status || ""] || status || "Desconhecido";
 }

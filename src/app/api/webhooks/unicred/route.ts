@@ -1,6 +1,7 @@
 import { db } from "@/db";
 import { titulo } from "@/db/schema";
 import { decryptWebhook, mapWebhookStatus, UnicredWebhookPayload } from "@/lib/unicred";
+import { deveAplicarNovoStatus } from "@/lib/titulo-helpers";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import crypto from "crypto";
@@ -62,19 +63,52 @@ export async function POST(request: Request) {
       });
     }
 
-    const status = mapWebhookStatus(payload.titulo.codigoSituacao);
+    const codigoStatus = mapWebhookStatus(payload.titulo.codigoSituacao);
+    if (!codigoStatus) {
+      console.warn(
+        `Webhook Unicred: codigoSituacao desconhecido "${payload.titulo.codigoSituacao}", status do título não será alterado`,
+      );
+    }
 
-    const [tituloExistente] = await db
-      .select({ id: titulo.id })
-      .from(titulo)
-      .where(eq(titulo.idUnicred, payload.titulo.uuidTitulo));
+    const tituloRowSelect = {
+      id: titulo.id,
+      status: titulo.status,
+      idempotenciaWebhook: titulo.idempotenciaWebhook,
+    };
 
-    if (tituloExistente) {
+    async function aplicarAtualizacao(
+      row: { id: number; status: string; idempotenciaWebhook: string | null },
+      viaFallback: boolean,
+    ) {
+      if (
+        payload.uuidRequisicaoWebhook &&
+        row.idempotenciaWebhook === payload.uuidRequisicaoWebhook
+      ) {
+        console.warn(
+          `Webhook Unicred: evento ${payload.uuidRequisicaoWebhook} já processado para o título ${row.id}, ignorando duplicata`,
+        );
+        return;
+      }
+
+      if (viaFallback) {
+        console.warn(
+          `Webhook Unicred: título ${row.id} localizado via fallback por seuNumero (uuidTitulo ${payload.titulo.uuidTitulo} não encontrado)`,
+        );
+      }
+
+      // Evita que um evento atrasado/fora de ordem regrida um status mais
+      // avançado (ex.: BAIXADO chegando depois de um LIQUIDADO já aplicado).
+      const novoStatus =
+        codigoStatus && deveAplicarNovoStatus(row.status, codigoStatus)
+          ? codigoStatus
+          : row.status;
+
       await db
         .update(titulo)
         .set({
-          status,
-          statusUnicred: status,
+          ...(viaFallback ? { idUnicred: payload.titulo.uuidTitulo } : {}),
+          status: novoStatus,
+          statusUnicred: codigoStatus || row.status,
           codigoBarras: payload.titulo.codigoBarras || null,
           linhaDigitavel: payload.titulo.linhaDigitavel || null,
           nossoNumero: payload.titulo.nossoNumero || null,
@@ -82,29 +116,25 @@ export async function POST(request: Request) {
           idempotenciaWebhook: payload.uuidRequisicaoWebhook || null,
           dataAtualizacao: new Date(),
         })
-        .where(eq(titulo.id, tituloExistente.id));
+        .where(eq(titulo.id, row.id));
+    }
+
+    const [tituloExistente] = await db
+      .select(tituloRowSelect)
+      .from(titulo)
+      .where(eq(titulo.idUnicred, payload.titulo.uuidTitulo));
+
+    if (tituloExistente) {
+      await aplicarAtualizacao(tituloExistente, false);
     } else {
       // Tenta localizar pelo seuNumero como fallback
       const [porSeuNumero] = await db
-        .select({ id: titulo.id })
+        .select(tituloRowSelect)
         .from(titulo)
         .where(eq(titulo.seuNumero, payload.titulo.seuNumero));
 
       if (porSeuNumero) {
-        await db
-          .update(titulo)
-          .set({
-            idUnicred: payload.titulo.uuidTitulo,
-            status,
-            statusUnicred: status,
-            codigoBarras: payload.titulo.codigoBarras || null,
-            linhaDigitavel: payload.titulo.linhaDigitavel || null,
-            nossoNumero: payload.titulo.nossoNumero || null,
-            qrCodePix: payload.titulo.qrCodePix || null,
-            idempotenciaWebhook: payload.uuidRequisicaoWebhook || null,
-            dataAtualizacao: new Date(),
-          })
-          .where(eq(titulo.id, porSeuNumero.id));
+        await aplicarAtualizacao(porSeuNumero, true);
       } else {
         console.warn(
           `Webhook Unicred: título não encontrado para uuid ${payload.titulo.uuidTitulo} / seuNumero ${payload.titulo.seuNumero}`,

@@ -1,6 +1,7 @@
 import { db } from "@/db";
 import { titulo } from "@/db/schema";
 import { consultarStatus, formatStatus } from "@/lib/unicred";
+import { deveAplicarNovoStatus } from "@/lib/titulo-helpers";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
@@ -38,13 +39,18 @@ export async function GET(
 
     const statusUnicred = await consultarStatus(tituloAtual.idUnicred);
 
-    const novoStatus = statusUnicred.status || tituloAtual.status;
+    const statusConsultado = mapStatus(statusUnicred.status || tituloAtual.status);
+    // Polling não pode regredir um status mais avançado já confirmado por
+    // webhook (ex.: EM_PROCESSAMENTO atrasado chegando depois de LIQUIDADO).
+    const novoStatus = deveAplicarNovoStatus(tituloAtual.status, statusConsultado)
+      ? statusConsultado
+      : tituloAtual.status;
 
     const [atualizado] = await db
       .update(titulo)
       .set({
-        status: mapStatus(novoStatus),
-        statusUnicred: novoStatus,
+        status: novoStatus,
+        statusUnicred: statusUnicred.status || tituloAtual.status,
         codigoBarras: statusUnicred.codBarras || null,
         linhaDigitavel: statusUnicred.linhaDigitavel || null,
         nossoNumero: statusUnicred.nossoNumero || null,
@@ -62,10 +68,7 @@ export async function GET(
   } catch (error) {
     console.error("Erro ao consultar status do título:", error);
     return NextResponse.json(
-      {
-        error: "Erro ao consultar status",
-        details: error instanceof Error ? error.message : "Erro desconhecido",
-      },
+      { error: "Erro ao consultar status do título" },
       { status: 500 },
     );
   }

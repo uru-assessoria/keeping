@@ -335,7 +335,7 @@ export function decryptWebhook(
   return JSON.parse(decrypted) as UnicredWebhookPayload;
 }
 
-export function mapWebhookStatus(codigoSituacao: string): string {
+export function mapWebhookStatus(codigoSituacao: string): string | undefined {
   const map: Record<string, string> = {
     "01": "ABERTO",
     "02": "BAIXADO",
@@ -349,7 +349,9 @@ export function mapWebhookStatus(codigoSituacao: string): string {
     "100": "EM_PROCESSAMENTO",
     "101": "REJEITADO",
   };
-  return map[codigoSituacao] || "ABERTO";
+  // Código desconhecido não deve reabrir um título já baixado/liquidado -
+  // undefined sinaliza "sem mudança de status" para quem chama.
+  return map[codigoSituacao];
 }
 
 export function formatStatus(status?: string): string {
@@ -359,13 +361,16 @@ export function formatStatus(status?: string): string {
     BAIXADO: "Baixado",
     EM_PROCESSAMENTO: "Em processamento",
     REJEITADO: "Rejeitado",
+    CANCELADO: "Cancelado",
   };
   return map[status || ""] || status || "Desconhecido";
 }
 
 function diaSeguinte(dataISO: string): string {
   const [ano, mes, dia] = dataISO.split("-").map(Number);
-  const data = new Date(ano, mes - 1, dia + 1);
+  // Date.UTC evita o desvio de 1 dia que new Date(ano, mes, dia) local +
+  // toISOString() (UTC) pode causar em fusos negativos.
+  const data = new Date(Date.UTC(ano, mes - 1, dia + 1));
   return data.toISOString().split("T")[0];
 }
 

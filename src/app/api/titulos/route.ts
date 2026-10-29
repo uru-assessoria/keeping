@@ -110,6 +110,8 @@ export async function POST(request: Request) {
         valorTotal: contrato.valorTotal,
         status: contrato.status,
         razaoSocialCliente: contrato.razaoSocialCliente,
+        formalizacao: contrato.formalizacao,
+        vencimento: contrato.vencimento,
       })
       .from(contrato)
       .where(eq(contrato.id, data.idContrato));
@@ -124,6 +126,17 @@ export async function POST(request: Request) {
     if (contratoAtual.status !== "signed") {
       return NextResponse.json(
         { error: "O contrato precisa estar assinado para gerar título" },
+        { status: 400 },
+      );
+    }
+
+    const mesFormalizacao = contratoAtual.formalizacao.toISOString().slice(0, 7);
+    const mesVencimentoContrato = contratoAtual.vencimento.toISOString().slice(0, 7);
+    if (data.referenciaMes < mesFormalizacao || data.referenciaMes > mesVencimentoContrato) {
+      return NextResponse.json(
+        {
+          error: `O mês de referência deve estar entre ${mesFormalizacao} e ${mesVencimentoContrato} (vigência do contrato)`,
+        },
         { status: 400 },
       );
     }
@@ -147,28 +160,41 @@ export async function POST(request: Request) {
       );
     }
 
-    const [tituloExistente] = await db
-      .select({ id: titulo.id })
-      .from(titulo)
-      .where(
-        and(
-          eq(titulo.idContrato, data.idContrato),
-          eq(titulo.referenciaMes, data.referenciaMes),
-        ),
-      );
-
-    if (tituloExistente) {
-      return NextResponse.json(
-        { error: "Já existe um título para este contrato e mês de referência" },
-        { status: 409 },
-      );
-    }
-
     const vencimento = ultimoDiaDoMes(data.referenciaMes);
     const seuNumero = gerarSeuNumero(data.idContrato, data.referenciaMes);
     const valor = Number(contratoAtual.valorTotal);
-
+    // Valida o pagador (pode lançar por CPF/CNPJ inválido) antes de inserir
+    // qualquer registro local.
     const pagador = montarPagador(clienteAtual);
+
+    // Insere o título localmente ANTES de chamar a Unicred: a constraint
+    // única (id_contrato, referencia_mes) decide atomicamente quem "ganha"
+    // sob concorrência, e evita título órfão na Unicred se o INSERT falhar
+    // depois da emissão (o contrário do fluxo anterior).
+    let novoTitulo;
+    try {
+      [novoTitulo] = await db
+        .insert(titulo)
+        .values({
+          idContrato: data.idContrato,
+          idCliente: contratoAtual.idCliente,
+          origem: "CONTRATO",
+          seuNumero,
+          valor,
+          vencimento: new Date(vencimento),
+          status: "EM_PROCESSAMENTO",
+          referenciaMes: data.referenciaMes,
+        })
+        .returning();
+    } catch (insertError) {
+      if ((insertError as { code?: string }).code === "23505") {
+        return NextResponse.json(
+          { error: "Já existe um título para este contrato e mês de referência" },
+          { status: 409 },
+        );
+      }
+      throw insertError;
+    }
 
     const params: EmitirTituloParams = {
       seuNumero,
@@ -177,39 +203,38 @@ export async function POST(request: Request) {
       pagador,
     };
 
-    const resposta = await emitirTitulo(params);
+    try {
+      const resposta = await emitirTitulo(params);
 
-    const [novoTitulo] = await db
-      .insert(titulo)
-      .values({
-        idContrato: data.idContrato,
-        idCliente: contratoAtual.idCliente,
-        origem: "CONTRATO",
-        idUnicred: resposta.id_titulo,
-        seuNumero,
-        valor,
-        vencimento: new Date(vencimento),
-        status: "EM_PROCESSAMENTO",
-        referenciaMes: data.referenciaMes,
-      })
-      .returning();
+      const [atualizado] = await db
+        .update(titulo)
+        .set({ idUnicred: resposta.id_titulo, dataAtualizacao: new Date() })
+        .where(eq(titulo.id, novoTitulo.id))
+        .returning();
 
-    return NextResponse.json(
-      {
-        ...novoTitulo,
-        statusFormatado: formatStatus(novoTitulo.status),
-        respostaUnicred: resposta,
-      },
-      { status: 201 },
-    );
+      return NextResponse.json(
+        {
+          ...atualizado,
+          statusFormatado: formatStatus(atualizado.status),
+          respostaUnicred: resposta,
+        },
+        { status: 201 },
+      );
+    } catch (emissaoError) {
+      const mensagem =
+        emissaoError instanceof Error ? emissaoError.message : "Erro desconhecido";
+      await db
+        .update(titulo)
+        .set({ status: "REJEITADO", mensagemErro: mensagem, dataAtualizacao: new Date() })
+        .where(eq(titulo.id, novoTitulo.id));
+      console.error(`Erro ao emitir título ${novoTitulo.id} na Unicred:`, emissaoError);
+      return NextResponse.json(
+        { error: "Erro ao emitir título na Unicred", tituloId: novoTitulo.id },
+        { status: 502 },
+      );
+    }
   } catch (error) {
     console.error("Erro ao criar título:", error);
-    return NextResponse.json(
-      {
-        error: "Erro ao criar título",
-        details: error instanceof Error ? error.message : "Erro desconhecido",
-      },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Erro ao criar título" }, { status: 500 });
   }
 }
